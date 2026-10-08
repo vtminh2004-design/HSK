@@ -141,6 +141,7 @@ button{border:0;border-radius:11px;padding:10px 16px;font-size:15px;cursor:point
 .rq-card{margin:18px 0 6px;padding:26px 14px;background:#fff7ed;border:1px solid #fed7aa;border-radius:16px;text-align:center}
 .rq-hz{font-size:32px;font-weight:700;line-height:1.5;color:#222}
 .rq-py{margin-top:12px;font-size:20px;font-weight:600;color:#b91c1c;line-height:1.6}
+.rq-vi{margin-top:10px;font-size:20px;font-weight:600;color:#1d4ed8;line-height:1.6}
 .hidden{display:none !important}
 footer{text-align:center;color:#888;margin:16px;font-size:13px}
 
@@ -221,6 +222,7 @@ footer{text-align:center;color:#888;margin:16px;font-size:13px}
   <button class="mode-btn" id="btnModeDialogue500" onclick="setMode('dialogue500')">💬 Đối đáp phản xạ</button>
   <button class="mode-btn" id="btnModeAdvDialogue" onclick="setMode('advDialogue')">🔥 Nghe đối đáp dài</button>
   <button class="mode-btn" id="btnModeRandomQ" onclick="setMode('randomQ')">🎲 Hỏi ngẫu nhiên</button>
+  <button class="mode-btn" id="btnModeRandomVocab" onclick="setMode('randomVocab')">🔤 Từ vựng ngẫu nhiên</button>
 </div>
 
 <!-- Chọn giọng đọc (dùng chung cho mọi chế độ) -->
@@ -300,6 +302,21 @@ footer{text-align:center;color:#888;margin:16px;font-size:13px}
     <button class="speak" style="margin-left:0" onclick="speakRandomQ()">🔊 Nghe câu hỏi</button>
     <button class="toggle-btn" id="rqToggleBtn" onclick="toggleRqPinyin()">🔤 Hiện Pinyin</button>
     <button class="primary" onclick="nextRandomQ()">🎲 Câu ngẫu nhiên khác →</button>
+  </div>
+</div>
+
+<!-- Khu vực từ vựng ngẫu nhiên -->
+<div id="randomVocabArea" class="hidden">
+  <div class="rq-card">
+    <div class="rq-hz" id="rvHz" style="font-size:48px">...</div>
+    <div class="rq-py hidden" id="rvPy"></div>
+    <div class="rq-vi hidden" id="rvVi"></div>
+  </div>
+  <div class="controls">
+    <button class="speak" style="margin-left:0" onclick="speakRandomVocab()">🔊 Nghe từ</button>
+    <button class="toggle-btn" id="rvPyBtn" onclick="toggleRvPinyin()">🔤 Hiện Pinyin</button>
+    <button class="toggle-btn" id="rvViBtn" onclick="toggleRvMeaning()">📖 Hiện nghĩa</button>
+    <button class="primary" onclick="nextRandomVocab()">🎲 Từ ngẫu nhiên khác →</button>
   </div>
 </div>
 
@@ -1546,6 +1563,47 @@ function nextRandomQ() {
   renderRandomQ();
 }
 
+// ===== Chế độ Từ vựng ngẫu nhiên (danh sách từ trong bài kiểm tra Việt-Hán) =====
+const RV_WORDS = ["学生", "们", "老师", "您", "你们", "谢谢", "不客气", "同学", "再见", "我", "叫", "什么", "名字", "请问", "吗", "不", "是", "对不起", "没关系", "没事", "很", "高兴", "认识", "也", "人", "的", "中国", "法国", "泰国", "中文", "这", "谁", "朋友", "女朋友", "男朋友", "哪", "国", "她", "他", "它", "喂", "姐姐", "工作", "还", "忙", "太", "我们", "想", "有", "没有", "多少", "个", "哥哥", "呢", "家", "几", "口", "一", "二", "三", "四", "五", "六", "七", "八", "九", "十", "爸爸", "妈妈", "妹妹", "和", "儿子", "女儿", "孩子", "岁", "今年", "多大", "今天", "年", "月", "号", "日", "星期", "星期天", "星期日", "休息", "会", "做饭", "做", "面条儿", "饺子", "一些", "菜", "上班", "下班", "新", "电脑", "真", "好看", "喜欢", "手机号", "打电话", "明天", "去", "哪儿", "超市", "买", "东西", "些", "牛奶", "吃", "晚饭", "那边", "包子", "非常", "好吃", "米饭", "怎么", "坐", "出租车", "饭店", "现在", "点", "早上", "上午", "中午", "下午", "晚上", "分", "课", "上课", "下课", "见", "吧", "看", "电影", "电影院", "事", "半", "在", "家里", "医院", "店", "分钟", "后", "房间", "外", "只", "小", "猫", "没", "看见", "桌子", "下", "漂亮", "学校", "书店", "前", "能", "到", "午饭", "饭", "大", "病人", "多", "医生", "边", "前边", "后边", "里边", "外边", "上边", "下边", "那", "椅子", "本", "书", "第", "学习", "白天", "读书", "唱", "歌", "好听", "电视", "狗", "玩", "杯子", "售货员", "这边", "钱", "这些", "那些", "块", "这儿", "水果", "少", "斤", "苹果", "便宜", "商店", "衣服", "件", "元", "怎么样", "贵", "穿", "女", "男", "那儿", "什么时候", "时候", "知道", "正在", "找", "开车", "车", "读大学", "大学", "大学生", "学", "医", "弟弟", "起床", "睡觉", "睡", "那里", "哪里", "这里", "昨天", "问", "说", "要", "小朋友", "天气", "天", "下雨", "了", "雨", "有点儿", "觉得", "冷", "下雪", "来", "公司", "生病", "看病", "病", "一点儿", "药", "回", "再", "喝", "热", "水", "可以", "问题", "卖", "一下", "服务员", "女士", "请", "给", "早饭", "这个", "那个", "面包", "鸡蛋", "写", "上", "都", "火车", "听见", "不要", "开", "说话", "有些", "听", "有的", "哪些", "字", "去年", "汉字", "汉语", "好玩儿", "爱", "飞机", "哪个", "小时", "接", "家人", "住", "时间", "早", "机场"];
+const RV_EXTRA = {"们": {"py": "men", "vi": "Những, các (hậu tố số nhiều)"}, "没事": {"py": "méi shì", "vi": "Không sao"}, "人": {"py": "rén", "vi": "Người"}, "法国": {"py": "Fǎguó", "vi": "Nước Pháp"}, "泰国": {"py": "Tàiguó", "vi": "Thái Lan"}, "中文": {"py": "Zhōngwén", "vi": "Tiếng Trung"}, "女朋友": {"py": "nǚpéngyou", "vi": "Bạn gái"}, "男朋友": {"py": "nánpéngyou", "vi": "Bạn trai"}, "国": {"py": "guó", "vi": "Nước, quốc gia"}, "她": {"py": "tā", "vi": "Cô ấy, bà ấy"}, "他": {"py": "tā", "vi": "Anh ấy, ông ấy"}, "它": {"py": "tā", "vi": "Nó (vật, con vật)"}, "没有": {"py": "méiyǒu", "vi": "Không có, chưa"}, "口": {"py": "kǒu", "vi": "Miệng; (lượng từ) nhân khẩu"}, "多大": {"py": "duō dà", "vi": "Bao nhiêu tuổi"}, "星期日": {"py": "xīngqīrì", "vi": "Chủ nhật"}, "面条儿": {"py": "miàntiáor", "vi": "Mì sợi"}, "饺子": {"py": "jiǎozi", "vi": "Sủi cảo"}, "一些": {"py": "yìxiē", "vi": "Một vài, một ít"}, "手机号": {"py": "shǒujīhào", "vi": "Số điện thoại di động"}, "晚饭": {"py": "wǎnfàn", "vi": "Bữa tối"}, "那边": {"py": "nàbiān", "vi": "Bên kia, đằng kia"}, "包子": {"py": "bāozi", "vi": "Bánh bao"}, "饭店": {"py": "fàndiàn", "vi": "Nhà hàng, khách sạn"}, "见": {"py": "jiàn", "vi": "Gặp, thấy"}, "事": {"py": "shì", "vi": "Việc, sự việc"}, "家里": {"py": "jiāli", "vi": "Ở nhà, trong nhà"}, "店": {"py": "diàn", "vi": "Cửa hàng, tiệm"}, "外": {"py": "wài", "vi": "Bên ngoài"}, "看见": {"py": "kànjiàn", "vi": "Nhìn thấy"}, "书店": {"py": "shūdiàn", "vi": "Hiệu sách"}, "午饭": {"py": "wǔfàn", "vi": "Bữa trưa"}, "饭": {"py": "fàn", "vi": "Cơm, bữa ăn"}, "病人": {"py": "bìngrén", "vi": "Bệnh nhân"}, "边": {"py": "biān", "vi": "Bên, phía"}, "前边": {"py": "qiánbian", "vi": "Phía trước"}, "后边": {"py": "hòubian", "vi": "Phía sau"}, "里边": {"py": "lǐbian", "vi": "Bên trong"}, "上边": {"py": "shàngbian", "vi": "Phía trên"}, "下边": {"py": "xiàbian", "vi": "Phía dưới"}, "第": {"py": "dì", "vi": "Thứ (số thứ tự)"}, "学习": {"py": "xuéxí", "vi": "Học tập"}, "白天": {"py": "báitiān", "vi": "Ban ngày"}, "读书": {"py": "dúshū", "vi": "Đọc sách, đi học"}, "唱": {"py": "chàng", "vi": "Hát"}, "歌": {"py": "gē", "vi": "Bài hát"}, "售货员": {"py": "shòuhuòyuán", "vi": "Nhân viên bán hàng"}, "这边": {"py": "zhèbiān", "vi": "Bên này, đằng này"}, "这些": {"py": "zhèxiē", "vi": "Những cái này"}, "那些": {"py": "nàxiē", "vi": "Những cái kia"}, "斤": {"py": "jīn", "vi": "Cân (nửa ký)"}, "元": {"py": "yuán", "vi": "Đồng, tệ (nhân dân tệ)"}, "女": {"py": "nǚ", "vi": "Nữ, con gái"}, "男": {"py": "nán", "vi": "Nam, con trai"}, "什么时候": {"py": "shénme shíhou", "vi": "Khi nào, lúc nào"}, "知道": {"py": "zhīdào", "vi": "Biết"}, "读大学": {"py": "dú dàxué", "vi": "Học đại học"}, "大学生": {"py": "dàxuéshēng", "vi": "Sinh viên đại học"}, "医": {"py": "yī", "vi": "Y, chữa bệnh"}, "睡": {"py": "shuì", "vi": "Ngủ"}, "那里": {"py": "nàlǐ", "vi": "Ở đó, nơi đó"}, "哪里": {"py": "nǎlǐ", "vi": "Ở đâu"}, "这里": {"py": "zhèlǐ", "vi": "Ở đây"}, "小朋友": {"py": "xiǎopéngyou", "vi": "Bạn nhỏ, em bé"}, "天": {"py": "tiān", "vi": "Ngày; trời"}, "有点儿": {"py": "yǒudiǎnr", "vi": "Hơi, có chút"}, "下雪": {"py": "xià xuě", "vi": "Tuyết rơi"}, "药": {"py": "yào", "vi": "Thuốc"}, "服务员": {"py": "fúwùyuán", "vi": "Nhân viên phục vụ"}, "女士": {"py": "nǚshì", "vi": "Quý bà, quý cô"}, "早饭": {"py": "zǎofàn", "vi": "Bữa sáng"}, "这个": {"py": "zhège", "vi": "Cái này"}, "那个": {"py": "nàge", "vi": "Cái kia"}, "火车": {"py": "huǒchē", "vi": "Tàu hỏa"}, "听见": {"py": "tīngjiàn", "vi": "Nghe thấy"}, "不要": {"py": "búyào", "vi": "Đừng, không cần"}, "说话": {"py": "shuōhuà", "vi": "Nói chuyện"}, "有些": {"py": "yǒuxiē", "vi": "Một số, có chút"}, "有的": {"py": "yǒude", "vi": "Có (người, cái) ..., một số"}, "哪些": {"py": "nǎxiē", "vi": "Những ... nào"}, "汉字": {"py": "Hànzì", "vi": "Chữ Hán"}, "哪个": {"py": "nǎge", "vi": "Cái nào"}, "小时": {"py": "xiǎoshí", "vi": "Giờ đồng hồ, tiếng"}, "接": {"py": "jiē", "vi": "Đón, nhận, nối"}, "家人": {"py": "jiārén", "vi": "Người nhà, gia đình"}, "早": {"py": "zǎo", "vi": "Sớm"}};
+const RANDOM_VOCAB = RV_WORDS.map(hz => RV_EXTRA[hz] ? { hz, py: RV_EXTRA[hz].py, vi: RV_EXTRA[hz].vi } : vocabFull.find(v => v.hz === hz)).filter(Boolean);
+let rvDeck = [], rvIndex = 0, rvShowPinyin = false, rvShowMeaning = false;
+function startRandomVocab() {
+  rvDeck = shuffleArray(RANDOM_VOCAB);
+  rvIndex = 0;
+  rvShowPinyin = false; rvShowMeaning = false;
+  renderRandomVocab();
+}
+function renderRandomVocab() {
+  const w = rvDeck[rvIndex];
+  document.getElementById("number").textContent = `Từ ${rvIndex + 1} / ${rvDeck.length}`;
+  document.getElementById("bar").style.width = ((rvIndex + 1) / rvDeck.length * 100) + "%";
+  document.getElementById("feedback").innerHTML = "";
+  document.getElementById("rvHz").textContent = w.hz;
+  const py = document.getElementById("rvPy");
+  py.textContent = w.py;
+  py.classList.toggle("hidden", !rvShowPinyin);
+  const vi = document.getElementById("rvVi");
+  vi.textContent = w.vi;
+  vi.classList.toggle("hidden", !rvShowMeaning);
+  document.getElementById("rvPyBtn").textContent = rvShowPinyin ? "🙈 Ẩn Pinyin" : "🔤 Hiện Pinyin";
+  document.getElementById("rvViBtn").textContent = rvShowMeaning ? "🙈 Ẩn nghĩa" : "📖 Hiện nghĩa";
+}
+function toggleRvPinyin() { rvShowPinyin = !rvShowPinyin; renderRandomVocab(); }
+function toggleRvMeaning() { rvShowMeaning = !rvShowMeaning; renderRandomVocab(); }
+function nextRandomVocab() {
+  rvIndex++;
+  if (rvIndex >= rvDeck.length) { // hết 1 vòng: xáo lại, tránh lặp ngay từ vừa hỏi
+    const last = rvDeck[rvDeck.length - 1];
+    rvDeck = shuffleArray(RANDOM_VOCAB);
+    if (rvDeck[0] === last) rvDeck.push(rvDeck.shift());
+    rvIndex = 0;
+  }
+  rvShowPinyin = false; rvShowMeaning = false; // mỗi từ mới: ẩn lại để tự kiểm tra
+  renderRandomVocab();
+}
+function speakRandomVocab() { if (rvDeck[rvIndex]) speakSafe(rvDeck[rvIndex].hz); }
+
 function setMode(mode) {
   currentMode = mode;
   document.querySelectorAll(".mode-btn").forEach(btn => btn.classList.remove("active"));
@@ -1559,9 +1617,11 @@ function setMode(mode) {
   if (mode === 'dialogue500') document.getElementById("btnModeDialogue500").classList.add("active");
   if (mode === 'advDialogue') document.getElementById("btnModeAdvDialogue").classList.add("active");
   if (mode === 'randomQ') document.getElementById("btnModeRandomQ").classList.add("active");
+  if (mode === 'randomVocab') document.getElementById("btnModeRandomVocab").classList.add("active");
 
   sentenceAreaEl.classList.add("hidden");
   document.getElementById("randomArea").classList.add("hidden");
+  document.getElementById("randomVocabArea").classList.add("hidden");
   typingAreaEl.classList.add("hidden");
   quizAreaEl.classList.add("hidden");
   sentenceControlsEl.classList.add("hidden");
@@ -1572,6 +1632,10 @@ function setMode(mode) {
     document.getElementById("randomArea").classList.remove("hidden");
     subTitleEl.textContent = "Chế độ Hỏi ngẫu nhiên (70 câu test HSK1): đọc câu hỏi, tự trả lời, bấm Pinyin khi cần!";
     startRandomQ();
+  } else if (mode === 'randomVocab') {
+    document.getElementById("randomVocabArea").classList.remove("hidden");
+    subTitleEl.textContent = `Chế độ Từ vựng ngẫu nhiên (${RANDOM_VOCAB.length} từ): nhìn chữ Hán, tự nhớ rồi bấm Pinyin / Nghĩa để kiểm tra!`;
+    startRandomVocab();
   } else if (mode === 'type') {
     typingAreaEl.classList.remove("hidden");
     typingControlsEl.classList.remove("hidden");
