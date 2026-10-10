@@ -203,10 +203,144 @@ footer{text-align:center;color:#888;margin:16px;font-size:13px}
 .donate-box .primary{margin-top:14px;width:100%}
 .donate-x{position:absolute;top:8px;right:10px;background:none;color:#94a3b8;font-size:22px;padding:2px 8px;line-height:1}
 @keyframes donFade{from{opacity:0}to{opacity:1}}
+/* ===== Thanh chức năng chính & nhánh HSK ===== */
+.main-nav{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px;background:#e8edf5;padding:6px;border-radius:16px}
+.main-tab{padding:13px 10px;border-radius:12px;border:0;background:transparent;color:#475569;font-weight:700;font-size:16px;cursor:pointer;min-height:48px;transition:.15s}
+.main-tab.active{background:#b91c1c;color:#fff;box-shadow:0 4px 12px #b91c1c40}
+.level-nav{display:flex;gap:8px;margin-bottom:12px}
+.level-tab{flex:1;padding:10px 12px;border-radius:999px;border:1.5px solid #cbd5e1;background:#fff;color:#334155;font-weight:700;font-size:15px;cursor:pointer;min-height:44px}
+.level-tab.active{background:#fee2e2;border-color:#b91c1c;color:#b91c1c}
+.panel{background:#fff;border-radius:18px;padding:20px;box-shadow:0 8px 30px #00000012}
+.shared-voice{background:#fff;border-radius:14px;padding:10px 14px;margin-bottom:12px;box-shadow:0 4px 16px #0000000d}
+.shared-voice .voice-bar{margin:0}
+.hsk2-soon{text-align:center;padding:64px 20px}
+.hsk2-soon .big{font-size:56px;line-height:1;margin-bottom:14px}
+.hsk2-soon p{margin:0;font-size:24px;font-weight:700;color:#b91c1c}
+/* ===== Thi thử ===== */
+.ex-rules{background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;padding:12px 14px;font-size:14px;line-height:1.55;color:#334155;display:grid;gap:6px;margin-bottom:12px}
+.ex-check{display:flex;gap:8px;align-items:center;font-size:14px;color:#334155;margin:0 0 14px;cursor:pointer}
+.ex-check input{width:20px;height:20px;accent-color:#b91c1c}
+.ex-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px}
+.ex-item{display:flex;flex-direction:column;align-items:flex-start;gap:6px;text-align:left;background:#fff;border:1.5px solid #cbd5e1;border-radius:14px;padding:14px 16px;cursor:pointer;font-weight:400;min-height:120px;transition:.15s}
+.ex-item:active{transform:scale(.98)}
+.ex-item-no{font-size:22px;font-weight:800;color:#b91c1c}
+.ex-item-meta{font-size:13px;color:#64748b}
+.ex-best{font-size:13px;color:#166534}.ex-best.muted{color:#94a3b8}
+.ex-item-go{margin-top:auto;font-size:14px;font-weight:700;color:#b91c1c}
+.ex-bar{position:sticky;top:0;z-index:20;background:#fff;border-bottom:2px solid #fecaca;margin:-20px -20px 14px;padding:10px 20px 8px;border-radius:18px 18px 0 0}
+.ex-bar-top,.ex-bar-bot{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.ex-bar-bot{margin-top:6px;font-size:13px;color:#475569}
+.ex-timer{font-weight:800;font-size:20px;font-variant-numeric:tabular-nums;color:#b91c1c;background:#fee2e2;padding:3px 12px;border-radius:999px}
+.ex-timer.low{background:#b91c1c;color:#fff;animation:exblink 1s infinite}
+@keyframes exblink{50%{opacity:.6}}
+.ex-part{margin-bottom:26px}
+.ex-part h2{margin:0 0 4px;font-size:18px;color:#b91c1c}
+.ex-range{font-size:13px;font-weight:600;color:#64748b;margin-left:6px}
+.ex-instr{font-size:14px;color:#475569;margin-bottom:10px}
+.ex-q{display:flex;gap:12px;padding:14px 0;border-top:1px dashed #e2e8f0}
+.ex-qno{flex:none;width:30px;height:30px;border-radius:50%;background:#b91c1c;color:#fff;font-weight:700;font-size:14px;display:flex;align-items:center;justify-content:center}
+.ex-q-main{flex:1;min-width:0;display:grid;gap:10px;justify-items:start}
+.ex-zh{font-size:22px;font-weight:600;line-height:1.5}
+.ex-zh.q{font-size:19px}
+.ex-py{display:none;font-size:13px;font-weight:500;color:#0369a1;line-height:1.4}
+.show-py .ex-py{display:block}
+small.ex-py{margin-top:2px}
+.ex-pic{font-size:58px;line-height:1.1}
+.ex-opts{display:grid;gap:8px;width:100%}
+.ex-opts.two{grid-template-columns:repeat(2,minmax(0,1fr));max-width:280px}
+.ex-opts.three{grid-template-columns:repeat(3,minmax(0,1fr));max-width:460px}
+.ex-opts.six{grid-template-columns:repeat(6,minmax(0,1fr));max-width:420px}
+.ex-opts.col{grid-template-columns:1fr}
+.ex-opt{background:#fff;border:2px solid #cbd5e1;border-radius:12px;color:#1e293b;min-height:48px;padding:8px 12px;font-size:18px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:10px;cursor:pointer;transition:.12s}
+.ex-opt.sel{background:#fee2e2;border-color:#b91c1c;color:#7f1d1d}
+.ex-opt.ok{font-size:26px}.ex-opt.no{font-size:26px}
+.ex-opt.picopt{flex-direction:column;gap:2px;padding:8px 4px}
+.ex-opt .pic{font-size:40px;line-height:1.1}
+.ex-opt .l{flex:none;font-size:14px;font-weight:800;color:#b91c1c}
+.ex-opt.txt{justify-content:flex-start;text-align:left;font-weight:600;font-size:18px}
+.ex-opt .t{display:flex;flex-direction:column;align-items:flex-start}
+.ex-opt.letter{padding:6px 0}
+.ex-bank{display:grid;gap:8px;margin:8px 0 6px;padding:10px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px}
+.ex-bank.pics{grid-template-columns:repeat(6,minmax(0,1fr))}
+.ex-bank.words{grid-template-columns:repeat(3,minmax(0,1fr))}
+.ex-bank.match{grid-template-columns:repeat(2,minmax(0,1fr))}
+.ex-bank-i{display:flex;gap:6px;align-items:center;font-size:17px;font-weight:600;min-width:0}
+.ex-bank-i .l{font-size:13px;font-weight:800;color:#b91c1c;flex:none}
+.ex-bank-i .pic{font-size:34px;line-height:1.1}
+.ex-bank-i>span:last-child{display:flex;flex-direction:column;min-width:0}
+.ex-warn{background:#fef3c7;border:1.5px solid #f59e0b;color:#92400e;border-radius:12px;padding:10px 14px;margin:12px 0;font-weight:600;font-size:14px}
+.ex-end{justify-content:center}
+.ex-play{margin-top:0;min-height:44px}
+.ex-play:disabled{background:#94a3b8;cursor:not-allowed}
+.ex-score{text-align:center;border-radius:16px;padding:18px;margin:10px 0 12px}
+.ex-score.pass{background:#dcfce7;color:#166534}
+.ex-score.fail{background:#fee2e2;color:#991b1b}
+.ex-total{font-size:56px;font-weight:800;line-height:1.1}
+.ex-total small{font-size:22px;font-weight:700}
+.ex-verdict{font-weight:700;font-size:16px}
+.ex-two{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}
+.ex-box{background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;padding:10px 14px;display:flex;justify-content:space-between;align-items:center;font-weight:600}
+.ex-box b{font-size:20px;color:#b91c1c}
+.ex-parts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px 18px;font-size:14px;margin-bottom:6px}
+.ex-prow{display:flex;justify-content:space-between;border-bottom:1px dotted #cbd5e1;padding:3px 0}
+.ex-rv-title{margin:22px 0 8px;font-size:18px}
+.ex-rv-filter{display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap}
+.ex-rv{border-left:5px solid;border-radius:10px;padding:10px 12px;margin-bottom:10px;background:#f8fafc;display:grid;gap:4px}
+.ex-rv.good{border-color:#22c55e}.ex-rv.bad{border-color:#ef4444;background:#fef2f2}
+.ex-rv-h{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.ex-rv-zh{font-size:19px;font-weight:600}
+.ex-rv-pic{font-size:34px;margin-right:8px;vertical-align:middle}
+.ex-rv-py{font-size:13px;color:#0369a1}
+.ex-rv-q{font-size:16px;font-weight:600}
+.ex-rv-q .ex-py{display:inline}
+.ex-rv-vi{font-size:14px;color:#475569;font-style:italic}
+.ex-rv-a{font-size:14px;display:grid;gap:2px}
+@media (max-width:520px){
+  .ex-bar{margin:-20px -20px 12px}
+  .ex-parts{grid-template-columns:1fr}
+  .ex-bank.pics{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .ex-bank.words{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .ex-bank.match{grid-template-columns:1fr}
+  .ex-opts.six{max-width:100%}
+  .ex-zh{font-size:20px}
+}
+
 </style>
 </head>
 <body>
 <div class="container">
+<!-- Thanh chức năng chính -->
+<div class="main-nav" role="tablist">
+  <button class="main-tab active" id="tabStudy" role="tab" aria-selected="true" onclick="setTopTab('study')">📖 Học tập</button>
+  <button class="main-tab" id="tabExam" role="tab" aria-selected="false" onclick="setTopTab('exam')">📝 Thi thử</button>
+</div>
+
+<!-- Giọng đọc dùng chung cho Học tập và Thi thử -->
+<div class="shared-voice">
+<!-- Chọn giọng đọc (dùng chung cho mọi chế độ) -->
+<div class="voice-bar">
+  <label for="voiceSelect">🗣 Giọng đọc:</label>
+  <select id="voiceSelect" onchange="onVoiceChange()"><option value="">Mặc định</option></select>
+  <label for="rateSelect">⏩ Tốc độ:</label>
+  <select id="rateSelect" onchange="onRateChange()">
+    <option value="0.5">Rất chậm</option>
+    <option value="0.65">Chậm</option>
+    <option value="0.8">Vừa</option>
+    <option value="1">Bình thường</option>
+    <option value="1.2">Nhanh</option>
+  </select>
+  <button class="toggle-btn" onclick="testVoice()">🔊 Thử giọng</button>
+</div>
+<div class="voice-note hidden" id="voiceNote"></div>
+</div>
+
+<!-- ===== HỌC TẬP ===== -->
+<div id="studyPane">
+  <div class="level-nav">
+    <button class="level-tab active" id="lvHsk1" onclick="setLevel('hsk1')">HSK 1</button>
+    <button class="level-tab" id="lvHsk2" onclick="setLevel('hsk2')">HSK 2</button>
+  </div>
+  <div id="hsk1Pane">
 <div class="card">
 <h1>🇨🇳 Ôn Luyện Tiếng Trung HSK 1</h1>
 <div class="sub" id="subTitle">Đúng 1 câu được +1 điểm. Đổi 5 điểm để mở gợi ý thứ tự 2-3 chữ!</div>
@@ -225,21 +359,7 @@ footer{text-align:center;color:#888;margin:16px;font-size:13px}
   <button class="mode-btn" id="btnModeRandomVocab" onclick="setMode('randomVocab')">🔤 Từ vựng ngẫu nhiên</button>
 </div>
 
-<!-- Chọn giọng đọc (dùng chung cho mọi chế độ) -->
-<div class="voice-bar">
-  <label for="voiceSelect">🗣 Giọng đọc:</label>
-  <select id="voiceSelect" onchange="onVoiceChange()"><option value="">Mặc định</option></select>
-  <label for="rateSelect">⏩ Tốc độ:</label>
-  <select id="rateSelect" onchange="onRateChange()">
-    <option value="0.5">Rất chậm</option>
-    <option value="0.65">Chậm</option>
-    <option value="0.8">Vừa</option>
-    <option value="1">Bình thường</option>
-    <option value="1.2">Nhanh</option>
-  </select>
-  <button class="toggle-btn" onclick="testVoice()">🔊 Thử giọng</button>
-</div>
-<div class="voice-note hidden" id="voiceNote"></div>
+
 
 <div class="top">
 <div class="badge" id="number">Câu 1 / 100</div>
@@ -342,6 +462,16 @@ footer{text-align:center;color:#888;margin:16px;font-size:13px}
 <button class="primary" id="btnQuizNext" onclick="nextQuizQuestion()">Câu tiếp theo →</button>
 </div>
 
+</div>
+  </div>
+  <div id="hsk2Pane" class="hidden">
+    <div class="panel hsk2-soon"><div class="big">🚧</div><p>Kato chưa học tới</p></div>
+  </div>
+</div>
+
+<!-- ===== THI THỬ ===== -->
+<div id="examPane" class="hidden">
+  <div class="panel" id="examCard"></div>
 </div>
 <footer>Hệ thống luyện phản xạ ngữ pháp và mặt chữ HSK 1</footer>
 </div>
@@ -2160,8 +2290,352 @@ function nextQuestion() {
   }
 }
 
+/* ================= ĐIỀU HƯỚNG: Học tập / Thi thử, HSK1 / HSK2 ================= */
+function setTopTab(tab) {
+  const study = tab === "study";
+  document.getElementById("studyPane").classList.toggle("hidden", !study);
+  document.getElementById("examPane").classList.toggle("hidden", study);
+  document.getElementById("tabStudy").classList.toggle("active", study);
+  document.getElementById("tabExam").classList.toggle("active", !study);
+  document.getElementById("tabStudy").setAttribute("aria-selected", study ? "true" : "false");
+  document.getElementById("tabExam").setAttribute("aria-selected", study ? "false" : "true");
+  try { window.speechSynthesis && window.speechSynthesis.cancel(); } catch (e) {}
+  if (!study) exRender();
+}
+function setLevel(lv) {
+  const one = lv === "hsk1";
+  document.getElementById("hsk1Pane").classList.toggle("hidden", !one);
+  document.getElementById("hsk2Pane").classList.toggle("hidden", one);
+  document.getElementById("lvHsk1").classList.toggle("active", one);
+  document.getElementById("lvHsk2").classList.toggle("active", !one);
+  try { window.speechSynthesis && window.speechSynthesis.cancel(); } catch (e) {}
+}
+
+/* ================= THI THỬ HSK 1 (chuẩn 3.0) ================= */
+const HSK_EXAMS = [{"id":1,"parts":[{"id":"L1","sec":"L","type":"pic3","items":[{"zh":"我去商店买东西。","py":"Wǒ qù shāngdiàn mǎi dōngxi.","vi":"Tôi đến cửa hàng mua đồ.","opts":["🏫","🏥","🏪"],"ans":2},{"zh":"我想喝水。","py":"Wǒ xiǎng hē shuǐ.","vi":"Tôi muốn uống nước.","opts":["💧","🍚","📖"],"ans":0},{"zh":"他坐飞机去北京。","py":"Tā zuò fēijī qù Běijīng.","vi":"Anh ấy đi máy bay đến Bắc Kinh.","opts":["🚕","🚆","✈️"],"ans":2},{"zh":"妹妹在睡觉。","py":"Mèimei zài shuìjiào.","vi":"Em gái đang ngủ.","opts":["😴","📺","🏀"],"ans":0},{"zh":"我想买一个电脑。","py":"Wǒ xiǎng mǎi yí ge diànnǎo.","vi":"Tôi muốn mua một cái máy tính.","opts":["📖","💻","📱"],"ans":1}]},{"id":"L2","sec":"L","type":"short3","items":[{"zh":"你今天几点起床？","py":"Nǐ jīntiān jǐ diǎn qǐchuáng?","vi":"Hôm nay bạn mấy giờ dậy? - 6 giờ rưỡi.","opts":["五个人。","星期天。","六点半。"],"optpy":["Wǔ ge rén.","Xīngqītiān.","Liù diǎn bàn."],"ans":2},{"zh":"你叫什么名字？","py":"Nǐ jiào shénme míngzi?","vi":"Bạn tên là gì? - Lý Tiểu Vân.","opts":["李小云。","在北京。","很高兴。"],"optpy":["Lǐ Xiǎoyún.","Zài Běijīng.","Hěn gāoxìng."],"ans":0},{"zh":"这个多少钱？","py":"Zhè ge duōshao qián?","vi":"Cái này bao nhiêu tiền? - 30 tệ.","opts":["三点钟。","三十块。","三个人。"],"optpy":["Sān diǎn zhōng.","Sān shí kuài.","Sān ge rén."],"ans":1},{"zh":"你喜欢什么运动？","py":"Nǐ xǐhuan shénme yùndòng?","vi":"Bạn thích môn thể thao nào? - Bóng rổ.","opts":["看电视。","打篮球。","吃苹果。"],"optpy":["Kàn diànshì.","Dǎ lánqiú.","Chī píngguǒ."],"ans":1},{"zh":"你是哪国人？","py":"Nǐ shì nǎ guó rén?","vi":"Bạn là người nước nào? - Người Việt Nam.","opts":["很好。","三年了。","越南人。"],"optpy":["Hěn hǎo.","Sān nián le.","Yuènán rén."],"ans":2}]},{"id":"L3","sec":"L","type":"dlgpic6","bank":["🛒","🚕","🍚","📞","🕗","🏥"],"items":[{"lines":["女：你好，请问超市在哪儿？","男：就在前面，走五分钟就到。"],"linespy":["Nǚ: Nǐ hǎo, qǐng wèn chāoshì zài nǎr?","Nán: Jiù zài qiánmiàn, zǒu wǔ fēnzhōng jiù dào."],"vi":"Nữ: Xin hỏi siêu thị ở đâu? Nam: Ngay phía trước, đi bộ 5 phút là tới.","ans":0},{"lines":["女：我们怎么去机场？","男：坐出租车吧，很快。"],"linespy":["Nǚ: Wǒmen zěnme qù jīchǎng?","Nán: Zuò chūzūchē ba, hěn kuài."],"vi":"Nữ: Chúng ta ra sân bay thế nào? Nam: Đi taxi nhé, rất nhanh.","ans":1},{"lines":["女：你想吃什么？","男：我想吃米饭和鱼。"],"linespy":["Nǚ: Nǐ xiǎng chī shénme?","Nán: Wǒ xiǎng chī mǐfàn hé yú."],"vi":"Nữ: Bạn muốn ăn gì? Nam: Tôi muốn ăn cơm với cá.","ans":2},{"lines":["女：喂，你在家吗？","男：在，我正在等你的电话。"],"linespy":["Nǚ: Wèi, nǐ zài jiā ma?","Nán: Zài, wǒ zhèngzài děng nǐ de diànhuà."],"vi":"Nữ: Alo, bạn có ở nhà không? Nam: Có, mình đang đợi điện thoại của bạn.","ans":3},{"lines":["女：现在几点了？","男：八点了，我们快走吧。"],"linespy":["Nǚ: Xiànzài jǐ diǎn le?","Nán: Bā diǎn le, wǒmen kuài zǒu ba."],"vi":"Nữ: Bây giờ mấy giờ rồi? Nam: 8 giờ rồi, mình đi nhanh thôi.","ans":4}]},{"id":"L4","sec":"L","type":"passage3","items":[{"zh":"今天是星期六，我不上班。我想在家看电影。","py":"Jīntiān shì xīngqī liù, wǒ bú shàngbān. Wǒ xiǎng zài jiā kàn diànyǐng.","q":"说话人星期六做什么？","qpy":"Shuōhuàrén xīngqī liù zuò shénme?","vi":"Hôm nay thứ Bảy, tôi không đi làm. Tôi muốn xem phim ở nhà.","opts":["看电影","上班","学汉语"],"optpy":["Kàn diànyǐng","Shàngbān","Xué Hànyǔ"],"ans":0},{"zh":"我家离学校很近，走路十分钟就到。","py":"Wǒ jiā lí xuéxiào hěn jìn, zǒu lù shí fēnzhōng jiù dào.","q":"说话人怎么去学校？","qpy":"Shuōhuàrén zěnme qù xuéxiào?","vi":"Nhà tôi gần trường, đi bộ 10 phút là tới.","opts":["开车","坐车","走路"],"optpy":["Kāichē","Zuò chē","Zǒu lù"],"ans":2},{"zh":"这件衣服太大了，我想换一件小的。","py":"Zhè jiàn yīfu tài dà le, wǒ xiǎng huàn yí jiàn xiǎo de.","q":"说话人想做什么？","qpy":"Shuōhuàrén xiǎng zuò shénme?","vi":"Cái áo này to quá, tôi muốn đổi cái nhỏ hơn.","opts":["吃饭","换衣服","买书"],"optpy":["Chīfàn","Huàn yīfu","Mǎi shū"],"ans":1},{"zh":"明天下雨，我们不去公园了，在家休息吧。","py":"Míngtiān xiàyǔ, wǒmen bú qù gōngyuán le, zài jiā xiūxi ba.","q":"他们明天做什么？","qpy":"Tāmen míngtiān zuò shénme?","vi":"Mai mưa, chúng ta không đi công viên nữa, ở nhà nghỉ ngơi đi.","opts":["在家休息","去学校","去公园"],"optpy":["Zài jiā xiūxi","Qù xuéxiào","Qù gōngyuán"],"ans":0},{"zh":"我有两个哥哥，没有姐姐。","py":"Wǒ yǒu liǎng ge gēge, méi yǒu jiějie.","q":"说话人有几个哥哥？","qpy":"Shuōhuàrén yǒu jǐ ge gēge?","vi":"Tôi có hai anh trai, không có chị gái.","opts":["一个","三个","两个"],"optpy":["Yí ge","Sān ge","Liǎng ge"],"ans":2}]},{"id":"R1","sec":"R","type":"pic6","bank":["🐶","🍚","🚆","📞","🏥","🌧️"],"items":[{"zh":"我想坐火车去北京。","py":"Wǒ xiǎng zuò huǒchē qù Běijīng.","vi":"Tôi muốn đi tàu hỏa đến Bắc Kinh.","ans":2},{"zh":"他在打电话。","py":"Tā zài dǎ diànhuà.","vi":"Anh ấy đang gọi điện thoại.","ans":3},{"zh":"我的狗很大。","py":"Wǒ de gǒu hěn dà.","vi":"Con chó của tôi rất to.","ans":0},{"zh":"她生病了，在医院。","py":"Tā shēngbìng le, zài yīyuàn.","vi":"Cô ấy bị ốm, đang ở bệnh viện.","ans":4},{"zh":"我们去吃米饭吧。","py":"Wǒmen qù chī mǐfàn ba.","vi":"Chúng ta đi ăn cơm nhé.","ans":1}]},{"id":"R2","sec":"R","type":"word6","bank":["喜欢","在","和","很","离","没有"],"bankpy":["xǐhuan","zài","hé","hěn","lí","méi yǒu"],"items":[{"zh":"我（___）朋友一起去看电影。","py":"Wǒ (___) péngyou yìqǐ qù kàn diànyǐng.","vi":"Tôi cùng bạn đi xem phim.","ans":2},{"zh":"这个苹果（___）好吃。","py":"Zhè ge píngguǒ (___) hǎochī.","vi":"Quả táo này rất ngon.","ans":3},{"zh":"他家（___）学校很近。","py":"Tā jiā (___) xuéxiào hěn jìn.","vi":"Nhà anh ấy cách trường rất gần.","ans":4},{"zh":"我最（___）喝水。","py":"Wǒ zuì (___) hē shuǐ.","vi":"Tôi thích uống nước nhất.","ans":0},{"zh":"他（___）北京工作。","py":"Tā (___) Běijīng gōngzuò.","vi":"Anh ấy làm việc ở Bắc Kinh.","ans":1}]},{"id":"R3","sec":"R","type":"dlgword6","bank":["谁","哪儿","几","什么","怎么","多少"],"bankpy":["shéi","nǎr","jǐ","shénme","zěnme","duōshao"],"items":[{"lines":["A：你在（___）工作？","B：我在医院工作。"],"linespy":["A: Nǐ zài (___) gōngzuò?","B: Wǒ zài yīyuàn gōngzuò."],"vi":"A: Bạn làm việc ở đâu? B: Tôi làm ở bệnh viện.","ans":1},{"lines":["A：你和（___）一起去？","B：我和朋友一起去。"],"linespy":["A: Nǐ hé (___) yìqǐ qù?","B: Wǒ hé péngyou yìqǐ qù."],"vi":"A: Bạn đi cùng ai? B: Mình đi cùng bạn.","ans":0},{"lines":["A：你想吃（___）？","B：我想吃米饭。"],"linespy":["A: Nǐ xiǎng chī (___)?","B: Wǒ xiǎng chī mǐfàn."],"vi":"A: Bạn muốn ăn gì? B: Tôi muốn ăn cơm.","ans":3},{"lines":["A：这个杯子（___）钱？","B：十五块。"],"linespy":["A: Zhè ge bēizi (___) qián?","B: Shíwǔ kuài."],"vi":"A: Cái cốc này bao nhiêu tiền? B: 15 tệ.","ans":5},{"lines":["A：现在（___）点了？","B：现在九点了。"],"linespy":["A: Xiànzài (___) diǎn le?","B: Xiànzài jiǔ diǎn le."],"vi":"A: Bây giờ mấy giờ rồi? B: Bây giờ 9 giờ.","ans":2}]},{"id":"R4","sec":"R","type":"read3","items":[{"zh":"明天是星期天，我们不上课。","py":"Míngtiān shì xīngqītiān, wǒmen bú shàngkè.","q":"★ 我们可以知道什么？","qpy":"★ Wǒmen kěyǐ zhīdào shénme?","vi":"Mai là Chủ nhật, chúng tôi không đi học.","opts":["明天上班","明天要考试","明天不上课"],"optpy":["Míngtiān shàngbān","Míngtiān yào kǎoshì","Míngtiān bú shàngkè"],"ans":2},{"zh":"请问，这里有没有汉语书？","py":"Qǐng wèn, zhèlǐ yǒu méi yǒu Hànyǔ shū?","q":"★ 说话人想知道什么？","qpy":"★ Shuōhuàrén xiǎng zhīdào shénme?","vi":"Xin hỏi ở đây có sách tiếng Trung không?","opts":["书店在哪儿","有没有汉语书","书多少钱"],"optpy":["Shūdiàn zài nǎr","Yǒu méi yǒu Hànyǔ shū","Shū duōshao qián"],"ans":1},{"zh":"我今天不去公园了，我想在家看电视。","py":"Wǒ jīntiān bú qù gōngyuán le, wǒ xiǎng zài jiā kàn diànshì.","q":"★ 说话人今天想做什么？","qpy":"★ Shuōhuàrén jīntiān xiǎng zuò shénme?","vi":"Hôm nay tôi không đi công viên, tôi muốn ở nhà xem ti vi.","opts":["在家看电视","去商店","去公园"],"optpy":["Zài jiā kàn diànshì","Qù shāngdiàn","Qù gōngyuán"],"ans":0},{"zh":"爸爸做的菜很好吃，我吃了三个米饭。","py":"Bàba zuò de cài hěn hǎochī, wǒ chī le sān ge mǐfàn.","q":"★ 爸爸做的菜怎么样？","qpy":"★ Bàba zuò de cài zěnmeyàng?","vi":"Món bố nấu rất ngon, tôi ăn ba bát cơm.","opts":["很好吃","不好看","很贵"],"optpy":["Hěn hǎochī","Bù hǎokàn","Hěn guì"],"ans":0},{"zh":"天很冷，我穿了很多衣服。","py":"Tiān hěn lěng, wǒ chuān le hěn duō yīfu.","q":"★ 天气怎么样？","qpy":"★ Tiānqì zěnmeyàng?","vi":"Trời rất lạnh, tôi mặc nhiều áo.","opts":["下雨","很热","很冷"],"optpy":["Xiàyǔ","Hěn rè","Hěn lěng"],"ans":2}]}]},{"id":2,"parts":[{"id":"L1","sec":"L","type":"pic3","items":[{"zh":"我在椅子上看书。","py":"Wǒ zài yǐzi shàng kàn shū.","vi":"Tôi ngồi trên ghế đọc sách.","opts":["🚪","🛏️","🪑"],"ans":2},{"zh":"她喜欢听音乐。","py":"Tā xǐhuan tīng yīnyuè.","vi":"Cô ấy thích nghe nhạc.","opts":["🎧","🎬","📖"],"ans":0},{"zh":"爸爸开车去公司。","py":"Bàba kāichē qù gōngsī.","vi":"Bố lái xe đến công ty.","opts":["✈️","🚗","🚆"],"ans":1},{"zh":"我的哥哥在踢足球。","py":"Wǒ de gēge zài tī zúqiú.","vi":"Anh trai tôi đang đá bóng.","opts":["🏀","🏊","⚽"],"ans":2},{"zh":"我想吃米饭。","py":"Wǒ xiǎng chī mǐfàn.","vi":"Tôi muốn ăn cơm.","opts":["🍎","🍚","🍞"],"ans":1}]},{"id":"L2","sec":"L","type":"short3","items":[{"zh":"你的汉语老师是谁？","py":"Nǐ de Hànyǔ lǎoshī shì shéi?","vi":"Giáo viên tiếng Trung của bạn là ai? - Thầy/cô Vương.","opts":["在学校。","我的朋友。","王老师。"],"optpy":["Zài xuéxiào.","Wǒ de péngyou.","Wáng lǎoshī."],"ans":2},{"zh":"你想喝什么？","py":"Nǐ xiǎng hē shénme?","vi":"Bạn muốn uống gì? - Một cốc trà.","opts":["一个人。","一杯茶。","一本书。"],"optpy":["Yí ge rén.","Yì bēi chá.","Yì běn shū."],"ans":1},{"zh":"现在几点？","py":"Xiànzài jǐ diǎn?","vi":"Bây giờ mấy giờ? - 8 giờ 10.","opts":["八点十分。","八个人。","八月。"],"optpy":["Bā diǎn shí fēn.","Bā ge rén.","Bā yuè."],"ans":0},{"zh":"你家有几口人？","py":"Nǐ jiā yǒu jǐ kǒu rén?","vi":"Nhà bạn có mấy người? - Bốn người.","opts":["四块钱。","四口人。","四点。"],"optpy":["Sì kuài qián.","Sì kǒu rén.","Sì diǎn."],"ans":1},{"zh":"你今年多大？","py":"Nǐ jīnnián duō dà?","vi":"Năm nay bạn bao nhiêu tuổi? - 20 tuổi.","opts":["二十块。","二十个。","二十岁。"],"optpy":["Èr shí kuài.","Èr shí ge.","Èr shí suì."],"ans":2}]},{"id":"L3","sec":"L","type":"dlgpic6","bank":["📖","🌧️","🏀","💻","🍎","🛏️"],"items":[{"lines":["女：你在做什么？","男：我在看书，明天有考试。"],"linespy":["Nǚ: Nǐ zài zuò shénme?","Nán: Wǒ zài kàn shū, míngtiān yǒu kǎoshì."],"vi":"Nữ: Bạn đang làm gì? Nam: Mình đang đọc sách, mai có thi.","ans":0},{"lines":["女：外面下大雨了。","男：那我们不出去了。"],"linespy":["Nǚ: Wàimiàn xià dà yǔ le.","Nán: Nà wǒmen bù chūqù le."],"vi":"Nữ: Bên ngoài mưa to rồi. Nam: Vậy chúng ta không ra ngoài nữa.","ans":1},{"lines":["女：下午你想做什么？","男：我想和朋友去打篮球。"],"linespy":["Nǚ: Xiàwǔ nǐ xiǎng zuò shénme?","Nán: Wǒ xiǎng hé péngyou qù dǎ lánqiú."],"vi":"Nữ: Chiều bạn muốn làm gì? Nam: Mình muốn đi chơi bóng rổ với bạn.","ans":2},{"lines":["女：你的电脑真新！","男：对，这是我昨天买的。"],"linespy":["Nǚ: Nǐ de diànnǎo zhēn xīn!","Nán: Duì, zhè shì wǒ zuótiān mǎi de."],"vi":"Nữ: Máy tính của bạn mới thật! Nam: Ừ, mình mới mua hôm qua.","ans":3},{"lines":["女：这个苹果怎么样？","男：很好吃，也不贵。"],"linespy":["Nǚ: Zhè ge píngguǒ zěnmeyàng?","Nán: Hěn hǎochī, yě bú guì."],"vi":"Nữ: Quả táo này thế nào? Nam: Rất ngon, cũng không đắt.","ans":4}]},{"id":"L4","sec":"L","type":"passage3","items":[{"zh":"小李昨天生病了，没来上课，今天好了。","py":"Xiǎo Lǐ zuótiān shēngbìng le, méi lái shàngkè, jīntiān hǎo le.","q":"小李昨天为什么没来上课？","qpy":"Xiǎo Lǐ zuótiān wèishénme méi lái shàngkè?","vi":"Tiểu Lý hôm qua bị ốm, không đi học, hôm nay khỏi rồi.","opts":["他很忙","他去北京","他生病了"],"optpy":["Tā hěn máng","Tā qù Běijīng","Tā shēngbìng le"],"ans":2},{"zh":"我妈妈是老师，爸爸是医生。","py":"Wǒ māma shì lǎoshī, bàba shì yīshēng.","q":"妈妈做什么工作？","qpy":"Māma zuò shénme gōngzuò?","vi":"Mẹ tôi là giáo viên, bố là bác sĩ.","opts":["学生","医生","老师"],"optpy":["Xuésheng","Yīshēng","Lǎoshī"],"ans":2},{"zh":"现在三点五十，我们四点见面。","py":"Xiànzài sān diǎn wǔ shí, wǒmen sì diǎn jiànmiàn.","q":"他们几点见面？","qpy":"Tāmen jǐ diǎn jiànmiàn?","vi":"Bây giờ 3 giờ 50, 4 giờ chúng ta gặp nhau.","opts":["四点","三点","五点"],"optpy":["Sì diǎn","Sān diǎn","Wǔ diǎn"],"ans":0},{"zh":"我最喜欢吃苹果，不太喜欢喝茶。","py":"Wǒ zuì xǐhuan chī píngguǒ, bú tài xǐhuan hē chá.","q":"说话人喜欢什么？","qpy":"Shuōhuàrén xǐhuan shénme?","vi":"Tôi thích ăn táo nhất, không thích uống trà lắm.","opts":["茶","苹果","面包"],"optpy":["Chá","Píngguǒ","Miànbāo"],"ans":1},{"zh":"我的手机很旧了，我想买一个新的。","py":"Wǒ de shǒujī hěn jiù le, wǒ xiǎng mǎi yí ge xīn de.","q":"说话人想买什么？","qpy":"Shuōhuàrén xiǎng mǎi shénme?","vi":"Điện thoại của tôi cũ rồi, tôi muốn mua cái mới.","opts":["电脑","手机","衣服"],"optpy":["Diànnǎo","Shǒujī","Yīfu"],"ans":1}]},{"id":"R1","sec":"R","type":"pic6","bank":["💰","🛒","🐟","👕","🌸","🎤"],"items":[{"zh":"她在商店买东西。","py":"Tā zài shāngdiàn mǎi dōngxi.","vi":"Cô ấy mua đồ ở cửa hàng.","ans":1},{"zh":"这件衣服很好看。","py":"Zhè jiàn yīfu hěn hǎokàn.","vi":"Cái áo này rất đẹp.","ans":3},{"zh":"我想吃鱼。","py":"Wǒ xiǎng chī yú.","vi":"Tôi muốn ăn cá.","ans":2},{"zh":"他有很多钱。","py":"Tā yǒu hěn duō qián.","vi":"Anh ấy có rất nhiều tiền.","ans":0},{"zh":"她唱歌唱得很好听。","py":"Tā chànggē chàng de hěn hǎotīng.","vi":"Cô ấy hát rất hay.","ans":5}]},{"id":"R2","sec":"R","type":"word6","bank":["太","会","和","的","去","都"],"bankpy":["tài","huì","hé","de","qù","dōu"],"items":[{"zh":"今天（___）热了，我不想出去。","py":"Jīntiān (___) rè le, wǒ bù xiǎng chūqù.","vi":"Hôm nay nóng quá, tôi không muốn ra ngoài.","ans":0},{"zh":"我（___）说一点儿汉语。","py":"Wǒ (___) shuō yìdiǎnr Hànyǔ.","vi":"Tôi biết nói một chút tiếng Trung.","ans":1},{"zh":"明天我（___）商店，你去吗？","py":"Míngtiān wǒ (___) shāngdiàn, nǐ qù ma?","vi":"Mai tôi đi cửa hàng, bạn đi không?","ans":4},{"zh":"这是我（___）书。","py":"Zhè shì wǒ (___) shū.","vi":"Đây là sách của tôi.","ans":3},{"zh":"我们（___）是学生。","py":"Wǒmen (___) shì xuésheng.","vi":"Chúng tôi đều là học sinh.","ans":5}]},{"id":"R3","sec":"R","type":"dlgword6","bank":["不","都","很","和","没","正在"],"bankpy":["bù","dōu","hěn","hé","méi","zhèngzài"],"items":[{"lines":["A：你喜欢喝茶吗？","B：我（___）喜欢，我喜欢喝水。"],"linespy":["A: Nǐ xǐhuan hē chá ma?","B: Wǒ (___) xǐhuan, wǒ xǐhuan hē shuǐ."],"vi":"A: Bạn thích uống trà không? B: Mình không thích, mình thích uống nước.","ans":0},{"lines":["A：你们是学生吗？","B：对，我们（___）是学生。"],"linespy":["A: Nǐmen shì xuésheng ma?","B: Duì, wǒmen (___) shì xuésheng."],"vi":"A: Các bạn là học sinh à? B: Đúng, chúng mình đều là học sinh.","ans":1},{"lines":["A：你的汉语怎么样？","B：我的汉语（___）好。"],"linespy":["A: Nǐ de Hànyǔ zěnmeyàng?","B: Wǒ de Hànyǔ (___) hǎo."],"vi":"A: Tiếng Trung của bạn thế nào? B: Tiếng Trung của mình rất tốt.","ans":2},{"lines":["A：你吃饭了吗？","B：（___）有，我现在很饿。"],"linespy":["A: Nǐ chīfàn le ma?","B: (___) yǒu, wǒ xiànzài hěn è."],"vi":"A: Bạn ăn cơm chưa? B: Chưa, giờ mình đang đói.","ans":4},{"lines":["A：你在做什么？","B：我（___）看电视。"],"linespy":["A: Nǐ zài zuò shénme?","B: Wǒ (___) kàn diànshì."],"vi":"A: Bạn đang làm gì? B: Mình đang xem ti vi.","ans":5}]},{"id":"R4","sec":"R","type":"read3","items":[{"zh":"我的同学小李是北京人，他汉语说得很好。","py":"Wǒ de tóngxué Xiǎo Lǐ shì Běijīng rén, tā Hànyǔ shuō de hěn hǎo.","q":"★ 小李是哪里人？","qpy":"★ Xiǎo Lǐ shì nǎ lǐ rén?","vi":"Bạn học Tiểu Lý của tôi là người Bắc Kinh, nói tiếng Trung rất giỏi.","opts":["越南人","美国人","北京人"],"optpy":["Yuènán rén","Měiguó rén","Běijīng rén"],"ans":2},{"zh":"我想坐飞机去上海，请问飞机票多少钱？","py":"Wǒ xiǎng zuò fēijī qù Shànghǎi, qǐng wèn fēijī piào duōshao qián?","q":"★ 说话人想知道什么？","qpy":"★ Shuōhuàrén xiǎng zhīdào shénme?","vi":"Tôi muốn đi máy bay đến Thượng Hải, xin hỏi vé bao nhiêu tiền?","opts":["去上海的时间","飞机票多少钱","上海的天气"],"optpy":["Qù Shànghǎi de shíjiān","Fēijī piào duōshao qián","Shànghǎi de tiānqì"],"ans":1},{"zh":"医生说我要多喝水，多休息。","py":"Yīshēng shuō wǒ yào duō hē shuǐ, duō xiūxi.","q":"★ 医生说什么？","qpy":"★ Yīshēng shuō shénme?","vi":"Bác sĩ nói tôi phải uống nhiều nước, nghỉ ngơi nhiều.","opts":["多运动","多看书","多休息"],"optpy":["Duō yùndòng","Duō kàn shū","Duō xiūxi"],"ans":2},{"zh":"爸爸今天很忙，没有时间做饭，我们去饭馆吃饭。","py":"Bàba jīntiān hěn máng, méi yǒu shíjiān zuòfàn, wǒmen qù fànguǎn chīfàn.","q":"★ 他们在哪儿吃饭？","qpy":"★ Tāmen zài nǎr chīfàn?","vi":"Hôm nay bố rất bận, không có thời gian nấu ăn, chúng tôi ra quán ăn.","opts":["饭馆","学校","家里"],"optpy":["Fànguǎn","Xuéxiào","Jiā lǐ"],"ans":0},{"zh":"下午我和朋友去商店，我想买一件新衣服。","py":"Xiàwǔ wǒ hé péngyou qù shāngdiàn, wǒ xiǎng mǎi yí jiàn xīn yīfu.","q":"★ 说话人想买什么？","qpy":"★ Shuōhuàrén xiǎng mǎi shénme?","vi":"Chiều tôi cùng bạn đi cửa hàng, tôi muốn mua một cái áo mới.","opts":["新衣服","新手机","新电脑"],"optpy":["Xīn yīfu","Xīn shǒujī","Xīn diànnǎo"],"ans":0}]}]},{"id":3,"parts":[{"id":"L1","sec":"L","type":"pic3","items":[{"zh":"我的姐姐是医生。","py":"Wǒ de jiějie shì yīshēng.","vi":"Chị gái tôi là bác sĩ.","opts":["👩‍⚕️","👩‍🏫","🧑‍🎓"],"ans":0},{"zh":"我想买一杯茶。","py":"Wǒ xiǎng mǎi yì bēi chá.","vi":"Tôi muốn mua một cốc trà.","opts":["🍎","🍚","🍵"],"ans":2},{"zh":"下雨了，我没有去公园。","py":"Xiàyǔ le, wǒ méi yǒu qù gōngyuán.","vi":"Mưa rồi, tôi không đi công viên.","opts":["☀️","❄️","🌧️"],"ans":2},{"zh":"她给妈妈打电话。","py":"Tā gěi māma dǎ diànhuà.","vi":"Cô ấy gọi điện cho mẹ.","opts":["🚗","📞","📺"],"ans":1},{"zh":"我们坐出租车去学校。","py":"Wǒmen zuò chūzūchē qù xuéxiào.","vi":"Chúng tôi đi taxi đến trường.","opts":["🚕","🏫","🚲"],"ans":0}]},{"id":"L2","sec":"L","type":"short3","items":[{"zh":"你什么时候去北京？","py":"Nǐ shénme shíhou qù Běijīng?","vi":"Khi nào bạn đi Bắc Kinh? - Chiều mai.","opts":["明天下午。","三个。","在北京。"],"optpy":["Míngtiān xiàwǔ.","Sān ge.","Zài Běijīng."],"ans":0},{"zh":"你想吃什么？","py":"Nǐ xiǎng chī shénme?","vi":"Bạn muốn ăn gì? - Cơm.","opts":["三点。","米饭。","医院。"],"optpy":["Sān diǎn.","Mǐfàn.","Yīyuàn."],"ans":1},{"zh":"你和谁一起去？","py":"Nǐ hé shéi yìqǐ qù?","vi":"Bạn đi cùng ai? - Bạn của tôi.","opts":["星期五。","很好吃。","我的朋友。"],"optpy":["Xīngqī wǔ.","Hěn hǎochī.","Wǒ de péngyou."],"ans":2},{"zh":"你在哪儿工作？","py":"Nǐ zài nǎr gōngzuò?","vi":"Bạn làm việc ở đâu? - Ở bệnh viện.","opts":["在医院。","很忙。","三年。"],"optpy":["Zài yīyuàn.","Hěn máng.","Sān nián."],"ans":0},{"zh":"今天几月几号？","py":"Jīntiān jǐ yuè jǐ hào?","vi":"Hôm nay ngày mấy tháng mấy? - Ngày 10 tháng 10.","opts":["十块钱。","十个人。","十月十号。"],"optpy":["Shí kuài qián.","Shí ge rén.","Shí yuè shí hào."],"ans":2}]},{"id":"L3","sec":"L","type":"dlgpic6","bank":["🏫","🎧","🥶","👕","🚗","🌙"],"items":[{"lines":["女：明天几点上课？","男：八点，你别晚了。"],"linespy":["Nǚ: Míngtiān jǐ diǎn shàngkè?","Nán: Bā diǎn, nǐ bié wǎn le."],"vi":"Nữ: Mai mấy giờ vào học? Nam: 8 giờ, bạn đừng đến muộn.","ans":0},{"lines":["女：你喜欢听什么？","男：我最喜欢听中国音乐。"],"linespy":["Nǚ: Nǐ xǐhuan tīng shénme?","Nán: Wǒ zuì xǐhuan tīng Zhōngguó yīnyuè."],"vi":"Nữ: Bạn thích nghe gì? Nam: Mình thích nghe nhạc Trung Quốc nhất.","ans":1},{"lines":["女：今天太冷了！","男：对，我们回家吧。"],"linespy":["Nǚ: Jīntiān tài lěng le!","Nán: Duì, wǒmen huí jiā ba."],"vi":"Nữ: Hôm nay lạnh quá! Nam: Ừ, chúng ta về nhà thôi.","ans":2},{"lines":["女：这件红的多少钱？","男：一百块，很好看。"],"linespy":["Nǚ: Zhè jiàn hóng de duōshao qián?","Nán: Yì bǎi kuài, hěn hǎokàn."],"vi":"Nữ: Cái màu đỏ này bao nhiêu tiền? Nam: 100 tệ, rất đẹp.","ans":3},{"lines":["女：爸爸，你去哪儿？","男：我开车去公司。"],"linespy":["Nǚ: Bàba, nǐ qù nǎr?","Nán: Wǒ kāichē qù gōngsī."],"vi":"Nữ: Bố ơi, bố đi đâu? Nam: Bố lái xe đến công ty.","ans":4}]},{"id":"L4","sec":"L","type":"passage3","items":[{"zh":"我每天早上七点起床，七点半吃早饭。","py":"Wǒ měi tiān zǎoshang qī diǎn qǐchuáng, qī diǎn bàn chī zǎofàn.","q":"说话人几点吃早饭？","qpy":"Shuōhuàrén jǐ diǎn chī zǎofàn?","vi":"Mỗi sáng tôi 7 giờ dậy, 7 rưỡi ăn sáng.","opts":["八点","七点半","七点"],"optpy":["Bā diǎn","Qī diǎn bàn","Qī diǎn"],"ans":1},{"zh":"我朋友在中国学习，他说中国菜很好吃。","py":"Wǒ péngyou zài Zhōngguó xuéxí, tā shuō Zhōngguó cài hěn hǎochī.","q":"他朋友在哪儿学习？","qpy":"Tā péngyou zài nǎr xuéxí?","vi":"Bạn tôi học ở Trung Quốc, anh ấy nói món Trung rất ngon.","opts":["越南","美国","中国"],"optpy":["Yuènán","Měiguó","Zhōngguó"],"ans":2},{"zh":"今天我很累，晚上不想做饭，我们去饭馆吧。","py":"Jīntiān wǒ hěn lèi, wǎnshang bù xiǎng zuòfàn, wǒmen qù fànguǎn ba.","q":"他们晚上去哪儿？","qpy":"Tāmen wǎnshang qù nǎr?","vi":"Hôm nay tôi rất mệt, tối không muốn nấu, chúng ta ra quán ăn nhé.","opts":["饭馆","医院","学校"],"optpy":["Fànguǎn","Yīyuàn","Xuéxiào"],"ans":0},{"zh":"我的女儿三岁了，她会唱很多歌。","py":"Wǒ de nǚ'ér sān suì le, tā huì chàng hěn duō gē.","q":"女儿会做什么？","qpy":"Nǚ'ér huì zuò shénme?","vi":"Con gái tôi ba tuổi, bé biết hát nhiều bài.","opts":["看书","唱歌","写字"],"optpy":["Kàn shū","Chànggē","Xiě zì"],"ans":1},{"zh":"请你等一下，王老师正在打电话。","py":"Qǐng nǐ děng yíxià, Wáng lǎoshī zhèngzài dǎ diànhuà.","q":"王老师在做什么？","qpy":"Wáng lǎoshī zài zuò shénme?","vi":"Mời bạn đợi một chút, thầy Vương đang gọi điện thoại.","opts":["打电话","上课","吃饭"],"optpy":["Dǎ diànhuà","Shàngkè","Chīfàn"],"ans":0}]},{"id":"R1","sec":"R","type":"pic6","bank":["📖","🏊","🐱","🏠","💻","🌙"],"items":[{"zh":"我喜欢看书。","py":"Wǒ xǐhuan kàn shū.","vi":"Tôi thích đọc sách.","ans":0},{"zh":"他会游泳。","py":"Tā huì yóuyǒng.","vi":"Anh ấy biết bơi.","ans":1},{"zh":"我的猫在睡觉。","py":"Wǒ de māo zài shuìjiào.","vi":"Mèo của tôi đang ngủ.","ans":2},{"zh":"我在家里工作。","py":"Wǒ zài jiā lǐ gōngzuò.","vi":"Tôi làm việc ở nhà.","ans":3},{"zh":"她的电脑很新。","py":"Tā de diànnǎo hěn xīn.","vi":"Máy tính của cô ấy rất mới.","ans":4}]},{"id":"R2","sec":"R","type":"word6","bank":["在","是","有","吗","不","一起"],"bankpy":["zài","shì","yǒu","ma","bù","yìqǐ"],"items":[{"zh":"我（___）两个哥哥，没有姐姐。","py":"Wǒ (___) liǎng ge gēge, méi yǒu jiějie.","vi":"Tôi có hai anh trai, không có chị gái.","ans":2},{"zh":"他（___）我的同学。","py":"Tā (___) wǒ de tóngxué.","vi":"Anh ấy là bạn học của tôi.","ans":1},{"zh":"你想去看电影（___）？","py":"Nǐ xiǎng qù kàn diànyǐng (___)?","vi":"Bạn muốn đi xem phim không?","ans":3},{"zh":"我们（___）去公园吧。","py":"Wǒmen (___) qù gōngyuán ba.","vi":"Chúng ta cùng đi công viên nhé.","ans":5},{"zh":"书（___）桌子上。","py":"Shū (___) zhuōzi shàng.","vi":"Sách ở trên bàn.","ans":0}]},{"id":"R3","sec":"R","type":"dlgword6","bank":["在","是","有","想","去","给"],"bankpy":["zài","shì","yǒu","xiǎng","qù","gěi"],"items":[{"lines":["A：你的书（___）桌子上吗？","B：对，在桌子上。"],"linespy":["A: Nǐ de shū (___) zhuōzi shàng ma?","B: Duì, zài zhuōzi shàng."],"vi":"A: Sách của bạn ở trên bàn à? B: Đúng, ở trên bàn.","ans":0},{"lines":["A：他（___）谁？","B：他是我的哥哥。"],"linespy":["A: Tā (___) shéi?","B: Tā shì wǒ de gēge."],"vi":"A: Anh ấy là ai? B: Anh ấy là anh trai tôi.","ans":1},{"lines":["A：你家（___）猫吗？","B：有，我家有两个。"],"linespy":["A: Nǐ jiā (___) māo ma?","B: Yǒu, wǒ jiā yǒu liǎng ge."],"vi":"A: Nhà bạn có mèo không? B: Có, nhà mình có hai con.","ans":2},{"lines":["A：明天你（___）学校吗？","B：去，我八点上课。"],"linespy":["A: Míngtiān nǐ (___) xuéxiào ma?","B: Qù, wǒ bā diǎn shàngkè."],"vi":"A: Mai bạn có đến trường không? B: Có, mình 8 giờ vào học.","ans":4},{"lines":["A：我可以（___）你打电话吗？","B：可以，晚上打吧。"],"linespy":["A: Wǒ kěyǐ (___) nǐ dǎ diànhuà ma?","B: Kěyǐ, wǎnshang dǎ ba."],"vi":"A: Mình gọi điện cho bạn được không? B: Được, tối gọi nhé.","ans":5}]},{"id":"R4","sec":"R","type":"read3","items":[{"zh":"我哥哥在大学学习汉语，他明年想去北京。","py":"Wǒ gēge zài dàxué xuéxí Hànyǔ, tā míngnián xiǎng qù Běijīng.","q":"★ 哥哥明年想做什么？","qpy":"★ Gēge míngnián xiǎng zuò shénme?","vi":"Anh trai tôi học tiếng Trung ở đại học, năm sau anh muốn đi Bắc Kinh.","opts":["去北京","去美国","去医院"],"optpy":["Qù Běijīng","Qù Měiguó","Qù yīyuàn"],"ans":0},{"zh":"现在是晚上十点，我的女儿已经睡觉了。","py":"Xiànzài shì wǎnshang shí diǎn, wǒ de nǚ'ér yǐjīng shuìjiào le.","q":"★ 女儿现在在做什么？","qpy":"★ Nǚ'ér xiànzài zài zuò shénme?","vi":"Bây giờ là 10 giờ tối, con gái tôi đã ngủ rồi.","opts":["看书","吃饭","睡觉"],"optpy":["Kàn shū","Chīfàn","Shuìjiào"],"ans":2},{"zh":"你好，我想买一个杯子，要红色的。","py":"Nǐ hǎo, wǒ xiǎng mǎi yí ge bēizi, yào hóngsè de.","q":"★ 说话人想买什么？","qpy":"★ Shuōhuàrén xiǎng mǎi shénme?","vi":"Xin chào, tôi muốn mua một cái cốc màu đỏ.","opts":["新手机","白色的杯子","红色的杯子"],"optpy":["Xīn shǒujī","Báisè de bēizi","Hóngsè de bēizi"],"ans":2},{"zh":"这个电影很好看，我已经看过两次了。","py":"Zhè ge diànyǐng hěn hǎokàn, wǒ yǐjīng kàn guo liǎng cì le.","q":"★ 说话人看过几次？","qpy":"★ Shuōhuàrén kàn guo jǐ cì?","vi":"Bộ phim này rất hay, tôi đã xem hai lần rồi.","opts":["三次","两次","一次"],"optpy":["Sān cì","Liǎng cì","Yí cì"],"ans":1},{"zh":"我家旁边有一个很大的超市，买东西很方便。","py":"Wǒ jiā pángbiān yǒu yí ge hěn dà de chāoshì, mǎi dōngxi hěn fāngbiàn.","q":"★ 超市在哪儿？","qpy":"★ Chāoshì zài nǎr?","vi":"Cạnh nhà tôi có một siêu thị rất lớn, mua đồ rất tiện.","opts":["医院前面","家旁边","学校里"],"optpy":["Yīyuàn qiánmiàn","Jiā pángbiān","Xuéxiào lǐ"],"ans":1}]}]},{"id":4,"parts":[{"id":"L1","sec":"L","type":"pic3","items":[{"zh":"请坐，喝杯茶。","py":"Qǐng zuò, hē bēi chá.","vi":"Mời ngồi, uống cốc trà.","opts":["🏀","🍞","🍵"],"ans":2},{"zh":"他在桌子上写字。","py":"Tā zài zhuōzi shàng xiě zì.","vi":"Anh ấy viết chữ trên bàn.","opts":["🏃","✍️","🎤"],"ans":1},{"zh":"我坐火车去上海。","py":"Wǒ zuò huǒchē qù Shànghǎi.","vi":"Tôi đi tàu hỏa đến Thượng Hải.","opts":["🚌","🚆","✈️"],"ans":1},{"zh":"妈妈买了很多水果。","py":"Māma mǎi le hěn duō shuǐguǒ.","vi":"Mẹ mua rất nhiều hoa quả.","opts":["📖","🍚","🍎🍌🍇"],"ans":2},{"zh":"我要去医院看病。","py":"Wǒ yào qù yīyuàn kànbìng.","vi":"Tôi phải đến bệnh viện khám bệnh.","opts":["🏥","🏪","🏫"],"ans":0}]},{"id":"L2","sec":"L","type":"short3","items":[{"zh":"她是谁？","py":"Tā shì shéi?","vi":"Cô ấy là ai? - Bạn học của tôi.","opts":["在家里。","很高。","我的同学。"],"optpy":["Zài jiā lǐ.","Hěn gāo.","Wǒ de tóngxué."],"ans":2},{"zh":"你坐什么去学校？","py":"Nǐ zuò shénme qù xuéxiào?","vi":"Bạn đi gì đến trường? - Đi tàu điện ngầm.","opts":["六点。","坐三个。","坐地铁。"],"optpy":["Liù diǎn.","Zuò sān ge.","Zuò dìtiě."],"ans":2},{"zh":"你的生日是几号？","py":"Nǐ de shēngrì shì jǐ hào?","vi":"Sinh nhật bạn là ngày mấy? - Ngày 5.","opts":["五号。","五块。","五个。"],"optpy":["Wǔ hào.","Wǔ kuài.","Wǔ ge."],"ans":0},{"zh":"你喜欢哪个？","py":"Nǐ xǐhuan nǎ ge?","vi":"Bạn thích cái nào? - Cái này.","opts":["星期五。","这个。","三点。"],"optpy":["Xīngqī wǔ.","Zhè ge.","Sān diǎn."],"ans":1},{"zh":"你爸爸做什么工作？","py":"Nǐ bàba zuò shénme gōngzuò?","vi":"Bố bạn làm nghề gì? - Bác sĩ.","opts":["明天。","医生。","苹果。"],"optpy":["Míngtiān.","Yīshēng.","Píngguǒ."],"ans":1}]},{"id":"L3","sec":"L","type":"dlgpic6","bank":["🍵","🏊","🐶","📺","🏠","🎤"],"items":[{"lines":["女：你想喝什么？","男：给我一杯茶，谢谢。"],"linespy":["Nǚ: Nǐ xiǎng hē shénme?","Nán: Gěi wǒ yì bēi chá, xièxie."],"vi":"Nữ: Bạn muốn uống gì? Nam: Cho mình một cốc trà, cảm ơn.","ans":0},{"lines":["女：你会游泳吗？","男：会，我每个星期游两次。"],"linespy":["Nǚ: Nǐ huì yóuyǒng ma?","Nán: Huì, wǒ měi ge xīngqī yóu liǎng cì."],"vi":"Nữ: Bạn biết bơi không? Nam: Biết, mỗi tuần mình bơi hai lần.","ans":1},{"lines":["女：它叫什么名字？","男：它叫小白，是我的狗。"],"linespy":["Nǚ: Tā jiào shénme míngzi?","Nán: Tā jiào Xiǎo Bái, shì wǒ de gǒu."],"vi":"Nữ: Nó tên gì? Nam: Nó tên Tiểu Bạch, là chó của mình.","ans":2},{"lines":["女：电视里有什么？","男：有一个很好看的电影。"],"linespy":["Nǚ: Diànshì lǐ yǒu shénme?","Nán: Yǒu yí ge hěn hǎokàn de diànyǐng."],"vi":"Nữ: Trên ti vi có gì? Nam: Có một bộ phim rất hay.","ans":3},{"lines":["女：你家大不大？","男：不大，但是很漂亮。"],"linespy":["Nǚ: Nǐ jiā dà bú dà?","Nán: Bú dà, dànshì hěn piàoliang."],"vi":"Nữ: Nhà bạn có to không? Nam: Không to, nhưng rất đẹp.","ans":4}]},{"id":"L4","sec":"L","type":"passage3","items":[{"zh":"明天是我朋友的生日，我想送他一本书。","py":"Míngtiān shì wǒ péngyou de shēngrì, wǒ xiǎng sòng tā yì běn shū.","q":"说话人想送朋友什么？","qpy":"Shuōhuàrén xiǎng sòng péngyou shénme?","vi":"Mai là sinh nhật bạn tôi, tôi muốn tặng bạn một quyển sách.","opts":["一杯茶","一本书","一件衣服"],"optpy":["Yì bēi chá","Yì běn shū","Yí jiàn yīfu"],"ans":1},{"zh":"这个商店的东西很便宜，所以人很多。","py":"Zhè ge shāngdiàn de dōngxi hěn piányi, suǒyǐ rén hěn duō.","q":"商店为什么人多？","qpy":"Shāngdiàn wèishénme rén duō?","vi":"Đồ ở cửa hàng này rất rẻ nên rất đông người.","opts":["东西很贵","天气很好","东西便宜"],"optpy":["Dōngxi hěn guì","Tiānqì hěn hǎo","Dōngxi piányi"],"ans":2},{"zh":"我下午有课，所以不能和你去看电影。","py":"Wǒ xiàwǔ yǒu kè, suǒyǐ bù néng hé nǐ qù kàn diànyǐng.","q":"说话人下午做什么？","qpy":"Shuōhuàrén xiàwǔ zuò shénme?","vi":"Chiều tôi có lớp nên không thể đi xem phim với bạn.","opts":["上课","睡觉","看电影"],"optpy":["Shàngkè","Shuìjiào","Kàn diànyǐng"],"ans":0},{"zh":"她在北京工作，每个星期天回家。","py":"Tā zài Běijīng gōngzuò, měi ge xīngqītiān huí jiā.","q":"她星期天做什么？","qpy":"Tā xīngqītiān zuò shénme?","vi":"Cô ấy làm việc ở Bắc Kinh, mỗi Chủ nhật về nhà.","opts":["回家","工作","上课"],"optpy":["Huí jiā","Gōngzuò","Shàngkè"],"ans":0},{"zh":"我想喝水，请问这儿有水吗？","py":"Wǒ xiǎng hē shuǐ, qǐng wèn zhèr yǒu shuǐ ma?","q":"说话人想要什么？","qpy":"Shuōhuàrén xiǎng yào shénme?","vi":"Tôi muốn uống nước, xin hỏi ở đây có nước không?","opts":["茶","米饭","水"],"optpy":["Chá","Mǐfàn","Shuǐ"],"ans":2}]},{"id":"R1","sec":"R","type":"pic6","bank":["🚗","📱","🐶","🍚","🧑‍🎓","🌧️"],"items":[{"zh":"我的手机在桌子上。","py":"Wǒ de shǒujī zài zhuōzi shàng.","vi":"Điện thoại của tôi ở trên bàn.","ans":1},{"zh":"我们开车去公司。","py":"Wǒmen kāichē qù gōngsī.","vi":"Chúng tôi lái xe đến công ty.","ans":0},{"zh":"他是一个大学生。","py":"Tā shì yí ge dàxuéshēng.","vi":"Anh ấy là một sinh viên đại học.","ans":4},{"zh":"外面下雨了。","py":"Wàimiàn xiàyǔ le.","vi":"Bên ngoài mưa rồi.","ans":5},{"zh":"我的狗在家里。","py":"Wǒ de gǒu zài jiā lǐ.","vi":"Con chó của tôi ở trong nhà.","ans":2}]},{"id":"R2","sec":"R","type":"word6","bank":["多少","几","谁","哪儿","什么","怎么"],"bankpy":["duōshao","jǐ","shéi","nǎr","shénme","zěnme"],"items":[{"zh":"这个苹果（___）钱？","py":"Zhè ge píngguǒ (___) qián?","vi":"Quả táo này bao nhiêu tiền?","ans":0},{"zh":"现在（___）点了？","py":"Xiànzài (___) diǎn le?","vi":"Bây giờ mấy giờ rồi?","ans":1},{"zh":"他是（___）？我不认识他。","py":"Tā shì (___)? Wǒ bú rènshi tā.","vi":"Anh ấy là ai? Tôi không quen anh ấy.","ans":2},{"zh":"你的书在（___）？","py":"Nǐ de shū zài (___)?","vi":"Sách của bạn ở đâu?","ans":3},{"zh":"这个汉字（___）读？","py":"Zhè ge hànzì (___) dú?","vi":"Chữ Hán này đọc thế nào?","ans":5}]},{"id":"R3","sec":"R","type":"dlgword6","bank":["大","小","多","少","长","快"],"bankpy":["dà","xiǎo","duō","shǎo","cháng","kuài"],"items":[{"lines":["A：你家有几个人？","B：我家人很（___），有八口人。"],"linespy":["A: Nǐ jiā yǒu jǐ ge rén?","B: Wǒ jiā rén hěn (___), yǒu bā kǒu rén."],"vi":"A: Nhà bạn có mấy người? B: Nhà mình đông người, có tám người.","ans":2},{"lines":["A：这个杯子太（___）了，我拿不了。","B：那你要小一点儿的吗？"],"linespy":["A: Zhè ge bēizi tài (___) le, wǒ ná bù le.","B: Nà nǐ yào xiǎo yìdiǎnr de ma?"],"vi":"A: Cái cốc này to quá, mình cầm không nổi. B: Vậy bạn lấy cái nhỏ hơn không?","ans":0},{"lines":["A：我们坐出租车去吧。","B：好，坐车很（___）。"],"linespy":["A: Wǒmen zuò chūzūchē qù ba.","B: Hǎo, zuò chē hěn (___)."],"vi":"A: Chúng ta đi taxi nhé. B: Được, đi xe rất nhanh.","ans":5},{"lines":["A：你今天为什么没吃饭？","B：我吃得很（___），因为不饿。"],"linespy":["A: Nǐ jīntiān wèishénme méi chīfàn?","B: Wǒ chī de hěn (___), yīnwèi bú è."],"vi":"A: Sao hôm nay bạn không ăn cơm? B: Mình ăn rất ít vì không đói.","ans":3},{"lines":["A：你的头发真（___）！","B：对，我喜欢长头发。"],"linespy":["A: Nǐ de tóufa zhēn (___)!","B: Duì, wǒ xǐhuan cháng tóufa."],"vi":"A: Tóc bạn dài thật! B: Ừ, mình thích tóc dài.","ans":4}]},{"id":"R4","sec":"R","type":"read3","items":[{"zh":"明天我有考试。","py":"Míngtiān wǒ yǒu kǎoshì.","q":"★ 说话人明天做什么？","qpy":"★ Shuōhuàrén míngtiān zuò shénme?","vi":"Mai tôi có bài thi.","opts":["旅游","考试","上班"],"optpy":["Lǚyóu","Kǎoshì","Shàngbān"],"ans":1},{"zh":"我昨天没有睡好，今天有点儿累。","py":"Wǒ zuótiān méi yǒu shuì hǎo, jīntiān yǒu diǎnr lèi.","q":"★ 说话人今天怎么样？","qpy":"★ Shuōhuàrén jīntiān zěnmeyàng?","vi":"Hôm qua tôi ngủ không ngon, hôm nay hơi mệt.","opts":["有点儿累","很高兴","很忙"],"optpy":["Yǒu diǎnr lèi","Hěn gāoxìng","Hěn máng"],"ans":0},{"zh":"请在这里等一下，王老师马上来。","py":"Qǐng zài zhèlǐ děng yíxià, Wáng lǎoshī mǎshàng lái.","q":"★ 说话人让你做什么？","qpy":"★ Shuōhuàrén ràng nǐ zuò shénme?","vi":"Mời đợi ở đây một chút, thầy Vương đến ngay.","opts":["回家","写字","等一下"],"optpy":["Huí jiā","Xiě zì","Děng yíxià"],"ans":2},{"zh":"今天不冷也不热，我们去公园玩儿吧。","py":"Jīntiān bù lěng yě bú rè, wǒmen qù gōngyuán wánr ba.","q":"★ 今天天气怎么样？","qpy":"★ Jīntiān tiānqì zěnmeyàng?","vi":"Hôm nay không lạnh cũng không nóng, chúng ta đi công viên chơi nhé.","opts":["很冷","不冷不热","下雨"],"optpy":["Hěn lěng","Bù lěng bú rè","Xiàyǔ"],"ans":1},{"zh":"我的汉语老师是王老师，她教我们说汉语。","py":"Wǒ de Hànyǔ lǎoshī shì Wáng lǎoshī, tā jiāo wǒmen shuō Hànyǔ.","q":"★ 王老师做什么工作？","qpy":"★ Wáng lǎoshī zuò shénme gōngzuò?","vi":"Giáo viên tiếng Trung của tôi là cô Vương, cô dạy chúng tôi nói tiếng Trung.","opts":["老师","学生","医生"],"optpy":["Lǎoshī","Xuésheng","Yīshēng"],"ans":0}]}]},{"id":5,"parts":[{"id":"L1","sec":"L","type":"pic3","items":[{"zh":"我想吃面包。","py":"Wǒ xiǎng chī miànbāo.","vi":"Tôi muốn ăn bánh mì.","opts":["🍚","🍞","🍎"],"ans":1},{"zh":"他在给妈妈打电话。","py":"Tā zài gěi māma dǎ diànhuà.","vi":"Anh ấy đang gọi điện cho mẹ.","opts":["💻","📖","📞"],"ans":2},{"zh":"今天天气很好，我们去公园玩儿。","py":"Jīntiān tiānqì hěn hǎo, wǒmen qù gōngyuán wánr.","vi":"Hôm nay thời tiết đẹp, chúng ta đi công viên chơi.","opts":["☀️🌳","🌧️","❄️"],"ans":0},{"zh":"我家有一个狗。","py":"Wǒ jiā yǒu yí ge gǒu.","vi":"Nhà tôi có một con chó.","opts":["🐟","🐶","🐱"],"ans":1},{"zh":"她在做饭。","py":"Tā zài zuòfàn.","vi":"Cô ấy đang nấu ăn.","opts":["😴","📺","🍳"],"ans":2}]},{"id":"L2","sec":"L","type":"short3","items":[{"zh":"你家在哪儿？","py":"Nǐ jiā zài nǎr?","vi":"Nhà bạn ở đâu? - Ở Bắc Kinh.","opts":["在北京。","很大。","三口人。"],"optpy":["Zài Běijīng.","Hěn dà.","Sān kǒu rén."],"ans":0},{"zh":"你什么时候下班？","py":"Nǐ shénme shíhou xiàbān?","vi":"Khi nào bạn tan làm? - 5 rưỡi.","opts":["很忙。","五点半。","在公司。"],"optpy":["Hěn máng.","Wǔ diǎn bàn.","Zài gōngsī."],"ans":1},{"zh":"你想买什么？","py":"Nǐ xiǎng mǎi shénme?","vi":"Bạn muốn mua gì? - Một cái áo.","opts":["三点。","在商店。","一件衣服。"],"optpy":["Sān diǎn.","Zài shāngdiàn.","Yí jiàn yīfu."],"ans":2},{"zh":"谁在打电话？","py":"Shéi zài dǎ diànhuà?","vi":"Ai đang gọi điện thoại? - Mẹ tôi.","opts":["手机。","我妈妈。","三点。"],"optpy":["Shǒujī.","Wǒ māma.","Sān diǎn."],"ans":1},{"zh":"你有几个哥哥？","py":"Nǐ yǒu jǐ ge gēge?","vi":"Bạn có mấy anh trai? - Hai người.","opts":["两个。","两块。","两岁。"],"optpy":["Liǎng ge.","Liǎng kuài.","Liǎng suì."],"ans":0}]},{"id":"L3","sec":"L","type":"dlgpic6","bank":["🍞","📱","🏃","🌸","🧑‍⚕️","🎬"],"items":[{"lines":["女：早上你吃什么？","男：我吃面包，喝牛奶。"],"linespy":["Nǚ: Zǎoshang nǐ chī shénme?","Nán: Wǒ chī miànbāo, hē niúnǎi."],"vi":"Nữ: Sáng bạn ăn gì? Nam: Mình ăn bánh mì, uống sữa.","ans":0},{"lines":["女：这是谁的手机？","男：是我的，你看，它很新。"],"linespy":["Nǚ: Zhè shì shéi de shǒujī?","Nán: Shì wǒ de, nǐ kàn, tā hěn xīn."],"vi":"Nữ: Đây là điện thoại của ai? Nam: Của mình, bạn xem, nó rất mới.","ans":1},{"lines":["女：你喜欢跑步吗？","男：喜欢，我每天早上跑。"],"linespy":["Nǚ: Nǐ xǐhuan pǎobù ma?","Nán: Xǐhuan, wǒ měi tiān zǎoshang pǎo."],"vi":"Nữ: Bạn thích chạy bộ không? Nam: Thích, mỗi sáng mình đều chạy.","ans":2},{"lines":["女：这些花真漂亮！","男：是的，送给你。"],"linespy":["Nǚ: Zhèxiē huā zhēn piàoliang!","Nán: Shì de, sòng gěi nǐ."],"vi":"Nữ: Những bông hoa này đẹp quá! Nam: Ừ, tặng bạn.","ans":3},{"lines":["女：医生，我头疼。","男：别怕，你要多休息。"],"linespy":["Nǚ: Yīshēng, wǒ tóu téng.","Nán: Bié pà, nǐ yào duō xiūxi."],"vi":"Nữ: Bác sĩ ơi, tôi đau đầu. Nam: Đừng sợ, bạn cần nghỉ ngơi nhiều.","ans":4}]},{"id":"L4","sec":"L","type":"passage3","items":[{"zh":"我哥哥会开车，也会说汉语。","py":"Wǒ gēge huì kāichē, yě huì shuō Hànyǔ.","q":"哥哥会做什么？","qpy":"Gēge huì zuò shénme?","vi":"Anh trai tôi biết lái xe, cũng biết nói tiếng Trung.","opts":["跳舞","游泳","开车"],"optpy":["Tiàowǔ","Yóuyǒng","Kāichē"],"ans":2},{"zh":"你的杯子在桌子上，我的书在椅子上。","py":"Nǐ de bēizi zài zhuōzi shàng, wǒ de shū zài yǐzi shàng.","q":"书在哪儿？","qpy":"Shū zài nǎr?","vi":"Cốc của bạn ở trên bàn, sách của tôi ở trên ghế.","opts":["桌子上","椅子上","学校里"],"optpy":["Zhuōzi shàng","Yǐzi shàng","Xuéxiào lǐ"],"ans":1},{"zh":"我们八点上课，十点下课。","py":"Wǒmen bā diǎn shàngkè, shí diǎn xiàkè.","q":"他们几点下课？","qpy":"Tāmen jǐ diǎn xiàkè?","vi":"Chúng tôi 8 giờ vào học, 10 giờ tan học.","opts":["九点","八点","十点"],"optpy":["Jiǔ diǎn","Bā diǎn","Shí diǎn"],"ans":2},{"zh":"今天太热了，我想喝一杯冷水。","py":"Jīntiān tài rè le, wǒ xiǎng hē yì bēi lěng shuǐ.","q":"今天天气怎么样？","qpy":"Jīntiān tiānqì zěnmeyàng?","vi":"Hôm nay nóng quá, tôi muốn uống một cốc nước lạnh.","opts":["很热","下雨","很冷"],"optpy":["Hěn rè","Xiàyǔ","Hěn lěng"],"ans":0},{"zh":"我昨天看了一个很好看的电影，我想再看一次。","py":"Wǒ zuótiān kàn le yí ge hěn hǎokàn de diànyǐng, wǒ xiǎng zài kàn yí cì.","q":"说话人觉得电影怎么样？","qpy":"Shuōhuàrén juéde diànyǐng zěnmeyàng?","vi":"Hôm qua tôi xem một bộ phim rất hay, tôi muốn xem lại.","opts":["很长","很好看","不好看"],"optpy":["Hěn cháng","Hěn hǎokàn","Bù hǎokàn"],"ans":1}]},{"id":"R1","sec":"R","type":"pic6","bank":["🏪","📺","🍎","🏊","🥛","🌙"],"items":[{"zh":"我在商店买苹果。","py":"Wǒ zài shāngdiàn mǎi píngguǒ.","vi":"Tôi mua táo ở cửa hàng.","ans":2},{"zh":"他喜欢看电视。","py":"Tā xǐhuan kàn diànshì.","vi":"Anh ấy thích xem ti vi.","ans":1},{"zh":"她喝了一杯牛奶。","py":"Tā hē le yì bēi niúnǎi.","vi":"Cô ấy uống một cốc sữa.","ans":4},{"zh":"我们去游泳吧。","py":"Wǒmen qù yóuyǒng ba.","vi":"Chúng ta đi bơi nhé.","ans":3},{"zh":"我家旁边有一个超市。","py":"Wǒ jiā pángbiān yǒu yí ge chāoshì.","vi":"Cạnh nhà tôi có một siêu thị.","ans":0}]},{"id":"R2","sec":"R","type":"word6","bank":["为什么","因为","但是","所以","还","已经"],"bankpy":["wèishénme","yīnwèi","dànshì","suǒyǐ","hái","yǐjīng"],"items":[{"zh":"我不去，（___）我很累。","py":"Wǒ bú qù, (___) wǒ hěn lèi.","vi":"Tôi không đi vì tôi rất mệt.","ans":1},{"zh":"他很忙，（___）今天不来了。","py":"Tā hěn máng, (___) jīntiān bù lái le.","vi":"Anh ấy rất bận nên hôm nay không đến.","ans":3},{"zh":"你（___）不吃饭？","py":"Nǐ (___) bù chīfàn?","vi":"Sao bạn không ăn cơm?","ans":0},{"zh":"这个很好看，（___）太贵了。","py":"Zhè ge hěn hǎokàn, (___) tài guì le.","vi":"Cái này rất đẹp, nhưng đắt quá.","ans":2},{"zh":"我（___）没吃早饭，很饿。","py":"Wǒ (___) méi chī zǎofàn, hěn è.","vi":"Tôi vẫn chưa ăn sáng, đói lắm.","ans":4}]},{"id":"R3","sec":"R","type":"dlgword6","bank":["再","正在","就","才","已经","和"],"bankpy":["zài","zhèngzài","jiù","cái","yǐjīng","hé"],"items":[{"lines":["A：我们去吃饭吧。","B：不用了，我（___）吃过了。"],"linespy":["A: Wǒmen qù chīfàn ba.","B: Búyòng le, wǒ (___) chī guo le."],"vi":"A: Chúng ta đi ăn cơm nhé. B: Thôi, mình ăn rồi.","ans":4},{"lines":["A：请你（___）说一次。","B：好的，我慢慢说。"],"linespy":["A: Qǐng nǐ (___) shuō yí cì.","B: Hǎo de, wǒ mànmàn shuō."],"vi":"A: Bạn nói lại một lần nữa nhé. B: Được, mình nói chậm.","ans":0},{"lines":["A：现在几点？","B：现在（___）七点，还早。"],"linespy":["A: Xiànzài jǐ diǎn?","B: Xiànzài (___) qī diǎn, hái zǎo."],"vi":"A: Mấy giờ rồi? B: Mới 7 giờ, còn sớm.","ans":3},{"lines":["A：你什么时候到？","B：我很快（___）到。"],"linespy":["A: Nǐ shénme shíhou dào?","B: Wǒ hěn kuài (___) dào."],"vi":"A: Khi nào bạn đến? B: Mình đến ngay thôi.","ans":2},{"lines":["A：你在忙什么？","B：我（___）打电话，一会儿说。"],"linespy":["A: Nǐ zài máng shénme?","B: Wǒ (___) dǎ diànhuà, yíhuìr shuō."],"vi":"A: Bạn đang bận gì thế? B: Mình đang gọi điện, lát nói nhé.","ans":1}]},{"id":"R4","sec":"R","type":"read3","items":[{"zh":"我六点下班，七点到家，然后做饭。","py":"Wǒ liù diǎn xiàbān, qī diǎn dào jiā, ránhòu zuòfàn.","q":"★ 说话人几点到家？","qpy":"★ Shuōhuàrén jǐ diǎn dào jiā?","vi":"Tôi 6 giờ tan làm, 7 giờ về nhà, sau đó nấu cơm.","opts":["七点","八点","六点"],"optpy":["Qī diǎn","Bā diǎn","Liù diǎn"],"ans":0},{"zh":"对不起，我的电话不在这里，我忘了带。","py":"Duìbuqǐ, wǒ de diànhuà bú zài zhèlǐ, wǒ wàng le dài.","q":"★ 说话人怎么了？","qpy":"★ Shuōhuàrén zěnme le?","vi":"Xin lỗi, điện thoại của tôi không ở đây, tôi quên mang.","opts":["忘了带电话","电话坏了","没有钱"],"optpy":["Wàng le dài diànhuà","Diànhuà huài le","Méi yǒu qián"],"ans":0},{"zh":"我哥哥喜欢运动，每个星期都去游泳。","py":"Wǒ gēge xǐhuan yùndòng, měi ge xīngqī dōu qù yóuyǒng.","q":"★ 哥哥喜欢做什么？","qpy":"★ Gēge xǐhuan zuò shénme?","vi":"Anh trai tôi thích thể thao, tuần nào cũng đi bơi.","opts":["唱歌","看书","游泳"],"optpy":["Chànggē","Kàn shū","Yóuyǒng"],"ans":2},{"zh":"小猫在椅子下面睡觉，小狗在桌子旁边。","py":"Xiǎo māo zài yǐzi xiàmiàn shuìjiào, xiǎo gǒu zài zhuōzi pángbiān.","q":"★ 小猫在哪儿？","qpy":"★ Xiǎo māo zài nǎr?","vi":"Mèo con ngủ dưới ghế, chó con ở cạnh bàn.","opts":["门口","椅子下面","桌子旁边"],"optpy":["Ménkǒu","Yǐzi xiàmiàn","Zhuōzi pángbiān"],"ans":1},{"zh":"你好，欢迎来到我们学校，请问你要找谁？","py":"Nǐ hǎo, huānyíng láidào wǒmen xuéxiào, qǐng wèn nǐ yào zhǎo shéi?","q":"★ 说话人在哪儿？","qpy":"★ Shuōhuàrén zài nǎr?","vi":"Xin chào, chào mừng đến trường chúng tôi, bạn muốn tìm ai?","opts":["饭馆","医院","学校"],"optpy":["Fànguǎn","Yīyuàn","Xuéxiào"],"ans":2}]}]}];
+const EX_SEC = { L: { name: "Nghe", zh: "听力", min: 15 }, R: { name: "Đọc", zh: "阅读", min: 17 } };
+const EX_PART = {
+  L1: { zh: "第一部分", vi: "Nghe câu, chọn hình đúng (A, B hoặc C)." },
+  L2: { zh: "第二部分", vi: "Nghe câu hỏi, chọn câu trả lời đúng (A, B hoặc C)." },
+  L3: { zh: "第三部分", vi: "Nghe đoạn hội thoại, chọn hình (A–F) phù hợp với mỗi đoạn." },
+  L4: { zh: "第四部分", vi: "Nghe đoạn ngắn và câu hỏi, rồi chọn đáp án đúng (A, B hoặc C)." },
+  R1: { zh: "第一部分", vi: "Chọn hình (A–F) phù hợp với mỗi câu." },
+  R2: { zh: "第二部分", vi: "Chọn từ (A–F) điền vào chỗ trống." },
+  R3: { zh: "第三部分", vi: "Chọn từ (A–F) điền vào chỗ trống trong đoạn hội thoại." },
+  R4: { zh: "第四部分", vi: "Đọc câu, rồi chọn đáp án đúng cho câu hỏi có dấu ★ (A, B hoặc C)." }
+};
+const EX_EXAMPLE = {
+  L1: { say: "我在看书。", pyt: "Wǒ zài kàn shū.", opts: ["📖", "🍎", "🚗"], ans: 0, kind: "pic" },
+  L2: { say: "你好吗？", pyt: "Nǐ hǎo ma?", opts: ["我很好。", "三个人。", "在学校。"], optpy: ["Wǒ hěn hǎo.", "Sān ge rén.", "Zài xuéxiào."], ans: 0, kind: "txt" },
+  L4: { say: "我有一个朋友，他是医生。问：他的朋友做什么工作？", pyt: "Wǒ yǒu yí ge péngyou, tā shì yīshēng. Wèn: Tā de péngyou zuò shénme gōngzuò?", opts: ["医生", "老师", "学生"], optpy: ["yīshēng", "lǎoshī", "xuésheng"], ans: 0, kind: "txt" },
+  R4: { zh: "我想买一本书。", pyt: "Wǒ xiǎng mǎi yì běn shū.", q: "★ 说话人想买什么？", qpy: "★ Shuōhuàrén xiǎng mǎi shénme?", opts: ["书", "衣服", "水果"], optpy: ["shū", "yīfu", "shuǐguǒ"], ans: 0, kind: "txt" }
+};
+const EX_LETTER = ["A", "B", "C", "D", "E", "F"];
+const EX_PASS = 120, EX_POINT = 5;
+let ex = { view: "list", id: 0, sec: "L", ans: {}, plays: {}, end: 0, tid: null, py: true, unlimited: false, warn: false, res: null };
+
+function exById(id) { return HSK_EXAMS.find(e => e.id === id); }
+function exEsc(s) { return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"); }
+function exKey(pid, i) { return pid + "-" + i; }
+function exBestKey(id) { return "hsk_exam_best_" + id; }
+function exFmt(sec) { const m = Math.floor(sec / 60), s = sec % 60; return String(m).padStart(2, "0") + ":" + String(s).padStart(2, "0"); }
+function exStripLabel(l) { return l.replace(/^[AB女男][：:]\s*/, ""); }
+
+function exRender() {
+  const root = document.getElementById("examCard");
+  if (ex.view === "list") root.innerHTML = exListHTML();
+  else if (ex.view === "run") { root.innerHTML = exRunHTML(); exUpdateBar(); }
+  else root.innerHTML = exResultHTML();
+}
+
+function exListHTML() {
+  const cards = HSK_EXAMS.map(e => {
+    const b = lsGet(exBestKey(e.id));
+    const best = b ? `<div class="ex-best">Điểm cao nhất: <b>${exEsc(b)}/200</b></div>` : `<div class="ex-best muted">Chưa làm</div>`;
+    return `<button class="ex-item" onclick="exStart(${e.id})">
+      <div class="ex-item-no">Đề ${e.id}</div>
+      <div class="ex-item-meta">40 câu · Nghe 20 + Đọc 20</div>
+      ${best}
+      <div class="ex-item-go">Bắt đầu →</div></button>`;
+  }).join("");
+  return `
+    <h1>📝 Thi thử HSK 1</h1>
+    <div class="sub">5 đề mô phỏng cấu trúc đề HSK 1 chuẩn 3.0: 40 câu, gồm Nghe 20 câu và Đọc 20 câu.</div>
+    <div class="ex-rules">
+      <div><b>Cấu trúc:</b> mỗi kỹ năng có 4 phần, mỗi phần 5 câu, mỗi câu 5 điểm. Tổng điểm 200, đạt từ ${EX_PASS} điểm.</div>
+      <div><b>Thời gian:</b> phần Nghe ${EX_SEC.L.min} phút, phần Đọc ${EX_SEC.R.min} phút. Hết giờ phần Nghe sẽ tự chuyển sang phần Đọc.</div>
+      <div><b>Nghe:</b> mỗi câu nghe tối đa 2 lần giống thi thật. Cần bật loa; có thể chọn giọng đọc và tốc độ ở thanh phía trên.</div>
+      <div><b>Pinyin:</b> đề HSK 1 có pinyin nên mặc định đang hiện. Bấm nút trên thanh bài thi để ẩn.</div>
+    </div>
+    <label class="ex-check"><input type="checkbox" id="exUnlimited" ${ex.unlimited ? "checked" : ""} onchange="ex.unlimited=this.checked"> Cho nghe lại không giới hạn (chế độ luyện tập)</label>
+    <div class="ex-grid">${cards}</div>`;
+}
+
+function exStart(id) {
+  const un = document.getElementById("exUnlimited");
+  if (un) ex.unlimited = un.checked;
+  ex.id = id; ex.sec = "L"; ex.ans = {}; ex.plays = {}; ex.warn = false; ex.res = null; ex.py = true;
+  ex.view = "run";
+  exStartTimer();
+  exRender();
+  window.scrollTo(0, 0);
+}
+function exStartTimer() {
+  clearInterval(ex.tid);
+  ex.end = Date.now() + EX_SEC[ex.sec].min * 60 * 1000;
+  ex.tid = setInterval(exTick, 500);
+}
+function exTick() {
+  const left = Math.max(0, Math.ceil((ex.end - Date.now()) / 1000));
+  const t = document.getElementById("exTimer");
+  if (t) { t.textContent = "⏱ " + exFmt(left); t.classList.toggle("low", left <= 60); }
+  if (left <= 0) exAdvance(true);
+}
+function exSecParts() { return exById(ex.id).parts.filter(p => p.sec === ex.sec); }
+function exAnsweredCount() {
+  let n = 0; exSecParts().forEach(p => p.items.forEach((_, i) => { if (ex.ans[exKey(p.id, i)] !== undefined) n++; }));
+  return n;
+}
+function exUpdateBar() {
+  const c = document.getElementById("exCount");
+  if (c) c.textContent = "Đã làm " + exAnsweredCount() + "/20";
+  exTick();
+}
+
+function exExampleHTML(pid) {
+  const x = EX_EXAMPLE[pid];
+  if (!x) return "";
+  const opt = (o, k) => {
+    const mark = k === x.ans ? " ✓" : "";
+    if (x.kind === "pic") return `<span class="ex-ex-o"><b>${EX_LETTER[k]}</b> <span class="pic">${o}</span>${mark}</span>`;
+    return `<span class="ex-ex-o"><b>${EX_LETTER[k]}</b> <span>${exEsc(o)}<small class="ex-py">${exEsc(x.optpy[k])}</small></span>${mark}</span>`;
+  };
+  const head = x.say
+    ? `<div class="ex-ex-say">🔊 ${exEsc(x.say)}<small class="ex-py">${exEsc(x.pyt)}</small></div>`
+    : `<div class="ex-ex-say">${exEsc(x.zh)}<small class="ex-py">${exEsc(x.pyt)}</small><div>${exEsc(x.q)}<small class="ex-py">${exEsc(x.qpy)}</small></div></div>`;
+  return `<div class="ex-example"><b class="ex-ex-t">例如</b>${head}<div class="ex-ex-opts">${x.opts.map(opt).join("")}</div></div>`;
+}
+
+function exRunHTML() {
+  const e = exById(ex.id);
+  const sec = EX_SEC[ex.sec];
+  const parts = exSecParts();
+  let qno = ex.sec === "L" ? 0 : 20;
+  const body = parts.map(p => {
+    const first = qno + 1;
+    const html = p.items.map((it, i) => exItemHTML(p, it, i, ++qno)).join("");
+    return `<section class="ex-part">
+      <h2>${EX_PART[p.id].zh} <span class="ex-range">第${first}—${qno}题</span></h2>
+      <div class="ex-instr">${EX_PART[p.id].vi}</div>
+      ${exExampleHTML(p.id)}${exBankHTML(p)}${html}</section>`;
+  }).join("");
+  const last = ex.sec === "R";
+  const left = 20 - exAnsweredCount();
+  const warn = ex.warn ? `<div class="ex-warn">Bạn còn ${left} câu chưa làm. Bấm lại để ${last ? "nộp bài" : "sang phần Đọc"}.</div>` : "";
+  return `
+    <div class="ex-bar">
+      <div class="ex-bar-top"><b>Đề ${e.id} · ${sec.name} ${sec.zh}</b><span class="ex-timer" id="exTimer">⏱ --:--</span></div>
+      <div class="ex-bar-bot"><span id="exCount">Đã làm 0/20</span>
+        <button class="toggle-btn" onclick="exTogglePy()">${ex.py ? "🙈 Ẩn Pinyin" : "🔤 Hiện Pinyin"}</button></div>
+    </div>
+    <div class="ex-body ${ex.py ? "show-py" : ""}" id="exBody">${body}</div>
+    ${warn}
+    <div class="controls ex-end">
+      <button class="primary" onclick="exSubmit()">${last ? "✓ Nộp bài" : "Nộp phần Nghe, sang phần Đọc →"}</button>
+    </div>`;
+}
+function exTogglePy() {
+  ex.py = !ex.py;
+  document.getElementById("exBody").classList.toggle("show-py", ex.py);
+  document.querySelector(".ex-bar-bot .toggle-btn").textContent = ex.py ? "🙈 Ẩn Pinyin" : "🔤 Hiện Pinyin";
+}
+function exBankHTML(p) {
+  if (p.type === "pic6" || p.type === "dlgpic6") return `<div class="ex-bank pics">${p.bank.map((b, k) => `<div class="ex-bank-i"><span class="l">${EX_LETTER[k]}</span><span class="pic">${b}</span></div>`).join("")}</div>`;
+  if (p.type === "word6" || p.type === "dlgword6") return `<div class="ex-bank words">${p.bank.map((b, k) => `<div class="ex-bank-i"><span class="l">${EX_LETTER[k]}</span><span>${exEsc(b)}<small class="ex-py">${exEsc(p.bankpy[k])}</small></span></div>`).join("")}</div>`;
+  return "";
+}
+function exBtn(pid, i, v, inner, cls) {
+  const sel = ex.ans[exKey(pid, i)] === v ? " sel" : "";
+  return `<button class="ex-opt ${cls || ""}${sel}" data-v="${v}" onclick="exPick('${pid}',${i},${v})">${inner}</button>`;
+}
+function exAudioHTML(pid, i) {
+  const k = exKey(pid, i);
+  const used = ex.plays[k] || 0;
+  const left = ex.unlimited ? "∞" : Math.max(0, 2 - used);
+  const dis = !ex.unlimited && used >= 2 ? " disabled" : "";
+  return `<button class="voice-big-btn ex-play" id="play-${k}" onclick="exPlay('${pid}',${i})"${dis}>🔊 Nghe <span class="ex-left">(còn ${left})</span></button>`;
+}
+function exTxtOpts(pid, i, it) {
+  return `<div class="ex-opts col">${it.opts.map((o, v) => exBtn(pid, i, v, `<span class="l">${EX_LETTER[v]}</span><span class="t">${exEsc(o)}<small class="ex-py">${exEsc(it.optpy[v])}</small></span>`, "txt")).join("")}</div>`;
+}
+function exLettersRow(pid, i) {
+  return `<div class="ex-opts six">${EX_LETTER.map((L, v) => exBtn(pid, i, v, L, "letter")).join("")}</div>`;
+}
+function exItemHTML(p, it, i, no) {
+  const head = `<div class="ex-qno">${no}</div>`;
+  let inner = "";
+  if (p.type === "pic3") {
+    inner = `${exAudioHTML(p.id, i)}<div class="ex-opts three">${it.opts.map((o, v) => exBtn(p.id, i, v, `<span class="l">${EX_LETTER[v]}</span><span class="pic">${o}</span>`, "picopt")).join("")}</div>`;
+  } else if (p.type === "short3" || p.type === "passage3") {
+    inner = `${exAudioHTML(p.id, i)}${exTxtOpts(p.id, i, it)}`;
+  } else if (p.type === "dlgpic6") {
+    inner = `${exAudioHTML(p.id, i)}${exLettersRow(p.id, i)}`;
+  } else if (p.type === "pic6" || p.type === "word6") {
+    inner = `<div class="ex-zh">${exEsc(it.zh)}</div><div class="ex-py">${exEsc(it.py)}</div>${exLettersRow(p.id, i)}`;
+  } else if (p.type === "dlgword6") {
+    const lines = it.lines.map((l, k) => `<div class="ex-zh dl">${exEsc(l)}</div><div class="ex-py">${exEsc(it.linespy[k])}</div>`).join("");
+    inner = `${lines}${exLettersRow(p.id, i)}`;
+  } else if (p.type === "read3") {
+    inner = `<div class="ex-zh">${exEsc(it.zh)}</div><div class="ex-py">${exEsc(it.py)}</div>
+      <div class="ex-zh q">${exEsc(it.q)}</div><div class="ex-py">${exEsc(it.qpy)}</div>${exTxtOpts(p.id, i, it)}`;
+  }
+  return `<div class="ex-q" data-q="${exKey(p.id, i)}">${head}<div class="ex-q-main">${inner}</div></div>`;
+}
+function exPick(pid, i, v) {
+  ex.ans[exKey(pid, i)] = v;
+  ex.warn = false;
+  const w = document.querySelector(".ex-warn"); if (w) w.remove();
+  document.querySelectorAll(`[data-q="${exKey(pid, i)}"] .ex-opt`).forEach(b => b.classList.toggle("sel", +b.dataset.v === v));
+  exUpdateBar();
+}
+function exItemOf(pid, i) { return exById(ex.id).parts.find(p => p.id === pid).items[i]; }
+function exAudioLines(pid, it) {
+  if (pid === "L3") return { lines: it.lines.map(exStripLabel), pitch: it.lines.map(l => l[0] === "女" ? 1.3 : 0.85) };
+  if (pid === "L4") return { lines: [it.zh, "问：" + it.q], pitch: [1, 1] };
+  return { lines: [it.zh], pitch: [1] };
+}
+function exSpeakItem(pid, it) { const a = exAudioLines(pid, it); speakLines(a.lines, a.pitch); }
+function exPlay(pid, i) {
+  const k = exKey(pid, i);
+  const used = ex.plays[k] || 0;
+  if (!ex.unlimited && used >= 2) return;
+  ex.plays[k] = used + 1;
+  exSpeakItem(pid, exItemOf(pid, i));
+  const btn = document.getElementById("play-" + k);
+  if (btn) {
+    const left = ex.unlimited ? "∞" : Math.max(0, 2 - ex.plays[k]);
+    btn.querySelector(".ex-left").textContent = "(còn " + left + ")";
+    if (!ex.unlimited && ex.plays[k] >= 2) btn.disabled = true;
+  }
+}
+function speakLines(lines, pitches) {
+  try {
+    if (!("speechSynthesis" in window)) return;
+    window.speechSynthesis.cancel();
+    lines.forEach((t, i) => {
+      const u = new SpeechSynthesisUtterance(t);
+      u.lang = "zh-CN";
+      u.rate = getRate();
+      u.pitch = pitches ? pitches[i] : (i % 2 ? 1.2 : 1);
+      const v = pickVoice();
+      if (v) { u.voice = v; u.lang = v.lang; }
+      window.speechSynthesis.speak(u);
+    });
+  } catch (e) {}
+}
+
+function exSubmit() {
+  const left = 20 - exAnsweredCount();
+  if (left > 0 && !ex.warn) {
+    ex.warn = true;
+    const root = document.getElementById("exBody");
+    const w = document.createElement("div");
+    w.className = "ex-warn";
+    w.textContent = `Bạn còn ${left} câu chưa làm. Bấm lần nữa để ${ex.sec === "R" ? "nộp bài" : "sang phần Đọc"}.`;
+    root.insertAdjacentElement("afterend", w);
+    w.scrollIntoView({ block: "center", behavior: "smooth" });
+    return;
+  }
+  exAdvance(false);
+}
+function exAdvance(timeout) {
+  if (ex.sec === "L") {
+    ex.sec = "R"; ex.warn = false;
+    try { window.speechSynthesis && window.speechSynthesis.cancel(); } catch (e) {}
+    exStartTimer(); exRender(); window.scrollTo(0, 0);
+    if (timeout) {
+      const b = document.getElementById("exBody");
+      if (b) b.insertAdjacentHTML("beforebegin", `<div class="ex-warn">Hết giờ phần Nghe. Bài đã chuyển sang phần Đọc.</div>`);
+    }
+  } else exFinish();
+}
+function exScore() {
+  const e = exById(ex.id);
+  const r = { L: 0, R: 0, parts: {} };
+  e.parts.forEach(p => {
+    let ok = 0;
+    p.items.forEach((it, i) => { if (ex.ans[exKey(p.id, i)] === it.ans) ok++; });
+    r.parts[p.id] = ok; r[p.sec] += ok;
+  });
+  r.Lp = r.L * EX_POINT; r.Rp = r.R * EX_POINT; r.total = r.Lp + r.Rp;
+  return r;
+}
+function exFinish() {
+  clearInterval(ex.tid);
+  try { window.speechSynthesis && window.speechSynthesis.cancel(); } catch (e) {}
+  ex.res = exScore();
+  const prev = parseInt(lsGet(exBestKey(ex.id)) || "0", 10);
+  if (ex.res.total > prev || !lsGet(exBestKey(ex.id))) lsSet(exBestKey(ex.id), String(ex.res.total));
+  ex.view = "result";
+  exRender();
+  window.scrollTo(0, 0);
+}
+function exOptText(p, it, v) {
+  if (v === undefined) return "Chưa chọn";
+  if (p.type === "pic3") return EX_LETTER[v] + " " + it.opts[v];
+  if (p.type === "pic6" || p.type === "dlgpic6") return EX_LETTER[v] + " " + p.bank[v];
+  if (p.type === "word6" || p.type === "dlgword6") return EX_LETTER[v] + ". " + p.bank[v];
+  return EX_LETTER[v] + ". " + it.opts[v];
+}
+function exResultHTML() {
+  const r = ex.res, e = exById(ex.id);
+  const pass = r.total >= EX_PASS;
+  const pn = { L1: "Nghe · phần 1", L2: "Nghe · phần 2", L3: "Nghe · phần 3", L4: "Nghe · phần 4", R1: "Đọc · phần 1", R2: "Đọc · phần 2", R3: "Đọc · phần 3", R4: "Đọc · phần 4" };
+  const partRows = e.parts.map(p => `<div class="ex-prow"><span>${pn[p.id]}</span><b>${r.parts[p.id]}/5</b></div>`).join("");
+  let no = 0;
+  const review = e.parts.map(p => p.items.map((it, i) => {
+    no++;
+    const mine = ex.ans[exKey(p.id, i)];
+    const ok = mine === it.ans;
+    let text, pyt;
+    if (it.lines) { text = it.lines.map(exEsc).join("<br>"); pyt = it.linespy.map(exEsc).join("<br>"); }
+    else { text = exEsc(it.zh); pyt = exEsc(it.py); }
+    const q = it.q ? `<div class="ex-rv-q">${exEsc(it.q)} <span class="ex-rv-py">${exEsc(it.qpy)}</span></div>` : "";
+    const play = p.sec === "L" ? `<button class="toggle-btn" onclick="exSpeakItem('${p.id}',exItemOf('${p.id}',${i}))">🔊 Nghe lại</button>` : "";
+    return `<div class="ex-rv ${ok ? "good" : "bad"}">
+      <div class="ex-rv-h"><span class="ex-qno">${no}</span><b>${ok ? "✓ Đúng" : (mine === undefined ? "✗ Bỏ trống" : "✗ Sai")}</b>${play}</div>
+      <div class="ex-rv-zh">${text}</div><div class="ex-rv-py">${pyt}</div>${q}
+      <div class="ex-rv-vi">${exEsc(it.vi)}</div>
+      <div class="ex-rv-a"><div>Bạn chọn: <b>${exEsc(exOptText(p, it, mine))}</b></div>${ok ? "" : `<div>Đáp án đúng: <b>${exEsc(exOptText(p, it, it.ans))}</b></div>`}</div>
+    </div>`;
+  }).join("")).join("");
+  return `
+    <h1>${pass ? "🎉" : "💪"} Kết quả Đề ${e.id}</h1>
+    <div class="ex-score ${pass ? "pass" : "fail"}">
+      <div class="ex-total">${r.total}<small>/200</small></div>
+      <div class="ex-verdict">${pass ? "Đạt" : "Chưa đạt"} (mốc đạt: ${EX_PASS} điểm)</div>
+    </div>
+    <div class="ex-two"><div class="ex-box">🎧 Nghe<b>${r.Lp}/100</b></div><div class="ex-box">📖 Đọc<b>${r.Rp}/100</b></div></div>
+    <div class="ex-parts">${partRows}</div>
+    <div class="controls">
+      <button class="primary" onclick="exStart(${e.id})">🔁 Làm lại đề này</button>
+      <button class="secondary" onclick="exBackToList()">☰ Danh sách đề</button>
+    </div>
+    <h2 class="ex-rv-title">Xem lại từng câu</h2>
+    <div class="ex-rv-filter">
+      <button class="toggle-btn" onclick="exFilter('all')">Tất cả</button>
+      <button class="toggle-btn" onclick="exFilter('bad')">Chỉ câu sai</button>
+    </div>
+    <div class="ex-rvs" id="exRvs">${review}</div>`;
+}
+function exFilter(m) {
+  document.querySelectorAll("#exRvs .ex-rv.good").forEach(el => el.classList.toggle("hidden", m === "bad"));
+}
+function exBackToList() { clearInterval(ex.tid); ex.view = "list"; exRender(); window.scrollTo(0, 0); }
+
 // Khởi động chế độ cơ bản
 setMode('basic');
+exRender();
 </script>
 </body>
 </html>
