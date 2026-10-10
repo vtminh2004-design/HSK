@@ -305,6 +305,9 @@ small.ex-py{margin-top:2px}
   .ex-zh{font-size:20px}
 }
 
+#studyCard .mode-selector{display:none}
+.back-btn{margin-bottom:10px}
+
 </style>
 </head>
 <body>
@@ -341,7 +344,24 @@ small.ex-py{margin-top:2px}
     <button class="level-tab" id="lvHsk2" onclick="setLevel('hsk2')">HSK 2</button>
   </div>
   <div id="hsk1Pane">
-<div class="card">
+<div class="panel" id="hsk1Menu">
+  <h1>🇨🇳 HSK 1 · Học tập</h1>
+  <div class="sub">Chọn một chức năng để bắt đầu luyện.</div>
+  <div class="ex-grid">
+<button class="ex-item" onclick="openMode('basic')"><div class="ex-item-no">🟢 Sắp xếp câu cơ bản</div><div class="ex-item-meta">Ghép các từ thành câu đúng</div><div class="ex-item-go">Bắt đầu →</div></button>
+<button class="ex-item" onclick="openMode('adv')"><div class="ex-item-no">🔥 Sắp xếp câu nâng cao</div><div class="ex-item-meta">Câu dài, khó hơn</div><div class="ex-item-go">Bắt đầu →</div></button>
+<button class="ex-item" onclick="openMode('type')"><div class="ex-item-no">⌨️ Luyện gõ</div><div class="ex-item-meta">Gõ chữ Hán từ vựng</div><div class="ex-item-go">Bắt đầu →</div></button>
+<button class="ex-item" onclick="openMode('audio')"><div class="ex-item-no">🎧 Nghe đoán chữ</div><div class="ex-item-meta">Nghe rồi chọn chữ đúng</div><div class="ex-item-go">Bắt đầu →</div></button>
+<button class="ex-item" onclick="openMode('quiz500')"><div class="ex-item-no">📚 Trắc nghiệm từ</div><div class="ex-item-meta">Từ vựng HSK 1</div><div class="ex-item-go">Bắt đầu →</div></button>
+<button class="ex-item" onclick="openMode('fill500')"><div class="ex-item-no">🧩 Điền chỗ trống</div><div class="ex-item-meta">Chọn từ điền vào câu</div><div class="ex-item-go">Bắt đầu →</div></button>
+<button class="ex-item" onclick="openMode('dialogue500')"><div class="ex-item-no">💬 Đối đáp phản xạ</div><div class="ex-item-meta">Chọn câu trả lời phù hợp</div><div class="ex-item-go">Bắt đầu →</div></button>
+<button class="ex-item" onclick="openMode('advDialogue')"><div class="ex-item-no">🔥 Nghe đối đáp dài</div><div class="ex-item-meta">Nghe hội thoại dài</div><div class="ex-item-go">Bắt đầu →</div></button>
+<button class="ex-item" onclick="openMode('randomQ')"><div class="ex-item-no">🎲 Hỏi ngẫu nhiên</div><div class="ex-item-meta">Tự trả lời, bấm Pinyin</div><div class="ex-item-go">Bắt đầu →</div></button>
+<button class="ex-item" onclick="openMode('randomVocab')"><div class="ex-item-no">🔤 Từ vựng ngẫu nhiên</div><div class="ex-item-meta">Nhớ chữ, kiểm tra nghĩa</div><div class="ex-item-go">Bắt đầu →</div></button>
+  </div>
+</div>
+<div class="card hidden" id="studyCard">
+<button class="toggle-btn back-btn" onclick="backToMenu()">← Danh sách chức năng</button>
 <h1>🇨🇳 Ôn Luyện Tiếng Trung HSK 1</h1>
 <div class="sub" id="subTitle">Đúng 1 câu được +1 điểm. Đổi 5 điểm để mở gợi ý thứ tự 2-3 chữ!</div>
 
@@ -2302,6 +2322,18 @@ function setTopTab(tab) {
   try { window.speechSynthesis && window.speechSynthesis.cancel(); } catch (e) {}
   if (!study) exRender();
 }
+function openMode(m) {
+  document.getElementById("hsk1Menu").classList.add("hidden");
+  document.getElementById("studyCard").classList.remove("hidden");
+  setMode(m);
+  window.scrollTo(0, 0);
+}
+function backToMenu() {
+  try { window.speechSynthesis && window.speechSynthesis.cancel(); } catch (e) {}
+  document.getElementById("studyCard").classList.add("hidden");
+  document.getElementById("hsk1Menu").classList.remove("hidden");
+  window.scrollTo(0, 0);
+}
 function setLevel(lv) {
   const one = lv === "hsk1";
   document.getElementById("hsk1Pane").classList.toggle("hidden", !one);
@@ -2364,7 +2396,7 @@ function exListHTML() {
     <div class="ex-rules">
       <div><b>Cấu trúc:</b> mỗi kỹ năng có 4 phần, mỗi phần 5 câu, mỗi câu 5 điểm. Tổng điểm 200, đạt từ ${EX_PASS} điểm.</div>
       <div><b>Thời gian:</b> phần Nghe ${EX_SEC.L.min} phút, phần Đọc ${EX_SEC.R.min} phút. Hết giờ phần Nghe sẽ tự chuyển sang phần Đọc.</div>
-      <div><b>Nghe:</b> mỗi câu nghe tối đa 2 lần giống thi thật. Cần bật loa; có thể chọn giọng đọc và tốc độ ở thanh phía trên.</div>
+      <div><b>Nghe:</b> mỗi câu nghe tối đa 2 lần giống thi thật. Cần bật loa (iPhone: gạt công tắc im lặng sang chế độ có chuông và tăng âm lượng); có thể chọn giọng đọc và tốc độ ở thanh phía trên.</div>
       <div><b>Pinyin:</b> đề HSK 1 có pinyin nên mặc định đang hiện. Bấm nút trên thanh bài thi để ẩn.</div>
     </div>
     <label class="ex-check"><input type="checkbox" id="exUnlimited" ${ex.unlimited ? "checked" : ""} onchange="ex.unlimited=this.checked"> Cho nghe lại không giới hạn (chế độ luyện tập)</label>
@@ -2518,21 +2550,39 @@ function exPlay(pid, i) {
     if (!ex.unlimited && ex.plays[k] >= 2) btn.disabled = true;
   }
 }
+const EX_IOS = /iP(hone|ad|od)/.test(navigator.userAgent) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+let exUtts = [];
+function exSpeakOne(t, pitch, last) {
+  const u = new SpeechSynthesisUtterance(t);
+  u.lang = "zh-CN";
+  u.rate = EX_IOS ? Math.min(getRate(), 0.5) : getRate();
+  if (!EX_IOS && pitch) u.pitch = pitch;
+  const v = pickVoice();
+  if (v) { u.voice = v; u.lang = v.lang; }
+  exUtts.push(u);
+  window.speechSynthesis.speak(u);
+}
 function speakLines(lines, pitches) {
   try {
-    if (!("speechSynthesis" in window)) return;
-    window.speechSynthesis.cancel();
-    lines.forEach((t, i) => {
-      const u = new SpeechSynthesisUtterance(t);
-      u.lang = "zh-CN";
-      u.rate = getRate();
-      u.pitch = pitches ? pitches[i] : (i % 2 ? 1.2 : 1);
-      const v = pickVoice();
-      if (v) { u.voice = v; u.lang = v.lang; }
-      window.speechSynthesis.speak(u);
-    });
+    if (!("speechSynthesis" in window)) { alert("Trình duyệt này không hỗ trợ đọc giọng nói."); return; }
+    const ss = window.speechSynthesis;
+    if (ss.speaking || ss.pending) ss.cancel();
+    exUtts = [];
+    if (ss.paused) ss.resume();
+    if (EX_IOS) exSpeakOne(lines.join("。 "), 1);
+    else lines.forEach((t, i) => exSpeakOne(t, pitches ? pitches[i] : 1));
+    if (ss.paused) ss.resume();
   } catch (e) {}
 }
+(function () {
+  let done = false;
+  function warm() {
+    if (done) return; done = true;
+    try { const u = new SpeechSynthesisUtterance(" "); u.volume = 0; window.speechSynthesis.speak(u); } catch (e) {}
+  }
+  document.addEventListener("touchend", warm, { once: true, passive: true });
+  document.addEventListener("click", warm, { once: true });
+})();
 
 function exSubmit() {
   const left = 20 - exAnsweredCount();
