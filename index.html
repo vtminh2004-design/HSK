@@ -4027,14 +4027,18 @@ exRender();
 })();
 </script>
 <script>
-/* Nút Back của điện thoại/trình duyệt: mỗi lần mở một màn hình con sẽ thêm 1 mục lịch sử,
-   bấm Back sẽ đóng màn hình con (giống chuyển trang), không thoát cả web. */
+/* Nút Back của điện thoại/trình duyệt: mỗi lần mở màn hình con hoặc chuyển tab/cấp độ
+   sẽ thêm 1 mục lịch sử; bấm Back quay lại đúng bước trước đó, không thoát cả web. */
 (function () {
-  let depth = 0, unwinding = false;
+  const stack = [];            /* {t:"screen"} hoặc {t:"tab", prev:{tab,lv}} */
   const orig = {};
   const $ = id => document.getElementById(id);
   const vis = id => { const e = $(id); return e && !e.classList.contains("hidden"); };
   try { history.replaceState({ d: 0 }, ""); } catch (e) {}
+  function state() {
+    return { tab: vis("studyPane") ? "study" : "exam",
+             lv: $("lvHsk2").classList.contains("active") ? "hsk2" : $("lvLib").classList.contains("active") ? "lib" : "hsk1" };
+  }
   function closeTop() {
     if (vis("examPane")) { if (ex.view !== "list") { orig.exBackToList(); return true; } return false; }
     if (vis("hsk1Pane") && vis("studyCard")) { orig.backToMenu(); return true; }
@@ -4046,32 +4050,33 @@ exRender();
     }
     return false;
   }
-  function closeAll() { let n = 0; while (n++ < 5 && closeTop()); }
-  function push() { try { history.pushState({ d: 1 }, ""); depth++; } catch (e) {} }
-  function unwind() {
-    if (depth <= 0) return;
-    const n = depth; depth = 0; unwinding = true;
-    closeAll();
-    try { history.go(-n); } catch (e) { unwinding = false; }
-  }
+  function push(e) { try { history.pushState({ d: 1 }, ""); stack.push(e); } catch (x) {} }
   ["openMode", "openNp", "openLib", "openOral", "stShow", "exStart"].forEach(name => {
     const f = window[name]; if (typeof f !== "function") return;
-    window[name] = function () { const r = f.apply(this, arguments); push(); return r; };
+    window[name] = function () { const r = f.apply(this, arguments); push({ t: "screen" }); return r; };
   });
   ["backToMenu", "npBack", "libBack", "oralBack", "stBack", "exBackToList"].forEach(name => {
     const f = window[name]; if (typeof f !== "function") return;
     orig[name] = f;
-    window[name] = function () { if (depth > 0) history.back(); else f.apply(this, arguments); };
+    window[name] = function () {
+      const top = stack[stack.length - 1];
+      if (top && top.t === "screen") history.back(); else f.apply(this, arguments);
+    };
   });
-  ["setTopTab", "setLevel"].forEach(name => {
-    const f = window[name]; if (typeof f !== "function") return;
-    window[name] = function () { unwind(); return f.apply(this, arguments); };
-  });
+  orig.setTopTab = window.setTopTab; orig.setLevel = window.setLevel;
+  window.setTopTab = function (t) {
+    const prev = state(); const r = orig.setTopTab.apply(this, arguments);
+    const now = state(); if (now.tab !== prev.tab) push({ t: "tab", prev }); return r;
+  };
+  window.setLevel = function (l) {
+    const prev = state(); const r = orig.setLevel.apply(this, arguments);
+    const now = state(); if (now.lv !== prev.lv) push({ t: "tab", prev }); return r;
+  };
   window.addEventListener("popstate", () => {
-    if (unwinding) { unwinding = false; return; }
-    if (depth > 0) depth--;
-    if (vis("examPane") && ex.view === "run" && !confirm("Thoát bài thi? Tiến trình làm bài sẽ bị mất.")) { push(); return; }
-    closeTop();
+    const e = stack.pop(); if (!e) return;
+    if (e.t === "tab") { orig.setTopTab(e.prev.tab); orig.setLevel(e.prev.lv); return; }
+    if (vis("examPane") && ex.view === "run" && !confirm("Thoát bài thi? Tiến trình làm bài sẽ bị mất.")) { push({ t: "screen" }); return; }
+    if (!closeTop() && stack.length) history.back();
   });
 })();
 </script>
