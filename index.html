@@ -4050,32 +4050,44 @@ exRender();
     }
     return false;
   }
+  function closeSubs() {          /* đưa mọi chức năng đang mở (trừ đề thi) về sảnh */
+    let any = false;
+    if (vis("studyCard")) { orig.backToMenu(); any = true; }
+    if (vis("libCard")) { orig.libBack(); any = true; }
+    if (vis("npCard")) { orig.npBack(); any = true; }
+    if (vis("oralCard")) { orig.oralBack(); any = true; }
+    for (const id of ["sanCard", "fillCard", "matCard", "trnCard", "bjCard"]) if (vis(id)) { orig.stBack(id); any = true; }
+    stack.forEach(e => { if (e.t === "screen" && !e.exam) e.dead = true; });
+    return any;
+  }
   function push(e) { try { history.pushState({ d: 1 }, ""); stack.push(e); } catch (x) {} }
   ["openMode", "openNp", "openLib", "openOral", "stShow", "exStart"].forEach(name => {
     const f = window[name]; if (typeof f !== "function") return;
-    window[name] = function () { const r = f.apply(this, arguments); push({ t: "screen" }); return r; };
+    window[name] = function () { const r = f.apply(this, arguments); push({ t: "screen", exam: name === "exStart" }); return r; };
   });
   ["backToMenu", "npBack", "libBack", "oralBack", "stBack", "exBackToList"].forEach(name => {
     const f = window[name]; if (typeof f !== "function") return;
     orig[name] = f;
     window[name] = function () {
       const top = stack[stack.length - 1];
-      if (top && top.t === "screen") history.back(); else f.apply(this, arguments);
+      if (top && top.t === "screen" && !top.dead) history.back();
+      else { f.apply(this, arguments); for (let i = stack.length - 1; i >= 0; i--) { const e = stack[i]; if (e.t === "screen" && !e.dead && !!e.exam === (name === "exBackToList")) { e.dead = true; break; } } }
     };
   });
   orig.setTopTab = window.setTopTab; orig.setLevel = window.setLevel;
   window.setTopTab = function (t) {
-    const prev = state(); const r = orig.setTopTab.apply(this, arguments);
+    const prev = state(); if (t !== prev.tab) closeSubs(); const r = orig.setTopTab.apply(this, arguments);
     const now = state(); if (now.tab !== prev.tab) push({ t: "tab", prev }); return r;
   };
   window.setLevel = function (l) {
-    const prev = state(); const r = orig.setLevel.apply(this, arguments);
+    const prev = state(); if (l !== prev.lv) closeSubs(); const r = orig.setLevel.apply(this, arguments);
     const now = state(); if (now.lv !== prev.lv) push({ t: "tab", prev }); return r;
   };
   window.addEventListener("popstate", () => {
     const e = stack.pop(); if (!e) return;
+    if (e.dead) { if (stack.length) history.back(); return; }
     if (e.t === "tab") { orig.setTopTab(e.prev.tab); orig.setLevel(e.prev.lv); return; }
-    if (vis("examPane") && ex.view === "run" && !confirm("Thoát bài thi? Tiến trình làm bài sẽ bị mất.")) { push({ t: "screen" }); return; }
+    if (vis("examPane") && ex.view === "run" && !confirm("Thoát bài thi? Tiến trình làm bài sẽ bị mất.")) { push({ t: "screen", exam: true }); return; }
     if (!closeTop() && stack.length) history.back();
   });
 })();
