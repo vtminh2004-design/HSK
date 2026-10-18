@@ -417,6 +417,30 @@ body{background:var(--bg)}
 .lib-chips .level-tab{flex:none;padding:6px 14px;border:1px solid var(--line);background:#fff;border-radius:999px;font-size:13px}
 .lib-chips .level-tab.active{background:var(--red);border-color:var(--red);color:#fff;box-shadow:none}
 .lib-ex .toggle-btn{padding:2px 8px;font-size:13px;border-radius:999px;vertical-align:middle;margin-left:4px}
+
+/* Điền bộ phận thiếu */
+.bj-wrap{text-align:center}
+.bj-info{font-size:15px;color:var(--mut);margin:4px 0 10px}
+.bj-info b{font-size:22px;color:var(--ink);margin-right:6px}
+.bj-fig{display:inline-flex;gap:6px;margin:6px 0 14px;font-family:"Noto Serif SC","Songti SC","Noto Serif CJK SC",serif}
+.bj-fig.tb{flex-direction:column}
+.bj-slot{width:92px;height:92px;border:2px solid #cbd5e1;border-radius:14px;background:#fff;display:flex;align-items:center;justify-content:center;font-size:64px;line-height:1;color:var(--ink)}
+.bj-slot.miss{border:2px dashed #f59e0b;background:#fffbeb;color:#d97706;font-size:44px;font-weight:800}
+.bj-slot.ok{border:2px solid #22c55e;background:#dcfce7;color:#166534}
+.bj-slot.no{border:2px solid #ef4444;background:#fee2e2;color:#991b1b}
+.bj-fig.enc{display:inline-block}
+.bj-out{position:relative;width:150px;height:150px;border:3px solid #94a3b8;border-radius:10px;display:flex;align-items:center;justify-content:center;background:#fff}
+.bj-out.men{border-bottom:3px dashed #e2e8f0}
+.bj-out.miss{border:3px dashed #f59e0b;background:#fffbeb}
+.bj-out .bj-lab{position:absolute;top:4px;left:8px;font-size:26px;color:var(--mut)}
+.bj-out.miss .bj-lab{color:#d97706;font-weight:800}
+.bj-out .bj-slot{width:74px;height:74px;font-size:46px}
+.bj-pos{font-size:13px;color:var(--mut);margin-bottom:6px}
+.bj-opts{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:8px 0}
+.bj-opts button{font-size:42px;line-height:1.1;padding:10px 0;border:1.5px solid var(--line);border-radius:14px;background:#fff;cursor:pointer;min-height:70px;font-family:"Noto Serif SC","Songti SC","Noto Serif CJK SC",serif;color:var(--ink)}
+.bj-opts button:active{transform:scale(.97)}
+.bj-fb{text-align:left}
+.bj-formula{font-size:26px;margin:4px 0;font-family:"Noto Serif SC","Songti SC","Noto Serif CJK SC",serif}
 @media (max-width:480px){.container{padding:8px 8px 40px}.card,.panel{padding:12px}}
 </style>
 </head>
@@ -628,6 +652,10 @@ body{background:var(--bg)}
 <button class="ex-item" onclick="stShow('matCard');matQ.start()"><div class="ex-item-no">🔗 Ghép 2 vế</div><div class="ex-item-meta">100 câu: nối 因为…所以…, 虽然…但是…, 如果…就…</div><div class="ex-item-go">Bắt đầu →</div></button>
 <button class="ex-item" onclick="stShow('trnCard');trnQ.start()"><div class="ex-item-no">📝 Ôn tập ngữ pháp</div><div class="ex-item-meta">115 câu trắc nghiệm: chọn câu đúng ngữ pháp HSK 2</div><div class="ex-item-go">Bắt đầu →</div></button>
 </div>
+<div class="menu-sec">Viết chữ Hán</div>
+<div class="ex-grid">
+<button class="ex-item" onclick="stShow('bjCard');bjStart()"><div class="ex-item-no">🖌️ Điền bộ phận thiếu</div><div class="ex-item-meta">200 câu: chọn bộ phận còn thiếu để hoàn thành chữ Hán</div><div class="ex-item-go">Bắt đầu →</div></button>
+</div>
 <div class="menu-sec">Luyện nói</div>
 <div class="ex-grid">
 <button class="ex-item" onclick="openOral()"><div class="ex-item-no">🎲 Hỏi ngẫu nhiên</div><div class="ex-item-meta">40 câu khẩu ngữ, tự trả lời, bấm Pinyin / nghĩa / đáp án mẫu</div><div class="ex-item-go">Bắt đầu →</div></button>
@@ -658,6 +686,12 @@ body{background:var(--bg)}
       <button class="toggle-btn back-btn" onclick="stBack('matCard')">← Danh sách chức năng</button>
       <h1>🔗 Ghép 2 vế</h1>
       <div id="matArea"></div>
+    </div>
+    <div class="card hidden" id="bjCard">
+      <button class="toggle-btn back-btn" onclick="stBack('bjCard')">← Danh sách chức năng</button>
+      <h1>🖌️ Điền bộ phận thiếu</h1>
+      <div class="sub">Như phần Viết của HSK 2: nhìn pinyin và nghĩa, chọn bộ phận còn thiếu để hoàn thành chữ.</div>
+      <div id="bjArea"></div>
     </div>
     <div class="card hidden" id="trnCard">
       <button class="toggle-btn back-btn" onclick="stBack('trnCard')">← Danh sách chức năng</button>
@@ -3225,6 +3259,142 @@ const trnQ = mkQuiz("trn", TRN_Q, q => ({ tag: ST_TAG[q.tag], ask: "Chọn câu 
 ST_TAG.p = "Phủ định & cầu khiến"; ST_RULE.p = "Phủ định: 不 (thói quen, ý muốn, hiện tại) / 没 (việc đã qua, phủ định 有 và 过); 别 / 不要 + V: đừng làm gì.";
 ST_TAG.m = "Động từ năng nguyện"; ST_RULE.m = "Động từ năng nguyện đứng trước động từ chính: 会 (biết/sẽ), 能 (có khả năng/điều kiện), 可以 (được phép), 想 (muốn), 要 (cần). Phủ định dùng 不 (không dùng 没).";
 ST_TAG.e = "Trợ từ 的 / 地 / 得"; ST_RULE.e = "的: định ngữ + 的 + danh từ; 地: trạng ngữ + 地 + động từ; 得: động từ + 得 + bổ ngữ (mô tả mức độ/kết quả).";
+
+// ===== HSK2 - Điền bộ phận thiếu (Viết: bổ sung thành phần chữ Hán) =====
+const BJ_CHARS = `好|hǎo|tốt|lr|女|子|又,文|了,小
+河|hé|sông|lr|氵|可|讠,犭|石,司
+没|méi|không có|lr|氵|殳|讠,忄|寸,支
+洗|xǐ|rửa, giặt|lr|氵|先|讠,忄|光,牛
+酒|jiǔ|rượu|lr|氵|酉|冫,讠|酋,百
+清|qīng|trong|lr|氵|青|扌,犭|毒,素
+海|hǎi|biển|lr|氵|每|冫,犭|母,毋
+活|huó|sống|lr|氵|舌|冫,犭|告,舍
+说|shuō|nói|lr|讠|兑|氵,扌|免,况
+请|qǐng|mời|lr|讠|青|冫,扌|责,毒
+谁|shéi|ai|lr|讠|隹|冫,犭|住,佳
+读|dú|đọc|lr|讠|卖|冫,犭|买,实
+语|yǔ|ngôn ngữ|lr|讠|吾|冫,犭|五,互
+话|huà|lời nói|lr|讠|舌|冫,犭|告,舍
+认|rèn|nhận ra, biết|lr|讠|人|冫,犭|八,入
+课|kè|bài học|lr|讠|果|氵,扌|里,朱
+你|nǐ|bạn|lr|亻|尔|彳,讠|东,小
+他|tā|anh ấy|lr|亻|也|彳,讠|巳,己
+们|men|(hậu tố số nhiều)|lr|亻|门|彳,讠|户,冂
+休|xiū|nghỉ ngơi|lr|亻|木|彳,讠|禾,术
+住|zhù|ở, sống|lr|亻|主|彳,冫|王,玉
+但|dàn|nhưng|lr|亻|旦|彳,讠|且,日
+体|tǐ|thân thể|lr|亻|本|彳,讠|末,术
+信|xìn|thư, tin|lr|亻|言|讠,彳|音,告
+打|dǎ|đánh, gọi|lr|扌|丁|犭,忄|于,了
+把|bǎ|nắm, cầm|lr|扌|巴|犭,氵|己,已
+找|zhǎo|tìm|lr|扌|戈|犭,忄|戋,弋
+拍|pāi|vỗ, chụp|lr|扌|白|犭,衤|日,目
+饭|fàn|cơm|lr|饣|反|钅,纟|友,及
+饿|è|đói|lr|饣|我|钅,纟|找,戎
+馆|guǎn|quán, nhà hàng|lr|饣|官|钅,纟|宫,宜
+钱|qián|tiền|lr|钅|戋|饣,纟|戈,贝
+钟|zhōng|đồng hồ, chuông|lr|钅|中|饣,纟|申,史
+错|cuò|sai|lr|钅|昔|饣,纟|告,百
+红|hóng|đỏ|lr|纟|工|饣,钅|土,士
+给|gěi|cho, đưa|lr|纟|合|饣,钅|今,令
+经|jīng|đã qua, kinh|lr|纟|圣|饣,钅|全,至
+绿|lǜ|xanh lá|lr|纟|录|饣,钅|隶,象
+快|kuài|nhanh|lr|忄|夬|犭,饣|失,史
+忙|máng|bận|lr|忄|亡|扌,犭|亠,云
+慢|màn|chậm|lr|忄|曼|犭,饣|受,最
+情|qíng|tình cảm|lr|忄|青|饣,钅|责,毒
+树|shù|cây|lr|木|对|禾,竹|刘,邓
+校|xiào|trường học|lr|木|交|禾,竹|文,父
+样|yàng|kiểu, dạng|lr|木|羊|禾,扌|半,丰
+楼|lóu|tòa nhà, tầng|lr|木|娄|禾,竹|类,屡
+相|xiāng|cùng nhau, tướng|lr|木|目|禾,扌|日,田
+明|míng|sáng|lr|日|月|目,田|目,用
+晴|qíng|trời nắng|lr|日|青|田,白|责,毒
+时|shí|giờ, lúc|lr|日|寸|目,田|才,丁
+晚|wǎn|tối, muộn|lr|日|免|目,田|兔,冤
+昨|zuó|hôm qua|lr|日|乍|目,田|乏,乒
+睡|shuì|ngủ|lr|目|垂|日,田|乖,华
+眼|yǎn|mắt|lr|目|艮|日,田|良,食
+睛|jīng|con ngươi (眼睛: mắt)|lr|目|青|田,白|责,毒
+吗|ma|(trợ từ nghi vấn)|lr|口|马|日,田|乌,与
+吃|chī|ăn|lr|口|乞|日,田|气,乙
+听|tīng|nghe|lr|口|斤|田,白|厂,片
+哪|nǎ|nào, đâu|lr|口|那|日,田|邦,郁
+妈|mā|mẹ|lr|女|马|又,文|乌,与
+她|tā|cô ấy|lr|女|也|又,文|巳,乜
+姐|jiě|chị|lr|女|且|又,文|旦,目
+妹|mèi|em gái|lr|女|未|又,文|末,束
+姓|xìng|họ|lr|女|生|又,文|主,牛
+奶|nǎi|sữa; bà nội|lr|女|乃|又,文|及,力
+这|zhè|này|lr|辶|文|彳,走|又,父
+过|guò|qua, đã từng|lr|辶|寸|彳,走|才,十
+进|jìn|vào|lr|辶|井|彳,走|开,升
+远|yuǎn|xa|lr|辶|元|彳,走|无,充
+近|jìn|gần|lr|辶|斤|彳,走|厂,斥
+还|hái|vẫn, còn|lr|辶|不|彳,走|下,丕
+边|biān|bên, phía|lr|辶|力|彳,走|刀,九
+送|sòng|tặng, tiễn|lr|辶|关|彳,走|兰,羊
+字|zì|chữ|tb|宀|子|冖,穴|了,小
+完|wán|xong, hết|tb|宀|元|冖,穴|无,兄
+花|huā|hoa|tb|艹|化|竹,宀|七,匕
+菜|cài|rau, món ăn|tb|艹|采|竹,宀|爱,受
+问|wèn|hỏi|enc|门|口|囗,冂|二,八
+间|jiān|gian, giữa|enc|门|日|囗,冂|月,目
+国|guó|nước|enc|囗|玉|门,冂|主,五
+回|huí|về, quay lại|enc|囗|口|门,冂|日,目
+因|yīn|bởi vì|enc|囗|大|门,冂|太,天
+病|bìng|bệnh|lr|疒|丙|广,尸|内,两
+床|chuáng|giường|lr|广|木|厂,尸|禾,术
+店|diàn|cửa hàng|lr|广|占|厂,尸|古,右
+都|dōu|đều|lr|者|阝|考,老|刂,卩
+猫|māo|mèo|lr|犭|苗|讠,冫|苦,若
+教|jiào|dạy|lr|孝|攵|老,考|欠,夂
+放|fàng|đặt, thả|lr|方|攵|万,力|欠,夂
+到|dào|đến|lr|至|刂|圣,臣|刀,力
+男|nán|nam|tb|田|力|日,目|刀,方
+早|zǎo|sớm|tb|日|十|目,田|土,士
+爸|bà|bố|tb|父|巴|交,文|己,已
+要|yào|cần, muốn|tb|西|女|酉,覀|又,文
+岁|suì|tuổi|tb|山|夕|川,屮|久,夂
+笑|xiào|cười|tb|竹|夭|艹,宀|天,夫
+球|qiú|quả bóng|lr|王|求|土,干|术,水
+对|duì|đúng|lr|又|寸|双,友|才,寺
+别|bié|đừng; khác|lr|另|刂|呆,吊|刀,力
+思|sī|nghĩ, nhớ|tb|田|心|日,目|必,忄`.split("\n").map(l => { const [hz, py, vi, lay, A, B, dA, dB] = l.split("|"); return { hz, py, vi, lay, A, B, dA: dA.split(","), dB: dB.split(",") }; });
+let bjDeck = [], bjI = 0, bjScore = 0, bjCur = null;
+const BJ_POS = { lr: ["bên TRÁI", "bên PHẢI"], tb: ["phía TRÊN", "phía DƯỚI"], enc: ["khung bên NGOÀI", "phần bên TRONG"] };
+function bjStart() {
+  let qs = []; BJ_CHARS.forEach(c => { qs.push({ c, miss: 0 }); qs.push({ c, miss: 1 }); });
+  qs = shuffleArray(qs);
+  for (let i = 0; i < qs.length - 2; i++) if (qs[i].c === qs[i + 1].c) { const t = qs[i + 1]; qs[i + 1] = qs[i + 2]; qs[i + 2] = t; }
+  bjDeck = qs; bjI = 0; bjScore = 0; bjRender();
+}
+function bjFig(q, state) {
+  const c = q.c, vis = q.miss === 0 ? c.B : c.A, ans = q.miss === 0 ? c.A : c.B;
+  const cell = (g, isMiss) => isMiss ? `<div class="bj-slot ${state || "miss"}" id="bjMiss">${state ? (state === "no" ? "?" : g) : "?"}</div>` : `<div class="bj-slot">${g}</div>`;
+  if (c.lay === "enc") {
+    const outerMiss = q.miss === 0, innerMiss = q.miss === 1;
+    return `<div class="bj-fig enc"><div class="bj-out ${c.A === "门" ? "men" : ""} ${outerMiss ? "miss" : ""}"><span class="bj-lab" id="${outerMiss ? "bjMissLab" : ""}">${outerMiss ? "?" : c.A}</span>${cell(innerMiss ? ans : c.B, innerMiss)}</div></div>`;
+  }
+  return `<div class="bj-fig ${c.lay}">${cell(c.A, q.miss === 0)}${cell(c.B, q.miss === 1)}</div>`;
+}
+function bjRender() {
+  const A = document.getElementById("bjArea");
+  if (bjI >= bjDeck.length) { A.innerHTML = `<h2>🎉 Hoàn thành: ${bjScore}/${bjDeck.length} câu đúng</h2><div class="sub" style="text-align:left">${bjScore / bjDeck.length >= 0.8 ? "Rất tốt! Bạn nhận ra cấu tạo chữ Hán khá chắc." : "Hãy làm lại để nhớ các bộ thủ hay gặp nhé."}</div><button class="primary" onclick="bjStart()">🔁 Làm lại</button>`; return; }
+  const q = bjDeck[bjI], c = q.c, ans = q.miss === 0 ? c.A : c.B, ds = q.miss === 0 ? c.dA : c.dB;
+  const o = shuffleArray([ans, ds[0], ds[1]]); bjCur = { q, o, ans, done: 0 };
+  A.innerHTML = `<div class="sub" style="text-align:left">Câu ${bjI + 1}/${bjDeck.length} · Đúng: ${bjScore}</div><div class="bj-wrap"><div class="bj-info"><b>${c.py}</b>${c.vi}</div>${bjFig(q)}<div class="bj-pos">Bộ phận còn thiếu ở ${BJ_POS[c.lay][q.miss]}</div></div><div class="np-q">Chọn bộ phận để hoàn thành chữ:</div><div class="bj-opts">${o.map((x, k) => `<button id="bjo${k}" onclick="bjPick(${k})">${x}</button>`).join("")}</div><div id="bjFb"></div>`;
+}
+function bjPick(k) {
+  if (bjCur.done) return; bjCur.done = 1;
+  const { q, o, ans } = bjCur, c = q.c, ok = o[k] === ans, p = o.indexOf(ans); if (ok) bjScore++;
+  document.getElementById("bjo" + p).style.background = "#bbf7d0";
+  if (!ok) document.getElementById("bjo" + k).style.background = "#fecaca";
+  const m = document.getElementById("bjMiss"); if (m) { m.className = "bj-slot ok"; m.textContent = ans; }
+  const ml = document.getElementById("bjMissLab"); if (ml) { ml.textContent = ans; ml.style.color = "#166534"; }
+  const f = c.lay === "enc" ? `${c.A} ⊃ ${c.B}` : `${c.A} + ${c.B}`;
+  document.getElementById("bjFb").innerHTML = `<div class="ex-rv bj-fb ${ok ? "good" : "bad"}">${ok ? "✅ Đúng!" : "❌ Chưa đúng."} Bộ phận cần điền: <b style="font-size:22px">${ans}</b><div class="bj-formula">${f} = <b>${c.hz}</b> <button class="toggle-btn" onclick="speakSafe('${c.hz}')">🔊</button></div><div class="np-vi">${c.py} · ${c.vi}</div></div><button class="primary np-next" onclick="bjI++;bjRender()">Câu tiếp →</button>`;
+}
 function openNp() {
   document.getElementById("hsk2Menu").classList.add("hidden");
   document.getElementById("npCard").classList.remove("hidden");
