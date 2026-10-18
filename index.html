@@ -626,7 +626,7 @@ body{background:var(--bg)}
 <button class="ex-item" onclick="stShow('sanCard');sanStart()"><div class="ex-item-no">🔍 Nhặt sạn</div><div class="ex-item-meta">100 câu: chọn câu sai, xem giải thích</div><div class="ex-item-go">Bắt đầu →</div></button>
 <button class="ex-item" onclick="stShow('fillCard');fillStart()"><div class="ex-item-no">✍️ Điền cấu trúc</div><div class="ex-item-meta">100 câu: chọn 比 / 因为…所以… / 了 / 过 / 还是…</div><div class="ex-item-go">Bắt đầu →</div></button>
 <button class="ex-item" onclick="stShow('matCard');matQ.start()"><div class="ex-item-no">🔗 Ghép 2 vế</div><div class="ex-item-meta">100 câu: nối 因为…所以…, 虽然…但是…, 如果…就…</div><div class="ex-item-go">Bắt đầu →</div></button>
-<button class="ex-item" onclick="stShow('trnCard');trnQ.start()"><div class="ex-item-no">🇻🇳→🇨🇳 Dịch Việt – Trung</div><div class="ex-item-meta">100 câu: chọn câu tiếng Trung đúng</div><div class="ex-item-go">Bắt đầu →</div></button>
+<button class="ex-item" onclick="stShow('trnCard');trnQ.start()"><div class="ex-item-no">📝 Ôn tập ngữ pháp</div><div class="ex-item-meta">115 câu trắc nghiệm: chọn câu đúng ngữ pháp HSK 2</div><div class="ex-item-go">Bắt đầu →</div></button>
 </div>
 <div class="menu-sec">Luyện nói</div>
 <div class="ex-grid">
@@ -661,7 +661,8 @@ body{background:var(--bg)}
     </div>
     <div class="card hidden" id="trnCard">
       <button class="toggle-btn back-btn" onclick="stBack('trnCard')">← Danh sách chức năng</button>
-      <h1>🇻🇳→🇨🇳 Dịch Việt – Trung</h1>
+      <h1>📝 Ôn tập ngữ pháp</h1>
+      <div class="sub">Chọn câu tiếng Trung đúng ngữ pháp, đọc nghĩa tiếng Việt để suy ra cấu trúc HSK 2.</div>
       <div id="trnArea"></div>
     </div>
   </div>
@@ -3097,8 +3098,6 @@ t|Tôi đã từng đến Bắc Kinh.|我去过北京。|我去北京过。|我�
 t|Họ đang ăn cơm.|他们在吃饭。|他们吃饭在。|他们正在吃着饭了。
 t|Hôm qua tôi không đi học.|我昨天没去上课。|我昨天不去上课了。|我昨天没去上课了。
 t|Phim sắp bắt đầu rồi.|电影快要开始了。|电影快要开始。|电影要快开始了。
-t|Trời lạnh rồi.|天气冷了。|天气了冷。|冷天气了。
-t|Tôi ăn cơm rồi.|我吃饭了。|我了吃饭。|我吃了饭了吗。
 d|Anh ấy chạy rất nhanh.|他跑得很快。|他跑很快。|他得跑很快。
 d|Cô ấy nói tiếng Hán rất giỏi.|她说汉语说得很好。|她说得汉语很好。|她说汉语很好得。
 d|Tôi làm xong bài tập rồi.|我做完作业了。|我做了完作业。|我作业完做了。
@@ -3109,79 +3108,96 @@ h|Bạn uống trà hay cà phê?|你喝茶还是咖啡？|你喝茶或者咖啡
 h|Tại sao bạn không đến?|你为什么没来？|你没来为什么？|你什么为没来？
 h|Bạn có phải là sinh viên không?|你是不是学生？|你是学生不是？|你是不是学生吗？
 h|Năm nay anh ấy bao nhiêu tuổi?|他今年多大？|他今年多大岁？|他今年几大？
-h|Cái này giá bao nhiêu?|这个多少钱？|这个钱多少？|这个几钱？
 j|Tôi làm việc từ 8 giờ đến 5 giờ.|我从八点工作到五点。|我工作从八点到五点。|我八点从工作到五点。
 j|Nhà tôi cách trường rất gần.|我家离学校很近。|我家离近学校。|我家近离学校。
 j|Hãy đi về phía trước.|请往前走。|请走往前。|请前往走。
 j|Tôi đi cùng bạn.|我跟朋友一起去。|我一起跟朋友去。|我去跟朋友一起。
 j|Tôi gọi điện cho mẹ.|我给妈妈打电话。|我打电话妈妈给。|我给打电话妈妈。
-j|Anh ấy học ở trường.|他在学校学习。|他学习在学校。|他在学习学校。
 j|Anh ấy rất tốt với tôi.|他对我很好。|他很好对我。|他对很好我。
 f|Tôi vẫn chưa ăn cơm.|我还没吃饭。|我没还吃饭。|我还不吃饭了。
-f|Chúng tôi đều là học sinh.|我们都是学生。|我们是都学生。|都我们是学生。
-f|Tôi hơi mệt.|我有点儿累。|我累有点儿。|我一点儿累。
 f|Mời bạn nói chậm một chút.|请你说慢一点儿。|请你说一点儿慢。|请你慢说一点儿。
 f|Ngày mai tôi sẽ lại đến.|明天我再来。|明天我又来。|我来再明天。
 f|Hôm qua anh ấy lại đến.|昨天他又来了。|昨天他再来了。|他又昨天来了。
-n|Đây là điện thoại mẹ mua cho tôi.|这是妈妈给我买的手机。|这是手机妈妈给我买的。|这是给我买妈妈的手机。
-n|Cô ấy là một người mẹ rất tốt.|她是一个很好的妈妈。|她是一个妈妈很好。|她是一个很好妈妈。
-n|Tôi có một chiếc cặp sách màu đen.|我有一个黑色的书包。|我有一个书包黑色的。|我有黑色一个的书包。
-n|Mẹ tôi đang nấu cơm.|我妈妈在做饭。|妈妈我在做饭。|我妈妈做饭在。
-n|Tôi thích món Trung Quốc.|我喜欢中国菜。|我喜欢菜中国。|我喜欢的中国菜。
-n|Tôi thấy một cô gái rất xinh.|我看见一个很漂亮的女生。|我看见一个女生很漂亮的。|我看见一很漂亮的个女生。
-n|Sách trên bàn là của tôi.|桌子上的书是我的。|书桌子上的是我的。|桌子的上书是我的。
-n|Anh ấy là bạn tốt của tôi.|他是我的好朋友。|他是朋友好我的。|他是我的朋友好。
-n|Hôm nay thời tiết rất lạnh.|今天的天气很冷。|今天天气的很冷。|天气今天很冷。
 b|Chị gái tôi lớn hơn tôi ba tuổi.|姐姐比我大三岁。|姐姐比我三岁大。|姐姐大比我三岁。
 b|Quả táo này rẻ hơn quả kia.|这个苹果比那个便宜。|这个苹果便宜比那个。|这个苹果比那个很便宜。
-b|Anh ấy không bận bằng tôi.|他没有我忙。|他不有我忙。|他忙没有我。
-b|Cái này giống cái kia.|这个跟那个一样。|这个一样跟那个。|这个跟一样那个。
 b|Anh ấy nói tiếng Hán tốt hơn tôi.|他汉语说得比我好。|他说汉语比我好。|他汉语比我说得很好。
-b|Đây là phòng đẹp nhất.|这是最漂亮的房间。|这是房间最漂亮的。|这是最漂亮房间的。
-l|Vì mệt nên tôi nghỉ một lát.|因为累了，所以我休息一会儿。|因为累了，但是我休息一会儿。|累了因为，我休息所以一会儿。
 l|Tuy anh ấy nhỏ nhưng chạy rất nhanh.|虽然他很小，但是跑得很快。|虽然他很小，所以跑得很快。|因为他很小，但是跑得很快。
-l|Nếu bạn có thời gian thì đến nhà tôi.|如果你有时间，就来我家。|如果你有时间，所以来我家。|你有时间如果，就来我家。
-l|Tôi uống thuốc trước rồi ngủ.|我先吃药，再睡觉。|我再吃药，先睡觉。|我吃药先，睡觉再。
-l|Cô ấy vừa đến là hỏi tôi.|她一到就问我。|她一到再问我。|她到一就问我。
 t|Tôi chưa từng ăn món Thái.|我没吃过泰国菜。|我没吃了泰国菜。|我吃泰国菜没过。
-t|Mẹ tôi đang xem tivi.|我妈妈在看电视。|我妈妈看电视在。|我妈妈在看电视了着。
 t|Hôm qua anh ấy mua một cái áo.|他昨天买了一件衣服。|他昨天买着一件衣服。|他买了一件衣服昨天。
-t|Tàu sắp đến rồi.|火车快要到了。|火车快要到。|火车要快到了。
-t|Trời tối rồi.|天黑了。|天了黑。|黑天了。
 t|Bạn đã từng uống trà sữa chưa?|你喝过奶茶吗？|你喝奶茶过吗？|你过喝奶茶吗？
-d|Anh ấy hát rất hay.|他唱得很好。|他唱很好。|他得唱很好。
-d|Cô ấy viết chữ Hán rất đẹp.|她写汉字写得很漂亮。|她写得汉字很漂亮。|她写汉字很漂亮得。
-d|Tôi ăn xong cơm rồi.|我吃完饭了。|我吃了完饭。|我饭完吃了。
 d|Anh ấy chạy ra ngoài rồi.|他跑出去了。|他出跑去了。|他跑去出了。
 d|Bạn nhìn một chút.|你看一下。|你一下看。|你看下一。
 d|Tôi nhìn thấy anh ấy.|我看见他了。|我见看他了。|我看了见他。
 h|Bạn đi xe buýt hay đi tàu điện?|你坐公交车还是坐地铁？|你坐公交车或者坐地铁？|你坐公交车还有地铁？
 h|Tại sao hôm nay bạn không đi làm?|你今天为什么不上班？|你为什么今天了不上班？|你今天不上班为什么？
 h|Cái này có đắt không?|这个贵不贵？|这个贵不贵吗？|这个不贵贵？
-h|Bạn bao nhiêu tuổi?|你多大了？|你多大岁？|你几大了？
 h|Nhà bạn có mấy người?|你家有几口人？|你家有口人几？|你家几有口人？
 j|Tôi từ Bắc Kinh đến.|我从北京来。|我北京从来。|我来从北京。
-j|Công ty cách nhà tôi không xa.|公司离我家不远。|公司不远离我家。|公司离不远我家。
-j|Xin đi về bên phải.|请往右走。|请走往右。|请往走右。
-j|Tôi đi chơi cùng bạn học.|我跟同学一起玩。|我一起跟同学玩。|我玩跟同学一起。
-j|Mẹ gọi điện cho tôi.|妈妈给我打电话。|妈妈打电话我给。|妈妈给打电话我。
-j|Tôi ăn cơm ở nhà.|我在家吃饭。|我吃饭在家。|我在吃饭家。
-j|Cô ấy rất tốt với chúng tôi.|她对我们很好。|她很好对我们。|她对很好我们。
 f|Tôi vẫn đang đợi bạn.|我还在等你。|我在还等你。|我等你还在。
-f|Họ cũng là sinh viên.|他们也是大学生。|他们是也大学生。|也他们是大学生。
 f|Bạn nói lại lần nữa nhé.|请你再说一次。|请你说再一次。|请你再一次说。
-f|Anh ấy lại đến rồi.|他又来了。|他再来了。|他来又了。
 f|Món này hơi cay.|这个菜有点儿辣。|这个菜辣有点儿。|这个菜一点儿辣。
 f|Cho tôi thêm ít nước nữa.|再给我一点儿水。|给再我一点儿水。|给我水再一点儿。
-n|Đây là bạn tôi.|这是我朋友。|这是朋友我。|这是我的朋友的。
-n|Tôi thích bài hát cô ấy hát.|我喜欢她唱的歌。|我喜欢唱她的歌。|我喜欢歌她唱的。
-n|Anh ấy có một chiếc điện thoại mới.|他有一个新手机。|他有一个手机新。|他有新一个手机。
-n|Quần áo mẹ mua rất đẹp.|妈妈买的衣服很漂亮。|买妈妈的衣服很漂亮。|妈妈衣服买的很漂亮。
-n|Đó là cô giáo dạy tiếng Hán của chúng tôi.|那是我们的汉语老师。|那是汉语我们的老师。|那是我们老师的汉语。
-n|Tôi muốn một cốc trà nóng.|我想要一杯热茶。|我想要热一杯茶。|我想要一热杯茶。
-n|Con mèo trong nhà rất nhỏ.|家里的猫很小。|猫家里的很小。|家的里猫很小。
-n|Người bên ngoài là bạn tôi.|外边的人是我的朋友。|人外边的是我的朋友。|外边人的是我的朋友。
-n|Tôi quen một cô gái Trung Quốc.|我认识一个中国女孩儿。|我认识一个女孩儿中国。|我认识中国一个女孩儿。`.split("\n").map(l => { const [tag, vi, ok, w1, w2] = l.split("|"); return { tag, vi, ok, w1, w2 }; });
+b|Chiếc áo này đắt hơn chiếc kia nhiều.|这件衣服比那件贵得多。|这件衣服比那件很贵。|这件衣服比那件贵多得。|Chênh lệch lớn: 比 + B + Adj + 得多 / 多了. Sau 比 không dùng 很.
+b|Em trai cao hơn tôi một chút.|弟弟比我高一点儿。|弟弟比我一点儿高。|弟弟比我高很点儿。|Chênh lệch nhỏ: Adj + 一点儿 (đặt SAU tính từ).
+b|Tiếng Hán của cô ấy tốt hơn tôi.|她的汉语比我好。|她的汉语好比我。|她的汉语比我很好。|Cấu trúc: A + 比 + B + Adj. Không thêm 很 và không đảo 比 ra sau.
+b|Hôm nay nóng hơn hôm qua hai độ.|今天比昨天热两度。|今天比昨天两度热。|今天热比昨天两度。|Số lượng chênh lệch đặt SAU tính từ: 比 + B + Adj + số lượng.
+b|Anh ấy còn cao hơn bố.|他比爸爸更高。|他更比爸爸高。|他比爸爸高更。|更 đứng trước tính từ, sau 比 + B: 比 + B + 更 + Adj.
+b|Tôi chạy không nhanh bằng anh ấy.|我跑得没有他快。|我不有他跑得快。|我跑得没有快他。|Phủ định so sánh: A + 没有 + B + Adj (không dùng 不有).
+b|Anh ấy là học sinh giỏi nhất lớp tôi.|他是我们班学习最好的学生。|他是最学习好我们班的学生。|他是我们班学习好最的学生。|最 đứng trước tính từ; phạm vi (我们班) đặt ở đầu cụm.
+b|Mùa hè nóng hơn mùa xuân.|夏天比春天热。|夏天热比春天。|夏天比春天热很。|Dùng 比 giữa hai vế so sánh, tính từ ở cuối và không có 很.
+l|Tuy trời mưa nhưng chúng tôi vẫn đi.|虽然下雨，但是我们还是去了。|虽然下雨，所以我们还是去了。|因为下雨，但是我们还是去了。|虽然 đi với 但是 (nhượng bộ), không đi với 所以.
+l|Vì anh ấy bị ốm nên không đến lớp.|因为他生病了，所以没来上课。|因为他生病了，但是没来上课。|虽然他生病了，所以没来上课。|因为 đi với 所以 (nhân quả).
+l|Nếu ngày mai thời tiết đẹp, chúng ta đi leo núi.|如果明天天气好，我们就去爬山。|如果明天天气好，但是我们去爬山。|明天天气好如果，我们就去爬山。|如果 đứng đầu vế điều kiện, vế sau dùng 就.
+l|Tôi ăn sáng trước rồi đi học.|我先吃早饭，再去上学。|我再吃早饭，先去上学。|我先吃早饭，所以去上学。|先…再…: thứ tự hai việc; 先 trước, 再 sau.
+l|Anh ấy vừa tan làm là về nhà.|他一下班就回家。|他一下班再回家。|他下班一就回家。|一…就…: vừa… là…, 一 đứng trước động từ thứ nhất, 就 trước động từ thứ hai.
+l|Tuy nhà xa nhưng tôi đi bộ đến trường.|虽然家很远，但是我走路去学校。|虽然家很远，所以我走路去学校。|因为家很远，但是我走路去学校。|虽然…但是… chỉ quan hệ chuyển ngoặt.
+l|Vì nhà xa nên tôi đi tàu điện ngầm.|因为家很远，所以我坐地铁。|因为家很远，但是我坐地铁。|家很远因为，我所以坐地铁。|因为 và 所以 đứng đầu mỗi vế.
+t|Anh ấy đang gọi điện thoại.|他正在打电话。|他打电话正在。|他正打在电话。|正在 + V: đang làm gì, đứng trước động từ.
+t|Cửa đang mở.|门开着。|门着开。|门开在。|V + 着: trạng thái kéo dài, 着 đứng ngay sau động từ.
+t|Cô ấy đang mặc một chiếc váy màu đỏ.|她穿着一条红色的裙子。|她穿一条着红色的裙子。|她着穿一条红色的裙子。|V + 着 + tân ngữ; 着 đứng liền sau động từ.
+t|Tôi chưa từng gặp anh ấy.|我没见过他。|我不见过他。|我没见他过。|Phủ định kinh nghiệm: 没(有) + V + 过; 过 đứng ngay sau động từ.
+t|Bạn đã từng đến Bắc Kinh chưa?|你去过北京吗？|你去了过北京吗？|你去北京过吗？|V + 过 + tân ngữ + 吗?
+t|Tàu sắp chạy rồi.|火车快要开了。|火车快要开。|火车快开要了。|快要 + V + 了: sắp xảy ra, cần 了 ở cuối.
+t|Ngày mai là nghỉ rồi.|明天就要放假了。|明天快要放假了。|明天就放假要了。|Có mốc thời gian cụ thể (明天) thì dùng 就要, không dùng 快要.
+t|Hôm qua tôi không mua sách.|昨天我没买书。|昨天我没买了书。|昨天我不买了书。|Đã dùng 没 phủ định việc đã qua thì không thêm 了.
+t|Anh ấy đang ăn cơm.|他正在吃饭呢。|他吃饭正在呢。|他正在吃了饭呢。|正在 + V (+ 呢): đang làm gì.
+t|Cô ấy vừa cười vừa nói "xin chào".|她笑着说“你好”。|她着笑说“你好”。|她笑说着“你好”。|V1 + 着 + V2: vừa V1 vừa V2, 着 đứng ngay sau V1.
+d|Cô ấy nói tiếng Anh rất giỏi.|她英语说得很好。|她说得英语很好。|她英语说很好。|Tân ngữ đặt trước động từ rồi V + 得 + Adj (hoặc lặp động từ).
+d|Cô ấy hát rất hay.|她唱歌唱得很好听。|她唱歌得唱很好听。|她唱得歌很好听。|Lặp động từ: V + O + V + 得 + Adj.
+d|Anh ấy ăn rất nhanh.|他吃得很快。|他吃很快得。|他得吃很快。|V + 得 + 很 + Adj: 得 đứng ngay sau động từ.
+d|Tôi chưa nghe hiểu.|我没听懂。|我没懂听。|我听没懂。|Bổ ngữ kết quả đứng ngay sau động từ: 听懂; phủ định đặt 没 trước cả cụm.
+d|Tôi viết xong thư rồi.|我写完信了。|我写了完信。|我完写信了。|V + 完 (làm xong); 了 ở cuối câu.
+d|Anh ấy chạy vào phòng học.|他跑进教室去了。|他跑去进教室了。|他跑教室进去了。|Tân ngữ nơi chốn đặt giữa 进 và 来/去: 进 + nơi chốn + 去.
+d|Mời bạn lên đây.|请你上来。|请你来上。|请你上去来。|Bổ ngữ xu hướng: V + 来/去 (上来: lên phía người nói).
+d|Tôi về nhà đây.|我回家去了。|我回去家了。|我去回家了。|Tân ngữ nơi chốn đứng TRƯỚC 来/去: 回家去.
+d|Tôi đợi anh ấy một lúc.|我等了他一会儿。|我等了一会儿他。|我一会儿等了他。|Tân ngữ là đại từ đứng trước thời lượng: V + 了 + người + 一会儿.
+d|Tôi đã đợi bạn một tiếng.|我等了你一个小时。|我等了一个小时你。|我一个小时等了你。|Thời lượng đặt sau tân ngữ đại từ: V + 了 + 你 + 一个小时.
+h|Bạn ăn cơm hay ăn mì?|你吃米饭还是吃面条？|你吃米饭或者面条？|你吃米饭还有面条？|Câu hỏi lựa chọn dùng 还是; 或者 chỉ dùng trong câu trần thuật.
+h|Anh ấy có đến không?|他来不来？|他来不来吗？|他不来来？|V不V không dùng thêm 吗.
+h|Ngày mai bạn có rảnh không?|明天你有没有空？|明天你有没有空吗？|明天你没有有空？|有没有: dạng chính phản của 有; không thêm 吗.
+h|Bạn mấy giờ dậy?|你几点起床？|你起床几点？|你什么点起床？|Từ để hỏi thời gian đứng trước động từ: 几点 + V.
+h|Ai là giáo viên của bạn?|谁是你的老师？|是谁你的老师？|谁你的老师是？|谁 đứng ở vị trí của chủ ngữ: 谁 + 是 + ….
+h|Bạn đến trường bằng cách nào?|你怎么去学校？|你去学校怎么？|你怎么学校去？|怎么 + V: hỏi cách thức, đứng trước động từ.
+j|Từ nhà tôi đến ga mất mười phút.|从我家到车站要十分钟。|从我家车站要十分钟。|我家从到车站要十分钟。|从 A 到 B: từ A đến B, cần đủ 到.
+j|Trung tâm thương mại cách đây không xa.|商场离这儿不远。|商场从这儿不远。|商场离不远这儿。|离 chỉ khoảng cách giữa hai địa điểm: A + 离 + B + Adj.
+j|Tôi nói chuyện với bạn học.|我跟同学说话。|我说话跟同学。|我跟说话同学。|跟 + người + V: cùng/với ai làm gì, đứng trước động từ.
+j|Tôi đưa cho anh ấy một quyển sách.|我给他一本书。|我一本书给他。|我给一本书他。|给 + người nhận + vật: cho ai cái gì.
+j|Tôi đợi bạn ở cổng trường.|我在学校门口等你。|我等你在学校门口。|我在等学校门口你。|在 + nơi chốn + V: giới từ chỉ nơi chốn đứng trước động từ.
+j|Tôi đi học bằng xe buýt.|我坐公交车去学校。|我去学校坐公交车。|我去坐公交车学校。|Phương tiện (坐…) đứng trước động từ chính 去.
+f|Anh ấy đã ăn cơm rồi.|他已经吃饭了。|他已经吃饭。|他吃已经饭了。|已经 + V + 了: đã hoàn thành; 已经 đứng trước động từ.
+f|Tám giờ anh ấy mới đến.|他八点才到。|他八点到才。|他才到八点了。|才 đứng trước động từ, nhấn mạnh muộn hơn dự kiến.
+f|Mười giờ anh ấy đã đến rồi.|他十点就到了。|他十点才到了。|他十点到就了。|就 + V + 了: nhấn mạnh sớm/nhanh hơn dự kiến.
+f|Hôm qua tôi lại ngủ muộn.|昨天我又睡晚了。|昨天我再睡晚了。|我昨天睡又晚了。|Việc đã xảy ra lặp lại dùng 又; 再 dùng cho việc chưa xảy ra.
+f|Ngày mai tôi sẽ lại gọi điện cho bạn.|明天我再给你打电话。|明天我又给你打电话。|我给你再明天打电话。|Việc sẽ lặp lại trong tương lai dùng 再.
+f|Cô ấy vẫn chưa về.|她还没回来。|她没还回来。|她回来还没。|还没 + V: vẫn chưa; 还 đứng trước 没.
+f|Hai chúng tôi cùng ăn cơm.|我们俩一起吃饭。|我们俩吃一起饭。|一起我们俩吃饭。|一起 + V: cùng nhau, đứng trước động từ.
+m|Anh ấy biết nói tiếng Hán.|他会说汉语。|他说会汉语。|他会汉语说。|Động từ năng nguyện đứng trước động từ chính: 会 + V (biết làm gì).
+m|Ở đây có được chụp ảnh không?|这里可以拍照吗？|这里拍照可以。|这里可以拍吗照？|可以 + V + 吗? hỏi xin phép.
+m|Tôi không biết hát.|我不会唱歌。|我没会唱歌。|我会不唱歌。|Phủ định của 会 dùng 不 (不会), không dùng 没.
+m|Bạn có thể giúp tôi một chút không?|你能帮我一下吗？|你帮能我一下吗？|你能一下帮我吗？|能 + V: có thể (khả năng/nhờ giúp), V + 一下.
+p|Đừng quên mang vé.|别忘了带票。|忘别了带票。|别了忘带票。|别 + V: đừng làm gì, 别 đứng trước động từ.
+e|Anh ấy chậm rãi đi vào.|他慢慢地走进来。|他慢慢得走进来。|他慢慢走地进来。|Trạng ngữ + 地 + động từ: 慢慢地走. 得 dùng sau động từ.
+e|Xin hãy nói chậm rãi.|请慢慢地说。|请慢慢得说。|请地慢慢说。|地 đứng sau trạng ngữ (慢慢) và trước động từ (说).`.split("\n").map(l => { const [tag, vi, ok, w1, w2, note] = l.split("|"); return { tag, vi, ok, w1, w2, note }; });
 function mkQuiz(id, data, build) {
   const st = { deck: [], i: 0, score: 0, cur: null };
   const A = () => document.getElementById(id + "Area");
@@ -3203,7 +3219,12 @@ function mkQuiz(id, data, build) {
 }
 const matPairOf = q => { const t = q.first + q.ok; return /因为/.test(t) ? "因为…所以…" : /虽然/.test(t) ? "虽然…但是…" : /如果/.test(t) ? "如果…就…" : /先/.test(t) ? "先…再/然后…" : /一/.test(t) ? "一…就…" : ""; };
 const matQ = mkQuiz("mat", MAT_Q, q => ({ tag: ST_TAG.l, ask: "Chọn vế sau để ghép thành câu đúng:", head: `<div class="lib-ex" style="margin:8px 0">${pyHtml(q.first)}＿＿＿</div>`, opts: [q.ok, q.w1, q.w2], full: q.first + q.ok, vi: q.vi, rule: (matPairOf(q) ? "Cặp " + matPairOf(q) + ". " : "") + ST_RULE.l }));
-const trnQ = mkQuiz("trn", TRN_Q, q => ({ tag: ST_TAG[q.tag], ask: "Chọn câu tiếng Trung đúng:", head: `<div class="np-vi" style="font-size:20px;margin:10px 0">🇻🇳 ${q.vi}</div>`, opts: [q.ok, q.w1, q.w2], full: q.ok, vi: q.vi, rule: ST_RULE[q.tag] }));
+const trnQ = mkQuiz("trn", TRN_Q, q => ({ tag: ST_TAG[q.tag], ask: "Chọn câu tiếng Trung đúng:", head: `<div class="np-vi" style="font-size:20px;margin:10px 0">🇻🇳 ${q.vi}</div>`, opts: [q.ok, q.w1, q.w2], full: q.ok, vi: q.vi, rule: (q.note ? q.note + "<br>📌 " : "") + ST_RULE[q.tag] }));
+
+// ===== HSK2 - Ôn tập ngữ pháp =====
+ST_TAG.p = "Phủ định & cầu khiến"; ST_RULE.p = "Phủ định: 不 (thói quen, ý muốn, hiện tại) / 没 (việc đã qua, phủ định 有 và 过); 别 / 不要 + V: đừng làm gì.";
+ST_TAG.m = "Động từ năng nguyện"; ST_RULE.m = "Động từ năng nguyện đứng trước động từ chính: 会 (biết/sẽ), 能 (có khả năng/điều kiện), 可以 (được phép), 想 (muốn), 要 (cần). Phủ định dùng 不 (không dùng 没).";
+ST_TAG.e = "Trợ từ 的 / 地 / 得"; ST_RULE.e = "的: định ngữ + 的 + danh từ; 地: trạng ngữ + 地 + động từ; 得: động từ + 得 + bổ ngữ (mô tả mức độ/kết quả).";
 function openNp() {
   document.getElementById("hsk2Menu").classList.add("hidden");
   document.getElementById("npCard").classList.remove("hidden");
