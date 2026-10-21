@@ -219,6 +219,11 @@ footer{text-align:center;color:#888;margin:16px;font-size:13px}
 .lib-words{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:8px}
 .lib-w{border:1px solid #cbd5e1;border-radius:10px;padding:8px 10px;background:#fff}
 .lib-hz{font-size:22px;font-weight:700}.lib-py{font-size:13px;color:#0369a1}
+.rd-img{border-radius:14px;overflow:hidden;margin:8px 0;border:1px solid #e5e7eb}.rd-img svg{display:block;width:100%;height:auto}
+.rd-scroll{height:260px;overflow-y:auto;scroll-snap-type:y proximity;border:2px solid #e2e8f0;border-radius:14px;padding:6px 8px;background:#fff;-webkit-overflow-scrolling:touch}.rd-scroll .rd-line{scroll-snap-align:start}.rd-hint{font-size:13px;color:#64748b;margin:6px 0 4px}.rd-qh{margin:18px 0 6px}.rd-q{margin-bottom:16px}
+.rd-tools{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0}.rd-line{display:flex;align-items:flex-start;gap:6px;margin:8px 0}.rd-line.b{flex-direction:row-reverse}
+.rd-who{font-size:12px;font-weight:700;color:#64748b;width:44px;text-align:center;padding-top:8px}.rd-bub{flex:1;padding:8px 12px;border-radius:14px;background:#f1f5f9;font-size:20px;cursor:pointer}.rd-line.b .rd-bub{background:#fee2e2}
+.rd-vi{font-size:14px;color:#475569;margin-top:4px}.rd-sp{padding:4px 8px}.rd-re{margin:8px 0}.rd-re summary{cursor:pointer;font-weight:700;color:#b91c1c}
 .np-q{margin:10px 0;padding:8px 12px;background:#fef2f2;border-radius:10px;font-weight:700;color:#b91c1c}
 .np-opts{display:flex;flex-direction:column;gap:8px}
 .np-opts button{text-align:left;font-size:22px;padding:10px 14px;border:1.5px solid #cbd5e1;border-radius:12px;background:#fff;cursor:pointer;min-height:44px}
@@ -647,8 +652,8 @@ body{background:var(--bg)}
       <h1>📚 Thư viện</h1>
       <div class="sub">Tra cứu từ vựng và ngữ pháp HSK 1–2 (3.0).</div>
       <div class="ex-grid">
-        <button class="ex-item" onclick="openLib('words')"><div class="ex-item-no">📖 Thư viện từ ngữ</div><div class="ex-item-meta">Từ vựng HSK 2 và từ trong sách New HSK 2</div><div class="ex-item-go">Xem →</div></button>
-        <button class="ex-item" onclick="openLib('grammar')"><div class="ex-item-no">📘 Thư viện ngữ pháp</div><div class="ex-item-meta">Quy tắc ngữ pháp HSK 1–2 và cụm danh từ</div><div class="ex-item-go">Xem →</div></button>
+        <button class="ex-item" onclick="openLib('words')"><div class="ex-item-no">📖 Thư viện từ ngữ</div><div class="ex-item-go">Xem →</div></button>
+        <button class="ex-item" onclick="openLib('grammar')"><div class="ex-item-no">📘 Thư viện ngữ pháp</div><div class="ex-item-go">Xem →</div></button>
       </div>
     </div>
     <div class="card hidden" id="libCard">
@@ -672,10 +677,11 @@ body{background:var(--bg)}
 <div class="menu-sec">Từ vựng</div>
 <div class="ex-grid">
 <button class="ex-item" onclick="stShow('antCard');antQ.start()"><div class="ex-item-no">↔️ Tìm từ trái nghĩa</div><div class="ex-item-meta">118 câu: chọn từ trái nghĩa (多 ↔ 少, 来 ↔ 去…)</div><div class="ex-item-go">Bắt đầu →</div></button>
-</div>
-<div class="menu-sec">Viết chữ Hán</div>
-<div class="ex-grid">
 <button class="ex-item" onclick="stShow('bjCard');bjStart()"><div class="ex-item-no">🖌️ Ghép bộ kiện (ẩn nét)</div><div class="ex-item-meta">500 câu: từ bị ẩn nét, chọn bộ kiện để hoàn thành chữ</div><div class="ex-item-go">Bắt đầu →</div></button>
+</div>
+<div class="menu-sec">Đọc hiểu</div>
+<div class="ex-grid">
+<button class="ex-item" onclick="stShow('rdCard');rdOpen()"><div class="ex-item-no">🖼️ Hội thoại dài</div><div class="ex-item-meta">Đọc hội thoại có hình minh hoạ, rồi trả lời câu hỏi</div><div class="ex-item-go">Bắt đầu →</div></button>
 </div>
 <div class="menu-sec">Luyện nói</div>
 <div class="ex-grid">
@@ -725,6 +731,12 @@ body{background:var(--bg)}
       <h1>↔️ Tìm từ trái nghĩa</h1>
       <div class="sub">Đọc từ cho sẵn rồi chọn từ có nghĩa trái ngược. Ví dụ: 多 (nhiều) ↔ 少 (ít).</div>
       <div id="antArea"></div>
+    </div>
+    <div class="card hidden" id="rdCard">
+      <button class="toggle-btn back-btn" onclick="rdBack()">← Danh sách chức năng</button>
+      <h1>🖼️ Hội thoại dài</h1>
+      <div class="sub">Đọc hội thoại (chạm vào câu để xem nghĩa), rồi trả lời câu hỏi đọc hiểu.</div>
+      <div id="rdArea"></div>
     </div>
     <div class="card hidden" id="trnCard">
       <button class="toggle-btn back-btn" onclick="stBack('trnCard')">← Danh sách chức năng</button>
@@ -878,7 +890,7 @@ const basicData = [
   { pinyin: "tā shēntǐ hěn hǎo.", sentence: "他身体很好。", vi: "Sức khỏe của anh ấy rất tốt." },
   { pinyin: "wèi, nǐ zài jiā ma?", sentence: "喂，你在家吗？", vi: "Alo, bạn có ở nhà không?" },
   { pinyin: "wǒ bú zài jiā, wǒ zài xuéxiào.", sentence: "我不在家，我在学校。", vi: "Tôi không ở nhà, tôi đang ở trường." },
-  { pinyin: "tā shénmeshíhou huílái?", sentence: "他什么时候回来？", vi: "Khi nào thì anh ấy quay về?" },
+  { pinyin: "tā shénme shíhou huílái?", sentence: "他什么时候回来？", vi: "Khi nào thì anh ấy quay về?" },
   { pinyin: "tā wǔ diǎn huílái.", sentence: "他五点回来。", vi: "Năm giờ anh ấy về." },
   { pinyin: "nǐ zài nǎlǐ gōngzuò?", sentence: "你在哪里工作？", vi: "Bạn làm việc ở nơi nào?" },
   { pinyin: "wǒ néng zuò zài zhèr ma?", sentence: "我能坐在这儿吗？", vi: "Tôi có thể ngồi ở đây không?" },
@@ -897,7 +909,7 @@ const advData = [
   { pinyin: "zhuōzi shang yǒu sān běn shū hé liǎng ge bēizi.", sentence: "桌子上有三本书和两个杯子。", vi: "Trên bàn có 3 quyển sách và 2 cái cốc." },
   { pinyin: "wǒ māma zuò de cài hěn hǎochī.", sentence: "我妈妈做的菜很好吃。", vi: "Món ăn mẹ tôi nấu rất ngon." },
   { pinyin: "wǒmen míngtiān zuò fēijī qù Běijīng.", sentence: "我们明天坐飞机去北京。", vi: "Ngày mai chúng tôi đi máy bay đến Bắc Kinh." },
-  { pinyin: "nǐ shénmeshíhou hé péngyou qù shāngdiàn?", sentence: "你什么时候和朋友去商店？", vi: "Khi nào bạn cùng bạn bè đi đến cửa hàng?" },
+  { pinyin: "nǐ shénme shíhou hé péngyou qù shāngdiàn?", sentence: "你什么时候和朋友去商店？", vi: "Khi nào bạn cùng bạn bè đi đến cửa hàng?" },
   { pinyin: "jīntiān tiānqì tài rè le, wǒ bù xiǎng chūqù.", sentence: "今天天气太热了，我不想出去。", vi: "Hôm nay thời tiết nóng quá rồi, tôi không muốn ra ngoài." },
   { pinyin: "tā de Hànyǔ lǎoshī jīnnián sìshí suì le.", sentence: "他的汉语老师今年四十岁了。", vi: "Giáo viên tiếng Hán của anh ấy năm nay đã 40 tuổi rồi." },
   { pinyin: "yǐzi xiàmiàn de nà zhī xiǎomāo shì shéi de?", sentence: "椅子下面的那只小猫是谁的？", vi: "Con mèo con ở dưới gầm ghế kia là của ai?" },
@@ -913,7 +925,7 @@ const advData = [
   { pinyin: "qǐngwèn, yīyuàn qiánmiàn yǒu chūzūchē ma?", sentence: "请问，医院前面有出租车吗？", vi: "Xin hỏi, phía trước bệnh viện có xe taxi không?" },
   { pinyin: "tā zài jiā lǐ tīng yīnyuè, bù xiǎng shuōhuà.", sentence: "他在家里听音乐，不想说话。", vi: "Anh ấy đang ở trong nhà nghe nhạc, không muốn nói chuyện." },
   { pinyin: "jīntiān de cài bù hǎochī, wǒ bù xiǎng chī.", sentence: "今天的菜不好吃，我不想吃。", vi: "Món ăn hôm nay không ngon lắm, tôi không muốn ăn." },
-  { pinyin: "nǐ shénmeshíhou lái wǒ jiā chī fàn?", sentence: "你什么时候来我家吃饭？", vi: "Khi nào bạn đến nhà tôi ăn cơm?" },
+  { pinyin: "nǐ shénme shíhou lái wǒ jiā chī fàn?", sentence: "你什么时候来我家吃饭？", vi: "Khi nào bạn đến nhà tôi ăn cơm?" },
   { pinyin: "tā zài xuéxiào xué le liǎng ge yuè Hànyǔ.", sentence: "他在学校学了两个月汉语。", vi: "Anh ấy đã học 2 tháng tiếng Hán ở trường." },
   { pinyin: "zhè ge diànyǐng hěn yǒu yìsi, wǒ hěn xǐhuan.", sentence: "这个电影很有意思，我很喜欢。", vi: "Bộ phim này rất thú vị, tôi rất thích." },
   { pinyin: "wǒ xiǎng qù shāngdiàn mǎi yìdiǎnr dōngxi chī.", sentence: "我想去商店买一点儿东西吃。", vi: "Tôi muốn đi cửa hàng mua một chút đồ ăn." },
@@ -963,7 +975,7 @@ const advData = [
   { pinyin: "nǐ kàn, nà zhī xiǎogǒu duō kě'ài!", sentence: "你看，那只小狗多可爱！", vi: "Bạn nhìn xem, con chó con kia đáng yêu quá!" },
   { pinyin: "wǒ bù xǐhuan zài zhè ge fànguǎn chīfàn.", sentence: "我不喜欢在这个饭馆吃饭。", vi: "Tôi không thích ăn cơm ở nhà hàng này." },
   { pinyin: "míngtiān tiānqì zěnmeyàng? huì xiàyǔ ma?", sentence: "明天天气怎么样？会下雨吗？", vi: "Thời tiết ngày mai thế nào? Có mưa không?" },
-  { pinyin: "tā shì shénmeshíhou lái nǐ jiā de?", sentence: "他是什么时候来你家的？", vi: "Anh ấy đến nhà bạn khi nào thế?" },
+  { pinyin: "tā shì shénme shíhou lái nǐ jiā de?", sentence: "他是什么时候来你家的？", vi: "Anh ấy đến nhà bạn khi nào thế?" },
   { pinyin: "wǒmen xiàwǔ yìqǐ qù shāngdiàn ba.", sentence: "我们下午一起去商店吧。", vi: "Buổi chiều chúng mình cùng đi cửa hàng nhé." },
   { pinyin: "zhè ge zì shì shénme yìsi?", sentence: "这个字是什么意思？", vi: "Chữ này nghĩa là gì?" },
   { pinyin: "wǒ bàba xǐhuan hē Zhōngguó chá.", sentence: "我爸爸喜欢喝中国茶。", vi: "Bố tôi thích uống trà Trung Quốc." },
@@ -976,7 +988,7 @@ const advData = [
   { pinyin: "zhè běn shū shì sānshí kuài qián mǎi de.", sentence: "这本书是三十块钱买的。", vi: "Quyển sách này được mua với giá 30 tệ." },
   { pinyin: "wǒ xiǎng zài xuéxiào lǐ xuéxí Hànyǔ.", sentence: "我想在学校里学汉语。", vi: "Tôi muốn học tiếng Hán ở trong trường." },
   { pinyin: "tāmen jīntiān xiàwǔ dōu bù zài xuéxiào.", sentence: "他们今天下午都不在学校。", vi: "Chiều nay tất cả bọn họ đều không ở trường." },
-  { pinyin: "nǐ shénmeshíhou qù Běijīng xuéxí?", sentence: "你什么时候去北京学汉语？", vi: "Khi nào bạn đi Bắc Kinh học tiếng Hán?" },
+  { pinyin: "nǐ shénme shíhou qù Běijīng xuéxí?", sentence: "你什么时候去北京学汉语？", vi: "Khi nào bạn đi Bắc Kinh học tiếng Hán?" },
   { pinyin: "zhuōzi shang yǒu yí ge dà píngguǒ.", sentence: "桌子上有一个大苹果。", vi: "Trên bàn có một quả táo to." },
   { pinyin: "tā de péngyou dōu bú huì kāichē.", sentence: "他的朋友都不会开车。", vi: "Bạn bè của anh ấy đều không biết lái xe." },
   { pinyin: "wǒ jīntiān xiǎng zài jiā lǐ tīng yīnyuè.", sentence: "我今天想在家里听音乐。", vi: "Hôm nay tôi muốn ở nhà nghe nhạc." },
@@ -1305,7 +1317,7 @@ const vocabFull = [
   { hz: "回家", py: "huí jiā", vi: "Về nhà" },
   { hz: "回国", py: "huí guó", vi: "Về nước" },
   { hz: "没问题", py: "méi wèntí", vi: "Không vấn đề gì" },
-  { hz: "什么时候", py: "shénmeshíhou", vi: "Khi nào, lúc nào" },
+  { hz: "什么时候", py: "shénme shíhou", vi: "Khi nào, lúc nào" },
   { hz: "在这里", py: "zài zhèlǐ", vi: "Ở đây" },
   { hz: "在哪儿", py: "zài nǎr", vi: "Ở đâu" },
   { hz: "前面", py: "qiánmiàn", vi: "Phía trước" },
@@ -2702,6 +2714,9 @@ const NP_ALLZH = NP_Q.map(q => q.f).join("");
 const H2_WORDS = H2_ALL.filter(w => NP_ALLZH.includes(w[0]));
 H2_ALL.forEach(w => { PYD[w[0]] = w[1]; });
 Object.assign(PYD, { "样": "yàng", "作业": "zuòyè", "然后": "ránhòu", "如果": "rúguǒ", "放假": "fàngjià", "或者": "huòzhě", "上海": "Shànghǎi", "洗澡": "xǐzǎo", "长城": "Chángchéng", "胖": "pàng", "行": "xíng", "信": "xìn", "辣": "là", "为": "wèi", "为什么": "wèishénme", "晚": "wǎn", "久": "jiǔ", "练习": "liànxí" });
+
+// Bổ sung pinyin còn thiếu / sửa chữ đa âm (chỉ thêm khi chưa có)
+(function () { const ADD = {"遍": "biàn", "一遍": "yíbiàn", "习": "xí", "仔": "zǐ", "俩": "liǎ", "儿": "ér", "关": "guān", "力": "lì", "努": "nǔ", "图": "tú", "声": "shēng", "夏": "xià", "子": "zi", "安": "ān", "山": "shān", "带": "dài", "度": "dù", "心": "xīn", "急": "jí", "息": "xi", "情": "qíng", "把": "bǎ", "拍": "pāi", "春": "chūn", "棒": "bàng", "楚": "chu", "气": "qì", "消": "xiāo", "清": "qīng", "然": "rán", "照": "zhào", "爬": "pá", "礼": "lǐ", "空": "kòng", "突": "tū", "答": "dá", "细": "xì", "聊": "liáo", "舞": "wǔ", "英": "yīng", "裙": "qún", "认": "rèn", "讲": "jiǎng", "语": "yǔ", "貌": "mào", "起": "qǐ", "跳": "tiào", "轻": "qīng", "迟": "chí", "难": "nán", "静": "jìng", "饱": "bǎo", "马": "mǎ", "鲜": "xiān", "长": "zhǎng", "我们俩": "wǒmenliǎ", "仔细": "zǐxì", "努力": "nǔlì", "地图": "dìtú", "大声": "dàshēng", "爬山": "páshān", "着急": "zháojí", "热情": "rèqíng", "拍照": "pāizhào", "生气": "shēngqì", "突然": "tūrán", "礼貌": "lǐmào", "回答": "huídá", "聊天": "liáotiān", "英语": "yīngyǔ", "认真": "rènzhēn", "起飞": "qǐfēi", "轻轻": "qīngqīng", "迟到": "chídào", "马路": "mǎlù", "吃饱": "chībǎo", "新鲜": "xīnxiān", "开心": "kāixīn", "睡着": "shuìzháo", "长得": "zhǎngde", "长大": "zhǎngdà", "过生日": "guòshēngrì", "过马路": "guòmǎlù", "玩儿": "wánr", "花儿": "huār", "画画儿": "huàhuàr", "空调": "kōngtiáo", "有空": "yǒukòng", "清楚": "qīngchu", "消息": "xiāoxi", "裙子": "qúnzi", "习惯": "xíguàn", "关上": "guānshàng", "关门": "guānmén", "跳起舞": "tiàoqǐwǔ", "孩子们": "háizimen"}; Object.keys(ADD).forEach(k => { if (!PYD[k]) PYD[k] = ADD[k]; }); })();
 let npDeck = [], npI = 0, npScore = 0, npCur = null;
 function npStart() { npDeck = shuffleArray(NP_Q); npI = 0; npScore = 0; npRender(); }
 function npRender() {
@@ -2717,22 +2732,54 @@ function npPick(i) {
   if (!ok) document.getElementById("npo" + i).style.background = "#fecaca";
   document.getElementById("npFb").innerHTML = `<div class="ex-rv ${ok ? "good" : "bad"}">${ok ? "✅ Đúng!" : "❌ Chưa đúng."} <b>${pyHtml(npFill(npCur.q, npCur.q.c))}</b> <button class="toggle-btn" onclick="speakSafe('${npFill(npCur.q, npCur.q.c)}')">🔊</button><div class="np-tr">💡 ${NP_RULE[npCur.q.cat]}</div></div><button class="primary np-next" onclick="npI++;npRender()">Câu tiếp →</button>`;
 }
-const GRAMMAR_RULES = [{"lv": "HSK1", "t": "Câu chữ 是", "r": "A + 是 + B: A là B. Phủ định: 不是.", "ex": [{"zh": "我是学生。", "vi": "Tôi là học sinh."}, {"zh": "他不是老师。", "vi": "Anh ấy không phải giáo viên."}]}, {"lv": "HSK1", "t": "Câu hỏi 吗 / 呢 / 吧", "r": "吗: hỏi có/không (cuối câu). 呢: hỏi lại 'còn…thì sao?'. 吧: đề nghị, phỏng đoán.", "ex": [{"zh": "你好吗?", "vi": "Bạn khỏe không?"}, {"zh": "我很好,你呢?", "vi": "Tôi khỏe, còn bạn?"}, {"zh": "我们走吧。", "vi": "Chúng ta đi thôi."}]}, {"lv": "HSK1", "t": "Phủ định 不 và 没", "r": "不: phủ định thói quen, ý muốn, hiện tại/tương lai (不去). 没(有): phủ định sự việc đã xảy ra hoặc 有 (没去, 没有).", "ex": [{"zh": "我不喝咖啡。", "vi": "Tôi không uống cà phê."}, {"zh": "他昨天没来。", "vi": "Hôm qua anh ấy không đến."}]}, {"lv": "HSK1", "t": "有 và 在", "r": "有: sở hữu/tồn tại: Nơi chốn + 有 + người/vật. 在: ở, tại: Người/vật + 在 + nơi chốn.", "ex": [{"zh": "桌子上有一本书。", "vi": "Trên bàn có một quyển sách."}, {"zh": "我在家。", "vi": "Tôi ở nhà."}]}, {"lv": "HSK1", "t": "Đại từ nghi vấn", "r": "什么 (gì), 谁 (ai), 哪/哪儿 (nào/đâu), 几 (mấy, số nhỏ), 多少 (bao nhiêu), 怎么 (thế nào, làm sao), 怎么样 (như thế nào). Vị trí giống câu trần thuật, không đảo ngữ.", "ex": [{"zh": "你叫什么名字?", "vi": "Bạn tên là gì?"}, {"zh": "这个多少钱?", "vi": "Cái này bao nhiêu tiền?"}, {"zh": "你去哪儿?", "vi": "Bạn đi đâu?"}]}, {"lv": "HSK1", "t": "Động từ năng nguyện 想 / 会 / 能 / 可以 / 要", "r": "想: muốn; 会: biết (học mà được); 能: có thể (khả năng/điều kiện); 可以: được phép; 要: cần, sẽ. Cấu trúc: S + động từ năng nguyện + V.", "ex": [{"zh": "我想喝水。", "vi": "Tôi muốn uống nước."}, {"zh": "他会说汉语。", "vi": "Anh ấy biết nói tiếng Trung."}, {"zh": "这里可以拍照吗?", "vi": "Ở đây có được chụp ảnh không?"}]}, {"lv": "HSK1", "t": "Phó từ 很 / 也 / 都 / 太", "r": "很: rất (đứng trước tính từ); 也: cũng; 都: đều; 太…了: quá. Phó từ đứng trước động từ/tính từ, sau chủ ngữ.", "ex": [{"zh": "她很高。", "vi": "Cô ấy rất cao."}, {"zh": "我们都是学生。", "vi": "Chúng tôi đều là học sinh."}, {"zh": "太好了!", "vi": "Tốt quá!"}]}, {"lv": "HSK1", "t": "Giới từ 和 / 在", "r": "和: và, cùng với; 在 + nơi chốn + V: làm gì ở đâu.", "ex": [{"zh": "我和朋友去商店。", "vi": "Tôi và bạn đi cửa hàng."}, {"zh": "他在学校学习。", "vi": "Anh ấy học ở trường."}]}, {"lv": "HSK1", "t": "Trợ từ 了 và 在 + V", "r": "V + 了: hành động đã hoàn thành. 在 + V: đang làm gì.", "ex": [{"zh": "我吃了饭。", "vi": "Tôi đã ăn cơm."}, {"zh": "他在看书。", "vi": "Anh ấy đang đọc sách."}]}, {"lv": "HSK1", "t": "Số, thời gian, lượng từ", "r": "Số + lượng từ + danh từ: 一个人, 两本书, 三杯水, 五块钱, 二十岁. Ngày giờ: năm → tháng → ngày → giờ; thời gian đứng trước động từ.", "ex": [{"zh": "我有两本书。", "vi": "Tôi có hai quyển sách."}, {"zh": "现在八点。", "vi": "Bây giờ là 8 giờ."}]}, {"lv": "HSK2", "t": "So sánh 比 / 更 / 最", "r": "A + 比 + B + Adj: A hơn B. Thêm 更 (càng) hoặc 一点儿/得多 để chỉ mức. 最: nhất. Phủ định: A + 没有 + B + Adj.", "ex": [{"zh": "他比我高。", "vi": "Anh ấy cao hơn tôi."}, {"zh": "今天比昨天更冷。", "vi": "Hôm nay lạnh hơn hôm qua."}, {"zh": "他是我们班最高的。", "vi": "Anh ấy cao nhất lớp."}]}, {"lv": "HSK2", "t": "Bổ ngữ trạng thái 得", "r": "V + 得 + Adj: mô tả mức độ/cách thức của hành động. Nếu có tân ngữ: lặp động từ (说汉语说得很好).", "ex": [{"zh": "她跑得很快。", "vi": "Cô ấy chạy rất nhanh."}, {"zh": "他汉语说得很好。", "vi": "Anh ấy nói tiếng Trung rất tốt."}]}, {"lv": "HSK2", "t": "过 / 着 / 正在", "r": "V + 过: đã từng. V + 着: đang ở trạng thái. 正在/正/在 + V (+ 呢): đang làm.", "ex": [{"zh": "我去过北京。", "vi": "Tôi từng đến Bắc Kinh."}, {"zh": "门开着。", "vi": "Cửa đang mở."}, {"zh": "他正在打电话。", "vi": "Anh ấy đang gọi điện."}]}, {"lv": "HSK2", "t": "Bổ ngữ kết quả 完 / 好", "r": "V + 完: làm xong; V + 好: làm xong, làm tốt. Phủ định dùng 没.", "ex": [{"zh": "我作业做完了。", "vi": "Tôi làm xong bài tập rồi."}, {"zh": "饭做好了。", "vi": "Cơm nấu xong rồi."}]}, {"lv": "HSK2", "t": "Bổ ngữ xu hướng", "r": "V + 来/去 hoặc V + 上/下/进/出/回/过 + 来/去: chỉ hướng so với người nói (来: hướng về người nói, 去: ra xa).", "ex": [{"zh": "他走进教室来了。", "vi": "Anh ấy bước vào lớp học rồi."}, {"zh": "请你回去吧。", "vi": "Mời bạn quay về nhé."}, {"zh": "他跑过来了。", "vi": "Anh ấy chạy qua đây rồi."}]}, {"lv": "HSK2", "t": "Giới từ 从…到 / 离 / 往 / 跟 / 给 / 让", "r": "从A到B: từ A đến B; A + 离 + B: A cách B; 往 + hướng: về phía; 跟: cùng/với; 给: cho; 让: để, bảo.", "ex": [{"zh": "从家到学校很近。", "vi": "Từ nhà đến trường rất gần."}, {"zh": "学校离我家不远。", "vi": "Trường cách nhà tôi không xa."}, {"zh": "请往左走。", "vi": "Xin đi về bên trái."}]}, {"lv": "HSK2", "t": "Liên từ 因为…所以 / 虽然…但是 / 还是", "r": "因为A,所以B: vì A nên B. 虽然A,但是B: tuy A nhưng B. 还是: hay là (câu hỏi lựa chọn).", "ex": [{"zh": "因为下雨,所以我没去。", "vi": "Vì mưa nên tôi không đi."}, {"zh": "虽然很累,但是很高兴。", "vi": "Tuy mệt nhưng rất vui."}, {"zh": "你喝茶还是咖啡?", "vi": "Bạn uống trà hay cà phê?"}]}, {"lv": "HSK2", "t": "Phó từ 已经 / 就 / 才 / 再 / 又 / 一起", "r": "已经: đã; 就: ngay, liền; 才: mới, mãi mới; 再: lại (chưa xảy ra); 又: lại (đã xảy ra); 一起: cùng nhau.", "ex": [{"zh": "他已经走了。", "vi": "Anh ấy đã đi rồi."}, {"zh": "请再说一遍。", "vi": "Xin nói lại một lần nữa."}, {"zh": "我们一起去吧。", "vi": "Chúng ta cùng đi nhé."}]}, {"lv": "HSK2", "t": "Câu cầu khiến 别 / 不要 / 请", "r": "别/不要 + V: đừng làm gì; 请 + V: xin mời, làm ơn.", "ex": [{"zh": "别说话!", "vi": "Đừng nói chuyện!"}, {"zh": "请坐。", "vi": "Xin mời ngồi."}]}, {"lv": "HSK2", "t": "V + 一下 / 一会儿 / Lặp động từ", "r": "V + 一下: thử/làm một chút; V + 一会儿: một lát; lặp động từ (看看) cũng mang nghĩa nhẹ nhàng, thử làm.", "ex": [{"zh": "请等一下。", "vi": "Xin đợi một chút."}, {"zh": "我看看。", "vi": "Để tôi xem thử."}, {"zh": "休息一会儿吧。", "vi": "Nghỉ một lát nhé."}]}];
+const GRAMMAR_RULES = [{"lv": "HSK1", "t": "Câu chữ 是", "r": "A + 是 + B: A là B. Phủ định: 不是.", "ex": [{"zh": "我是学生。", "vi": "Tôi là học sinh."}, {"zh": "他不是老师。", "vi": "Anh ấy không phải giáo viên."}]}, {"lv": "HSK1", "t": "Câu hỏi 吗 / 呢 / 吧", "r": "吗: hỏi có/không (cuối câu). 呢: hỏi lại 'còn…thì sao?'. 吧: đề nghị, phỏng đoán.", "ex": [{"zh": "你好吗?", "vi": "Bạn khỏe không?"}, {"zh": "我很好,你呢?", "vi": "Tôi khỏe, còn bạn?"}, {"zh": "我们走吧。", "vi": "Chúng ta đi thôi."}]}, {"lv": "HSK1", "t": "Phủ định 不 và 没", "r": "不: phủ định thói quen, ý muốn, hiện tại/tương lai (不去). 没(有): phủ định sự việc đã xảy ra hoặc 有 (没去, 没有).", "ex": [{"zh": "我不喝咖啡。", "vi": "Tôi không uống cà phê."}, {"zh": "他昨天没来。", "vi": "Hôm qua anh ấy không đến."}]}, {"lv": "HSK1", "t": "有 và 在", "r": "有: sở hữu/tồn tại: Nơi chốn + 有 + người/vật. 在: ở, tại: Người/vật + 在 + nơi chốn.", "ex": [{"zh": "桌子上有一本书。", "vi": "Trên bàn có một quyển sách."}, {"zh": "我在家。", "vi": "Tôi ở nhà."}]}, {"lv": "HSK1", "t": "Đại từ nghi vấn", "r": "什么 (gì), 谁 (ai), 哪/哪儿 (nào/đâu), 几 (mấy, số nhỏ), 多少 (bao nhiêu), 怎么 (thế nào, làm sao), 怎么样 (như thế nào). Vị trí giống câu trần thuật, không đảo ngữ.", "ex": [{"zh": "你叫什么名字?", "vi": "Bạn tên là gì?"}, {"zh": "这个多少钱?", "vi": "Cái này bao nhiêu tiền?"}, {"zh": "你去哪儿?", "vi": "Bạn đi đâu?"}]}, {"lv": "HSK1", "t": "Động từ năng nguyện 想 / 会 / 能 / 可以 / 要", "r": "想: muốn; 会: biết (học mà được); 能: có thể (khả năng/điều kiện); 可以: được phép; 要: cần, sẽ. Cấu trúc: S + động từ năng nguyện + V.", "ex": [{"zh": "我想喝水。", "vi": "Tôi muốn uống nước."}, {"zh": "他会说汉语。", "vi": "Anh ấy biết nói tiếng Trung."}, {"zh": "这里可以拍照吗?", "vi": "Ở đây có được chụp ảnh không?"}]}, {"lv": "HSK1", "t": "Phó từ 很 / 也 / 都 / 太", "r": "很: rất (đứng trước tính từ); 也: cũng; 都: đều; 太…了: quá. Phó từ đứng trước động từ/tính từ, sau chủ ngữ.", "ex": [{"zh": "她很高。", "vi": "Cô ấy rất cao."}, {"zh": "我们都是学生。", "vi": "Chúng tôi đều là học sinh."}, {"zh": "太好了!", "vi": "Tốt quá!"}]}, {"lv": "HSK1", "t": "Giới từ 和 / 在", "r": "和: và, cùng với; 在 + nơi chốn + V: làm gì ở đâu.", "ex": [{"zh": "我和朋友去商店。", "vi": "Tôi và bạn đi cửa hàng."}, {"zh": "他在学校学习。", "vi": "Anh ấy học ở trường."}]}, {"lv": "HSK1", "t": "Trợ từ 了 và 在 + V", "r": "V + 了: hành động đã hoàn thành. 在 + V: đang làm gì.", "ex": [{"zh": "我吃了饭。", "vi": "Tôi đã ăn cơm."}, {"zh": "他在看书。", "vi": "Anh ấy đang đọc sách."}]}, {"lv": "HSK1", "t": "Số, thời gian, lượng từ", "r": "Số + lượng từ + danh từ: 一个人, 两本书, 三杯水, 五块钱, 二十岁. Ngày giờ: năm → tháng → ngày → giờ; thời gian đứng trước động từ.", "ex": [{"zh": "我有两本书。", "vi": "Tôi có hai quyển sách."}, {"zh": "现在八点。", "vi": "Bây giờ là 8 giờ."}]}, {"lv": "HSK2", "t": "So sánh 比 / 更 / 最", "r": "A + 比 + B + Adj: A hơn B. Thêm 更 (càng) hoặc 一点儿/得多 để chỉ mức. 最: nhất. Phủ định: A + 没有 + B + Adj.", "ex": [{"zh": "他比我高。", "vi": "Anh ấy cao hơn tôi."}, {"zh": "今天比昨天更冷。", "vi": "Hôm nay lạnh hơn hôm qua."}, {"zh": "他是我们班最高的。", "vi": "Anh ấy cao nhất lớp."}]}, {"lv": "HSK2", "t": "Bổ ngữ trạng thái 得", "r": "V + 得 + Adj: mô tả mức độ/cách thức của hành động. Nếu động từ có tân ngữ thì có 2 cách: (1) lặp động từ: V + O + V + 得 + Adj; (2) đẩy tân ngữ lên trước: O + V + 得 + Adj. Không đặt 得 ngay sau tân ngữ (✗ 她唱歌得好听). Phủ định: đặt 不 trước tính từ (唱得不好听), không đặt trước động từ.", "ex": [{"zh": "她跑得很快。", "vi": "Cô ấy chạy rất nhanh."}, {"zh": "她唱歌唱得非常好听。", "vi": "Cô ấy hát cực kỳ hay. (lặp động từ)"}, {"zh": "她歌唱得非常好听。", "vi": "Cô ấy hát cực kỳ hay. (đẩy tân ngữ lên trước)"}, {"zh": "她唱得不太好听。", "vi": "Cô ấy hát không hay lắm. (phủ định ở tính từ)"}]}, {"lv": "HSK2", "t": "过 / 着 / 正在", "r": "V + 过: đã từng. V + 着: đang ở trạng thái. 正在/正/在 + V (+ 呢): đang làm.", "ex": [{"zh": "我去过北京。", "vi": "Tôi từng đến Bắc Kinh."}, {"zh": "门开着。", "vi": "Cửa đang mở."}, {"zh": "他正在打电话。", "vi": "Anh ấy đang gọi điện."}]}, {"lv": "HSK2", "t": "Bổ ngữ kết quả 完 / 好", "r": "V + 完: làm xong; V + 好: làm xong, làm tốt. Phủ định dùng 没.", "ex": [{"zh": "我作业做完了。", "vi": "Tôi làm xong bài tập rồi."}, {"zh": "饭做好了。", "vi": "Cơm nấu xong rồi."}]}, {"lv": "HSK2", "t": "Bổ ngữ xu hướng", "r": "V + 来/去 hoặc V + 上/下/进/出/回/过 + 来/去: chỉ hướng so với người nói (来: hướng về người nói, 去: ra xa).", "ex": [{"zh": "他走进教室来了。", "vi": "Anh ấy bước vào lớp học rồi."}, {"zh": "请你回去吧。", "vi": "Mời bạn quay về nhé."}, {"zh": "他跑过来了。", "vi": "Anh ấy chạy qua đây rồi."}]}, {"lv": "HSK2", "t": "Giới từ 从…到 / 离 / 往 / 跟 / 给 / 让", "r": "从A到B: từ A đến B; A + 离 + B: A cách B; 往 + hướng: về phía; 跟: cùng/với; 给: cho; 让: để, bảo.", "ex": [{"zh": "从家到学校很近。", "vi": "Từ nhà đến trường rất gần."}, {"zh": "学校离我家不远。", "vi": "Trường cách nhà tôi không xa."}, {"zh": "请往左走。", "vi": "Xin đi về bên trái."}]}, {"lv": "HSK2", "t": "Liên từ 因为…所以 / 虽然…但是 / 还是", "r": "因为A,所以B: vì A nên B. 虽然A,但是B: tuy A nhưng B. 还是: hay là (câu hỏi lựa chọn).", "ex": [{"zh": "因为下雨,所以我没去。", "vi": "Vì mưa nên tôi không đi."}, {"zh": "虽然很累,但是很高兴。", "vi": "Tuy mệt nhưng rất vui."}, {"zh": "你喝茶还是咖啡?", "vi": "Bạn uống trà hay cà phê?"}]}, {"lv": "HSK2", "t": "Phó từ 已经 / 就 / 才 / 再 / 又 / 一起", "r": "已经: đã; 就: ngay, liền; 才: mới, mãi mới; 再: lại (chưa xảy ra); 又: lại (đã xảy ra); 一起: cùng nhau.", "ex": [{"zh": "他已经走了。", "vi": "Anh ấy đã đi rồi."}, {"zh": "请再说一遍。", "vi": "Xin nói lại một lần nữa."}, {"zh": "我们一起去吧。", "vi": "Chúng ta cùng đi nhé."}]}, {"lv": "HSK2", "t": "Câu cầu khiến 别 / 不要 / 请", "r": "别/不要 + V: đừng làm gì; 请 + V: xin mời, làm ơn.", "ex": [{"zh": "别说话!", "vi": "Đừng nói chuyện!"}, {"zh": "请坐。", "vi": "Xin mời ngồi."}]}, {"lv": "HSK2", "t": "V + 一下 / 一会儿 / Lặp động từ", "r": "V + 一下: thử/làm một chút; V + 一会儿: một lát; lặp động từ (看看) cũng mang nghĩa nhẹ nhàng, thử làm.", "ex": [{"zh": "请等一下。", "vi": "Xin đợi một chút."}, {"zh": "我看看。", "vi": "Để tôi xem thử."}, {"zh": "休息一会儿吧。", "vi": "Nghỉ một lát nhé."}]}];
 const BOOK_WORDS = ["啊|a|a, nhé (trợ từ ngữ khí)|2", "爱好|àihào|sở thích|7", "爱情片|àiqíngpiàn|phim tình cảm ★|8", "白色|báisè|màu trắng|4", "班|bān|lớp|13", "帮|bāng|giúp|10", "帮忙|bāngmáng|giúp đỡ|1", "包|bāo|túi, cặp|14", "本子|běnzi|quyển vở|10", "比|bǐ|so với, hơn|8", "笔|bǐ|bút|10,13", "别|bié|đừng|2", "不错|búcuò|không tệ, khá tốt|3", "不好意思|bù hǎoyìsi|ngại quá, xin lỗi|1", "长|cháng|dài|6", "车站|chēzhàn|bến xe, ga|2", "出国|chūguó|ra nước ngoài|15", "出门|chūmén|ra ngoài, ra khỏi nhà|15", "出去|chūqù|đi ra|3", "床|chuáng|giường|6", "词|cí|từ|10", "次|cì|lần|1", "从|cóng|từ|7", "从小|cóngxiǎo|từ nhỏ|12", "错|cuò|sai|10", "打|dǎ|đánh, chơi (bóng)|7", "打车|dǎchē|đi taxi, bắt xe|2", "打开|dǎkāi|mở ra|6", "但|dàn|nhưng|2", "但是|dànshì|nhưng|8", "蛋糕|dàngāo|bánh ngọt ★|6", "地|de|(trợ từ trạng ngữ) một cách|6", "得|de|(trợ từ bổ ngữ trạng thái)|7", "等|děng|đợi|5", "地铁|dìtiě|tàu điện ngầm|12", "点|diǎn|giờ; chấm; gọi (món)|8", "懂|dǒng|hiểu|1", "动|dòng|động, di chuyển|11", "饭馆|fànguǎn|quán ăn|8", "房子|fángzi|nhà, căn nhà ★|14", "飞|fēi|bay|15", "高|gāo|cao|9", "高中|gāozhōng|trung học phổ thông|15", "告诉|gàosu|nói cho biết|13", "个子|gèzi|vóc dáng, chiều cao|9", "给|gěi|cho, đưa; (giới từ) cho|1", "跟|gēn|cùng, với, theo|5", "更|gèng|càng, hơn nữa ★|4", "公交车|gōngjiāochē|xe buýt|2", "过|guo|(trợ từ) đã từng|4", "过|guò|qua, trải qua|6", "过来|guòlái|qua đây|2", "过去|guòqù|qua đó; quá khứ|4", "过年|guònián|đón Tết|14", "还是|háishi|hay là; vẫn|2,10", "好|hǎo|tốt; (bổ ngữ kết quả) xong|12", "好像|hǎoxiàng|hình như ★|15", "黑色|hēisè|màu đen|4", "红色|hóngsè|màu đỏ|4", "后面|hòumiàn|phía sau|10", "花|huā|hoa; tiêu (tiền)|6", "画|huà|vẽ; bức tranh|8,13", "画笔|huàbǐ|bút vẽ ★|6", "坏|huài|hỏng, xấu|9", "回来|huílái|trở về (đây)|3", "回去|huíqù|trở về (đó)|3", "机场|jīchǎng|sân bay|15", "机票|jīpiào|vé máy bay|15", "记得|jìde|nhớ|8", "间|jiān|(lượng từ) gian, phòng|2", "教|jiāo|dạy|13", "教室|jiàoshì|lớp học, phòng học|2", "接|jiē|đón; nhận ★|1", "介绍|jièshào|giới thiệu|1", "进|jìn|vào|11", "进来|jìnlái|đi vào (đây)|5", "进去|jìnqù|đi vào (đó)|4", "近|jìn|gần|9", "经常|jīngcháng|thường xuyên|11", "酒店|jiǔdiàn|khách sạn|5", "就|jiù|liền, thì, chính là|1", "咖啡|kāfēi|cà phê|9", "开始|kāishǐ|bắt đầu|7", "开学|kāixué|khai giảng, vào học|10", "考|kǎo|thi|10", "考试|kǎoshì|kỳ thi, thi|10", "可能|kěnéng|có thể, khả năng|13", "裤子|kùzi|quần|4", "快|kuài|nhanh|5", "快乐|kuàilè|vui vẻ|6", "快要|kuàiyào|sắp|10", "篮球|lánqiú|bóng rổ|7", "累|lèi|mệt|3", "离|lí|cách, từ|9", "礼物|lǐwù|quà tặng ★|5", "里面|lǐmiàn|bên trong|13", "楼|lóu|tòa nhà, tầng|12", "路|lù|đường|15", "路上|lùshang|trên đường|11", "旅游|lǚyóu|du lịch|1", "绿色|lǜsè|màu xanh lá|4", "慢|màn|chậm|11", "没意思|méi yìsi|nhàm chán, không thú vị|14", "每|měi|mỗi|3", "门|mén|cửa|10", "门口|ménkǒu|cửa ra vào|9", "门票|ménpiào|vé vào cửa|15", "面|miàn|mì; mặt|5", "名|míng|tên; (lượng từ) người|2", "拿|ná|cầm, lấy|3", "那|nà|đó, thế thì|1", "那么|nàme|như vậy, thế|9", "那样|nàyàng|như thế|13", "奶茶|nǎichá|trà sữa|5", "奶奶|nǎinai|bà nội|5", "男孩儿|nánháir|bé trai|9", "鸟|niǎo|chim|15", "女孩儿|nǚháir|bé gái|14", "旁边|pángbiān|bên cạnh|9", "跑|pǎo|chạy|7", "跑步|pǎobù|chạy bộ|7", "票|piào|vé|2", "妻子|qīzi|vợ|8", "前面|qiánmiàn|phía trước|14", "晴|qíng|trời nắng, quang|12", "球|qiú|quả bóng|7", "让|ràng|để, bảo, cho phép|1", "肉|ròu|thịt|6", "商场|shāngchǎng|trung tâm thương mại|4", "上来|shànglái|đi lên (đây)|5", "上面|shàngmiàn|phía trên|13", "上去|shàngqù|đi lên (đó)|5", "上网|shàngwǎng|lên mạng|13", "身体|shēntǐ|cơ thể, sức khỏe|11", "生日|shēngrì|sinh nhật|6", "时|shí|lúc, khi|11", "事情|shìqing|sự việc, việc|12", "试|shì|thử ★|4", "手|shǒu|tay|3", "手表|shǒubiǎo|đồng hồ đeo tay|8", "书包|shūbāo|cặp sách|4", "舒服|shūfu|thoải mái, dễ chịu|6", "送|sòng|tặng, tiễn|3", "虽然|suīrán|tuy rằng|8", "所以|suǒyǐ|cho nên|4", "疼|téng|đau|11", "踢|tī|đá|7", "题|tí|đề, câu hỏi|10", "条|tiáo|(lượng từ) cái, con (vật dài)|4", "跳舞|tiàowǔ|nhảy múa|14", "头|tóu|đầu|11", "外国|wàiguó|nước ngoài|2", "外面|wàimiàn|bên ngoài|12", "完|wán|xong, hết|3", "往|wǎng|hướng về, về phía|7", "网上|wǎngshàng|trên mạng|2", "万|wàn|vạn, mười nghìn|2", "忘|wàng|quên|6", "为什么|wèi shénme|tại sao|3", "位|wèi|(lượng từ) vị|14", "希望|xīwàng|hy vọng|13", "洗|xǐ|rửa, giặt|3", "洗手间|xǐshǒujiān|nhà vệ sinh|13", "下来|xiàlái|đi xuống (đây)|5", "下面|xiàmiàn|phía dưới|5", "下去|xiàqù|đi xuống (đó)|5", "小孩儿|xiǎoháir|trẻ con|14", "小时候|xiǎoshíhou|hồi nhỏ|12", "笑|xiào|cười|10", "姓|xìng|họ; mang họ|14", "新年|xīnnián|năm mới ★|13", "姓名|xìngmíng|họ tên|15", "颜色|yánsè|màu sắc|4", "眼睛|yǎnjing|mắt|14", "药|yào|thuốc|11", "药店|yàodiàn|hiệu thuốc|11", "爷爷|yéye|ông nội|5", "一会儿|yíhuìr|một lát|5", "一起|yìqǐ|cùng nhau|3", "已经|yǐjīng|đã|1", "意思|yìsi|ý nghĩa|1", "阴|yīn|trời âm u|12", "因为|yīnwèi|bởi vì|4", "游|yóu|bơi; chơi, du|7", "游泳|yóuyǒng|bơi lội|7", "有时|yǒushí|có khi, đôi khi|1", "有意思|yǒu yìsi|thú vị|8", "右|yòu|phải (bên phải)|8", "右边|yòubian|bên phải|8", "鱼|yú|cá|6", "远|yuǎn|xa|2", "运动|yùndòng|vận động, thể thao|7", "站|zhàn|đứng; trạm|12,14", "丈夫|zhàngfu|chồng|8", "这么|zhème|như thế này|3", "这样|zhèyàng|như thế này|9", "周|zhōu|tuần|9", "着|zhe|(trợ từ) đang, đang ở trạng thái|11", "准备|zhǔnbèi|chuẩn bị|5", "自己|zìjǐ|bản thân, tự mình|3", "走|zǒu|đi, đi bộ|5", "走路|zǒulù|đi bộ|9", "足球|zúqiú|bóng đá|7", "最|zuì|nhất|11", "左|zuǒ|trái (bên trái)|8", "左边|zuǒbian|bên trái|8", "北京烤鸭|Běijīng Kǎoyā|vịt quay Bắc Kinh|1", "北京大学|Běijīng Dàxué|Đại học Bắc Kinh|2", "颐和园|Yíhé Yuán|Di Hòa Viên|15", "正|zhèng|đang, vừa đúng|12"].map(l => { const [hz, py, vi, bai] = l.split("|"); return { hz, py, vi, bai }; });
 BOOK_WORDS.forEach(w => { if (!PYD[w.hz]) PYD[w.hz] = w.py; });
 let LIB_WORDS = null, libLv = "all";
 function libNorm(t) { return (t || "").normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/đ/g, "d").toLowerCase().replace(/\s+/g, ""); }
+const LIB_EXTRA = `开心|kāixīn|vui vẻ, vui mừng
+认真|rènzhēn|nghiêm túc, chăm chỉ
+努力|nǔlì|cố gắng, nỗ lực
+仔细|zǐxì|tỉ mỉ, kỹ càng
+热情|rèqíng|nhiệt tình
+生气|shēngqì|tức giận
+着急|zháojí|sốt ruột, vội
+突然|tūrán|đột nhiên
+礼貌|lǐmào|lịch sự; phép lịch sự
+回答|huídá|trả lời
+聊天|liáotiān|trò chuyện
+英语|Yīngyǔ|tiếng Anh
+清楚|qīngchu|rõ ràng
+轻轻|qīngqīng|nhẹ nhàng, khẽ
+慢慢|mànmàn|từ từ, chậm rãi
+好好|hǎohǎo|cho tốt, đàng hoàng
+大声|dàshēng|to tiếng, lớn tiếng
+小心|xiǎoxīn|cẩn thận
+习惯|xíguàn|thói quen; quen với
+带|dài|mang, đem
+空|kòng|rảnh, thời gian rảnh (有空)
+马路|mǎlù|đường lớn, lòng đường
+新鲜|xīnxiān|tươi, mới mẻ
+迟到|chídào|đến muộn
+消息|xiāoxi|tin tức
+睡着|shuìzháo|ngủ thiếp đi
+长大|zhǎngdà|lớn lên
+爬山|páshān|leo núi
+拍照|pāizhào|chụp ảnh
+地图|dìtú|bản đồ`;
 function libBuild() {
   if (LIB_WORDS) return LIB_WORDS;
   const idx = {}; LIB_WORDS = [];
   const add = (hz, py, vi, lv, bai) => {
-    const k = hz + "|" + py, star = / ★$/.test(vi); if (star) vi = vi.slice(0, -2);
+    const k = hz + "|" + py.replace(/\s+/g, ""), star = / ★$/.test(vi); if (star) vi = vi.slice(0, -2);
     if (idx[k]) { if (bai && !idx[k].bai) { idx[k].bai = bai; idx[k].n += libNorm("bai" + bai); } return; }
     idx[k] = { hz, py, vi, lv, bai: bai || "", star, n: libNorm(hz + py + vi + (bai ? "bai" + bai : "")) }; LIB_WORDS.push(idx[k]);
   };
   vocabFull.forEach(v => add(v.hz, v.py, v.vi, "1"));
   H2_WORDS.forEach(w => add(w[0], w[1], w[2], "2"));
   BOOK_WORDS.forEach(w => add(w.hz, w.py, w.vi, "2", w.bai));
+  ANT_PAIRS.forEach(p => { add(p.a, p.pa, p.va, "2"); add(p.b, p.pb, p.vb, "2"); });
+  LIB_EXTRA.split("\n").forEach(l => { const [hz, py, vi] = l.split("|"); add(hz, py, vi, "2"); });
   return LIB_WORDS;
 }
 function libChips(fn) {
@@ -2758,7 +2805,7 @@ function openLib(kind) {
     GRAMMAR_RULES.forEach(g => { const n = g.lv.replace(/\D/g, ""); h += `<div class="lib-rule" data-lv="${n}"><div><span class="lvtag l${n}">${g.lv.replace("HSK", "HSK ")}</span><b>${g.t}</b></div><div>${g.r}</div>${g.ex.map(e => `<div class="lib-ex">${pyHtml(e.zh)} <button class="toggle-btn" onclick="speakSafe('${e.zh}')">🔊</button></div><div class="np-tr">🇻🇳 ${e.vi}</div>`).join("")}</div>`; });
     h += `<h2 class="lib-sec" data-lv="2">Trợ từ kết cấu 的 · 得 · 地<small>3 quy tắc</small></h2>`;
     h += `<div class="lib-rule" data-lv="2"><div><b>Cả ba đều đọc là de</b>, chỉ khác chữ viết và vị trí trong câu:</div><div class="np-tr">的 + DANH TỪ (định ngữ) · V/Adj + 得 + bổ ngữ · TRẠNG NGỮ + 地 + ĐỘNG TỪ</div></div>`;
-    [["的", "Định ngữ + 的 + danh từ. Định ngữ có thể là đại từ, tính từ, cụm động từ hay danh từ: 我的书, 漂亮的衣服, 妈妈做的饭. Cũng có cấu trúc 是……的 để nhấn mạnh: 是妈妈给我买的."], ["得", "Động từ/tính từ + 得 + bổ ngữ: nói người ta làm việc đó thế nào (说得很好), hoặc mức độ/kết quả (累得不想说话), so sánh (游得比我好). Bổ ngữ khả năng: 看得懂 / 看不懂, 吃得完."], ["地", "Trạng ngữ + 地 + động từ: tính từ hoặc từ lặp đứng trước động từ để nói cách thức (高兴地说, 慢慢地走, 好好地学习). Tính từ hai âm tiết thường cần 地."]].forEach(([c, rule]) => { const ex = DD_Q.filter(x => x.c === c).slice(0, 3); h += `<div class="lib-rule" data-lv="2"><div><span class="lvtag l2">HSK 2</span><b>${c}</b> — ${rule}</div>${ex.map(q => `<div class="lib-ex">${pyO(q.s.replace("＿", c))} <button class="toggle-btn" onclick="speakSafe('${q.s.replace("＿", c)}')">🔊</button></div><div class="np-tr">🇻🇳 ${q.vi}</div>`).join("")}</div>`; });
+    [["的", "Định ngữ + 的 + danh từ. Định ngữ có thể là đại từ, tính từ, cụm động từ hay danh từ: 我的书, 漂亮的衣服, 妈妈做的饭. Cũng có cấu trúc 是……的 để nhấn mạnh: 是妈妈给我买的."], ["得", "Động từ/tính từ + 得 + bổ ngữ: nói người ta làm việc đó thế nào (说得很好), hoặc mức độ/kết quả (累得不想说话), so sánh (游得比我好). Nếu động từ có tân ngữ: 她唱歌唱得好听 (lặp động từ) hoặc 她歌唱得好听 (tân ngữ lên trước); phủ định: 唱得不好听. Bổ ngữ khả năng: 看得懂 / 看不懂, 吃得完."], ["地", "Trạng ngữ + 地 + động từ: tính từ hoặc từ lặp đứng trước động từ để nói cách thức (高兴地说, 慢慢地走, 好好地学习). Tính từ hai âm tiết thường cần 地."]].forEach(([c, rule]) => { const ex = DD_Q.filter(x => x.c === c).slice(0, 3); h += `<div class="lib-rule" data-lv="2"><div><span class="lvtag l2">HSK 2</span><b>${c}</b> — ${rule}</div>${ex.map(q => `<div class="lib-ex">${pyO(q.s.replace("＿", c))} <button class="toggle-btn" onclick="speakSafe('${q.s.replace("＿", c)}')">🔊</button></div><div class="np-tr">🇻🇳 ${q.vi}</div>`).join("")}</div>`; });
     h += `<h2 class="lib-sec" data-lv="2">Cụm danh từ · vị trí định ngữ<small>${Object.keys(NP_RULE).length} quy tắc</small></h2>`;
     Object.keys(NP_RULE).forEach(k => { const q = NP_Q.find(x => x.cat === k); h += `<div class="lib-rule" data-lv="2"><div>${NP_RULE[k]}</div><div class="lib-ex">${pyHtml(npFill(q, q.c))}</div><div class="np-tr">🇻🇳 ${q.vi}</div></div>`; });
     h += `<h2 class="lib-sec" data-lv="2">Từ trái nghĩa<small>${ANT_PAIRS.length} cặp</small></h2>`;
@@ -3022,7 +3069,99 @@ f|请给我便宜___。|一点儿|有点儿|都|0|Làm ơn rẻ cho tôi một c
 f|我___在学校，没回家。|还|再|又|0|Tôi vẫn đang ở trường, chưa về nhà.
 f|他___住在这里，不在别的地方。|就|再|也|0|Anh ấy ở ngay tại đây, không ở chỗ khác.`.split("\n").map(l => { const [tag, s, o1, o2, o3, ans, vi] = l.split("|"); return { tag, s, o: [o1, o2, o3], ans: +ans, vi }; });
 function stFill(q, x) { const p = x.split("/"); let k = 0; return q.s.replace(/___/g, () => p[k++] || ""); }
+/* ===== ĐỌC HIỂU HỘI THOẠI DÀI ===== */
+const RD_SVG_MARKET = `<svg viewBox="0 0 360 210" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Quầy trái cây ở chợ">
+<rect width="360" height="210" fill="#fef3c7"/><rect y="150" width="360" height="60" fill="#fde68a"/>
+<path d="M30 20h300l14 44H16z" fill="#ef4444"/><path d="M30 20h50l-8 44H16zM130 20h50l-4 44h-56zM230 20h50l4 44h-56z" fill="#fff"/>
+<rect x="40" y="64" width="6" height="86" fill="#92400e"/><rect x="314" y="64" width="6" height="86" fill="#92400e"/>
+<rect x="46" y="112" width="268" height="44" rx="6" fill="#b45309"/><rect x="46" y="112" width="268" height="8" fill="#92400e"/>
+<g fill="#dc2626"><circle cx="70" cy="104" r="12"/><circle cx="94" cy="104" r="12"/><circle cx="118" cy="104" r="12"/><circle cx="82" cy="88" r="12"/><circle cx="106" cy="88" r="12"/></g>
+<g fill="#15803d"><path d="M82 74q6-8 12-2q-6 6-12 2z"/><path d="M106 74q6-8 12-2q-6 6-12 2z"/></g>
+<g fill="none" stroke="#eab308" stroke-width="9" stroke-linecap="round"><path d="M160 108q18 6 38-10"/><path d="M162 98q18 6 38-10"/><path d="M166 88q16 4 32-10"/></g>
+<g fill="#f97316"><circle cx="232" cy="104" r="12"/><circle cx="256" cy="104" r="12"/><circle cx="244" cy="88" r="12"/></g>
+<rect x="132" y="30" width="96" height="26" rx="6" fill="#fff" stroke="#92400e" stroke-width="2"/><text x="180" y="49" text-anchor="middle" font-size="16" font-weight="700" fill="#b91c1c">苹果 5元/斤</text>
+<g><circle cx="318" cy="120" r="20" fill="#fcd9b6"/><path d="M298 116q2-22 20-22q18 0 20 22q-8-10-20-10q-12 0-20 10z" fill="#1f2937"/><circle cx="311" cy="122" r="2.4" fill="#111"/><circle cx="325" cy="122" r="2.4" fill="#111"/><path d="M310 130q8 7 16 0" stroke="#b45309" stroke-width="2" fill="none"/><rect x="298" y="140" width="40" height="16" rx="6" fill="#f97316"/></g>
+<g><circle cx="46" cy="136" r="22" fill="#fcd9b6"/><path d="M22 136q-2-30 24-30q26 0 24 30q-4-18-24-18q-20 0-24 18z" fill="#3b2314"/><circle cx="38" cy="140" r="2.6" fill="#111"/><circle cx="54" cy="140" r="2.6" fill="#111"/><path d="M38 149q8 7 16 0" stroke="#b45309" stroke-width="2" fill="none"/><rect x="22" y="160" width="48" height="50" rx="12" fill="#f9a8d4"/></g>
+</svg>`;
+const RD_LESSONS = [{
+  id: "market", title: "在水果市场", vi: "Ở chợ trái cây", svg: RD_SVG_MARKET, tag: "Mua sắm · giá cả",
+  note: "Mẫu giá: 五块钱一斤 = 5 tệ/cân. 块 = đồng (tệ), 斤 = cân (500g).",
+  who: { A: "老板", B: "小美" },
+  lines: [
+    ["A", "你好！欢迎！你想买什么？", "Xin chào! Chào mừng! Bạn muốn mua gì?"],
+    ["B", "你好，这个苹果怎么卖？", "Chào ông, táo này bán thế nào?"],
+    ["A", "五块钱一斤。", "Năm tệ một cân."],
+    ["B", "有点贵，可以便宜一点吗？", "Hơi đắt, có thể rẻ hơn một chút không?"],
+    ["A", "今天的苹果很新鲜，也很甜。你尝一个吧。", "Táo hôm nay rất tươi, cũng rất ngọt. Bạn nếm thử một quả đi."],
+    ["B", "好吃！真的很甜。", "Ngon! Thật sự rất ngọt."],
+    ["A", "这样吧，四块五一斤。", "Thế này nhé, bốn tệ rưỡi một cân."],
+    ["B", "好的，我要两斤。香蕉怎么卖？", "Được, tôi lấy hai cân. Chuối bán thế nào?"],
+    ["A", "香蕉三块钱一斤。", "Chuối ba tệ một cân."],
+    ["B", "我也要一斤香蕉。", "Tôi cũng lấy một cân chuối."],
+    ["A", "还要别的吗？橙子今天也很便宜。", "Còn muốn mua gì nữa không? Cam hôm nay cũng rất rẻ."],
+    ["B", "橙子多少钱一斤？", "Cam bao nhiêu tiền một cân?"],
+    ["A", "六块一斤，但是今天买两斤，只要十块钱。", "Sáu tệ một cân, nhưng hôm nay mua hai cân chỉ cần mười tệ."],
+    ["B", "太好了，我也要两斤橙子。", "Tuyệt quá, tôi cũng lấy hai cân cam."],
+    ["A", "好的。苹果两斤九块，香蕉一斤三块，橙子两斤十块。", "Được. Táo hai cân chín tệ, chuối một cân ba tệ, cam hai cân mười tệ."],
+    ["B", "一共多少钱？", "Tổng cộng bao nhiêu tiền?"],
+    ["A", "一共二十二块。", "Tổng cộng hai mươi hai tệ."],
+    ["B", "给你五十块。", "Gửi ông năm mươi tệ."],
+    ["A", "找您二十八块。需要袋子吗？", "Thối lại bà hai mươi tám tệ. Có cần túi không?"],
+    ["B", "需要，谢谢。", "Cần, cảm ơn."],
+    ["A", "不客气，欢迎下次再来！", "Không có gì, hoan nghênh lần sau lại đến!"],
+    ["B", "再见！", "Tạm biệt!"]
+  ],
+  qs: [
+    {"q": "苹果一开始多少钱一斤？", "vi": "Lúc đầu táo bao nhiêu tiền một cân?", "o": ["三块", "四块五", "五块"], "a": 2, "ex": "Ông chủ nói đầu tiên: 五块钱一斤. 四块五 là giá sau khi giảm."},
+    {"q": "小美尝了苹果以后觉得怎么样？", "vi": "Tiểu Mỹ nếm táo xong thấy thế nào?", "o": ["很甜", "不新鲜", "太贵"], "a": 0, "ex": "Cô nói: 好吃！真的很甜。"},
+    {"q": "最后苹果多少钱一斤？", "vi": "Cuối cùng táo bao nhiêu một cân?", "o": ["五块", "四块五", "三块"], "a": 1, "ex": "Ông chủ nói: 这样吧，四块五一斤。"},
+    {"q": "买两斤橙子要多少钱？", "vi": "Mua hai cân cam hết bao nhiêu?", "o": ["六块", "十二块", "十块"], "a": 2, "ex": "Cam 六块一斤, nhưng hôm nay 买两斤，只要十块钱."},
+    {"q": "小美一共买了什么？", "vi": "Tiểu Mỹ mua tất cả những gì?", "o": ["苹果和香蕉", "苹果、香蕉和橙子", "香蕉和橙子"], "a": 1, "ex": "Cô mua 2 cân táo, 1 cân chuối và 2 cân cam."},
+    {"q": "一共多少钱？", "vi": "Tổng cộng bao nhiêu tiền?", "o": ["二十块", "二十二块", "二十八块"], "a": 1, "ex": "9 + 3 + 10 = 22 → 一共二十二块."},
+    {"q": "老板找给小美多少钱？", "vi": "Ông chủ thối lại cho Tiểu Mỹ bao nhiêu?", "o": ["二十二块", "二十八块", "三十八块"], "a": 1, "ex": "Cô đưa 五十块, phải trả 二十二块 → 找二十八块 (50 − 22 = 28)."},
+    {"q": "最后小美还需要什么？", "vi": "Cuối cùng Tiểu Mỹ còn cần gì?", "o": ["袋子", "香蕉", "橙子"], "a": 0, "ex": "Ông chủ hỏi: 需要袋子吗？ Cô đáp: 需要，谢谢。"}
+  ]
+}];
+Object.entries({"香蕉":"xiāngjiāo","甜":"tián","小美":"Xiǎoměi","老板":"lǎobǎn","市场":"shìchǎng","下次":"xiàcì","再来":"zàilái","怎么卖":"zěnme mài","这样":"zhèyàng","这样吧":"zhèyàng ba","一斤":"yì jīn","在水果市场":"zài shuǐguǒ shìchǎng"}).forEach(([k, v]) => { if (!(k in PYD)) PYD[k] = v; });
+Object.entries({"尝":"cháng","橙子":"chéngzi","袋子":"dàizi","别的":"biéde","真的":"zhēnde","需要":"xūyào","还要":"háiyào","不客气":"bú kèqi","好吃":"hǎochī","只要":"zhǐyào","太好了":"tài hǎo le"}).forEach(([k, v]) => { if (!(k in PYD)) PYD[k] = v; });
+const rd = { L: null, i: 0, score: 0, py: 1, vi: 0, view: "list" };
+function rdOpen() { rd.view = "list"; rdRender(); }
+function rdLine(l, k) {
+  const L = rd.L, who = L.who[l[0]];
+  return `<div class="rd-line ${l[0] === "A" ? "a" : "b"}"><div class="rd-who">${pyHtml(who)}</div><div class="rd-bub" onclick="rdTap(${k})"><div class="rd-zh">${rd.py ? pyHtml(l[1]) : l[1]}</div><div class="rd-vi" id="rdvi${k}" style="display:${rd.vi ? "block" : "none"}">${l[2]}</div></div><button class="toggle-btn rd-sp" onclick="speakSafe('${l[1]}')">🔊</button></div>`;
+}
+function rdTap(k) { const e = document.getElementById("rdvi" + k); if (e) e.style.display = e.style.display === "none" ? "block" : "none"; }
+function rdTools() { return `<div class="rd-tools"><button class="toggle-btn" onclick="rdTog('py')">${rd.py ? "Ẩn" : "Hiện"} pinyin</button><button class="toggle-btn" onclick="rdTog('vi')">${rd.vi ? "Ẩn" : "Hiện"} nghĩa</button><button class="toggle-btn" onclick="rdPlayAll()">🔊 Nghe cả bài</button></div>`; }
+function rdTog(k) { const st = document.getElementById("rdScroll").scrollTop; rd[k] = !rd[k]; const keep = rd.ans, ord = rd.ord, sc = rd.score; rdRenderKeep(st, keep, ord, sc); }
+function rdRenderKeep(st, keep, ord, sc) { const A = document.getElementById("rdArea"), L = rd.L; A.querySelector(".rd-tools").outerHTML = rdTools(); document.getElementById("rdScroll").innerHTML = L.lines.map(rdLine).join(""); document.getElementById("rdScroll").scrollTop = st; }
+function rdQ(q, qi) { return `<div class="rd-q" id="rdq${qi}"><div class="np-q">${qi + 1}. ${pyHtml(q.q)}<div class="sub" style="color:#7f1d1d;font-weight:400">${q.vi}</div></div><div class="np-opts">${rd.ord[qi].map((k, n) => `<button id="rdo${qi}_${n}" onclick="rdPick(${qi},${n})">${"ABC"[n]}. ${pyHtml(q.o[k])}</button>`).join("")}</div><div id="rdFb${qi}"></div></div>`; }
+function rdText() { return `<div class="rd-tools"><button class="toggle-btn" onclick="rd.py=!rd.py;rdRender()">${rd.py ? "Ẩn" : "Hiện"} pinyin</button><button class="toggle-btn" onclick="rd.vi=!rd.vi;rdRender()">${rd.vi ? "Ẩn" : "Hiện"} nghĩa</button><button class="toggle-btn" onclick="rdPlayAll()">🔊 Nghe cả bài</button></div>` + rd.L.lines.map(rdLine).join(""); }
+function rdPlayAll() { try { window.speechSynthesis.cancel(); const L = rd.L; L.lines.forEach(l => { const u = new SpeechSynthesisUtterance(l[1]); u.lang = "zh-CN"; u.rate = getRate(); const v = pickVoice(); if (v) { u.voice = v; u.lang = v.lang; } window.speechSynthesis.speak(u); }); } catch (e) {} }
+function rdRender() {
+  const A = document.getElementById("rdArea"); if (!A) return;
+  if (rd.view === "list") {
+    A.innerHTML = RD_LESSONS.map(L => `<button class="ex-item" onclick="rdStart('${L.id}')"><div class="ex-item-no">🖼️ ${pyHtml(L.title)}</div><div class="ex-item-meta">${L.vi} · ${L.lines.length} lượt thoại · ${L.qs.length} câu hỏi</div><div class="ex-item-go">Đọc →</div></button>`).join("");
+    return;
+  }
+  const L = rd.L;
+  if (rd.view === "read") {
+    rd.ord = L.qs.map(q => shuffleArray(q.o.map((_, k) => k))); rd.ans = {}; rd.score = 0;
+    A.innerHTML = `<h2>${pyHtml(L.title)} <span class="sub">· ${L.vi}</span></h2><div class="rd-img">${L.svg}</div><div class="sub">💡 ${pyHtml(L.note)}</div>${rdTools()}<div class="rd-hint">👇 Cuộn khung dưới để đọc tiếp (${L.lines.length} lượt thoại)</div><div class="rd-scroll" id="rdScroll">${L.lines.map(rdLine).join("")}</div><h3 class="rd-qh">❓ Câu hỏi</h3><div id="rdQs">${L.qs.map((q, qi) => rdQ(q, qi)).join("")}</div><div id="rdSum" class="sub"></div>`;
+  }
+}
+function rdStart(id) { rd.L = RD_LESSONS.find(x => x.id === id); rd.view = "read"; rdRender(); window.scrollTo(0, 0); }
+function rdGo() { rd.view = "quiz"; rd.i = 0; rd.score = 0; rdRender(); window.scrollTo(0, 0); }
+function rdPick(qi, n) {
+  if (rd.ans[qi] !== undefined) return; const q = rd.L.qs[qi], ok = rd.ord[qi][n] === q.a; rd.ans[qi] = n; if (ok) rd.score++;
+  document.getElementById("rdo" + qi + "_" + rd.ord[qi].indexOf(q.a)).style.background = "#bbf7d0";
+  if (!ok) document.getElementById("rdo" + qi + "_" + n).style.background = "#fecaca";
+  document.getElementById("rdFb" + qi).innerHTML = `<div class="ex-rv ${ok ? "good" : "bad"}">${ok ? "✅ Đúng!" : "❌ Chưa đúng."} <div class="np-tr">💡 ${q.ex}</div></div>`;
+  const done = Object.keys(rd.ans).length, tot = rd.L.qs.length;
+  document.getElementById("rdSum").innerHTML = done < tot ? `Đã làm ${done}/${tot} · Đúng: ${rd.score}` : `<h2>🎉 Hoàn thành: ${rd.score}/${tot} câu đúng</h2><button class="primary" onclick="rdStart('${rd.L.id}')">🔁 Làm lại</button>`;
+}
+
 function stShow(id) { document.getElementById("hsk2Menu").classList.add("hidden"); document.getElementById(id).classList.remove("hidden"); window.scrollTo(0, 0); }
+function rdBack() { if (rd.view !== "list") { rd.view = "list"; rdRender(); window.scrollTo(0, 0); } else stBack("rdCard"); }
 function stBack(id) { try { window.speechSynthesis && window.speechSynthesis.cancel(); } catch (e) {} document.getElementById(id).classList.add("hidden"); document.getElementById("hsk2Menu").classList.remove("hidden"); window.scrollTo(0, 0); }
 let sanDeck = [], sanI = 0, sanScore = 0, sanCur = null;
 function sanStart() { sanDeck = shuffleArray(SAN_Q); sanI = 0; sanScore = 0; sanRender(); }
@@ -3195,7 +3334,7 @@ f|Ngày mai tôi sẽ lại đến.|明天我再来。|明天我又来。|我来
 f|Hôm qua anh ấy lại đến.|昨天他又来了。|昨天他再来了。|他又昨天来了。
 b|Chị gái tôi lớn hơn tôi ba tuổi.|姐姐比我大三岁。|姐姐比我三岁大。|姐姐大比我三岁。
 b|Quả táo này rẻ hơn quả kia.|这个苹果比那个便宜。|这个苹果便宜比那个。|这个苹果比那个很便宜。
-b|Anh ấy nói tiếng Hán tốt hơn tôi.|他汉语说得比我好。|他说汉语比我好。|他汉语比我说得很好。
+b|Anh ấy nói tiếng Hán tốt hơn tôi.|他汉语说得比我好。|他说汉语得比我好。|他汉语比我说得很好。
 l|Tuy anh ấy nhỏ nhưng chạy rất nhanh.|虽然他很小，但是跑得很快。|虽然他很小，所以跑得很快。|因为他很小，但是跑得很快。
 t|Tôi chưa từng ăn món Thái.|我没吃过泰国菜。|我没吃了泰国菜。|我吃泰国菜没过。
 t|Hôm qua anh ấy mua một cái áo.|他昨天买了一件衣服。|他昨天买着一件衣服。|他买了一件衣服昨天。
@@ -3377,7 +3516,7 @@ const antQ = mkQuiz("ant", ANT_Q, q => {
 const DD_TAG = { "的": "的 · định ngữ + danh từ", "得": "得 · bổ ngữ sau động từ/tính từ", "地": "地 · trạng ngữ + động từ" };
 const DD_RULE = {
   "的": "的 nối ĐỊNH NGỮ với DANH TỪ: định ngữ + 的 + danh từ (我的书, 漂亮的衣服, 妈妈做的饭). Mẹo: sau chỗ trống là danh từ.",
-  "得": "得 đứng SAU động từ/tính từ để dẫn BỔ NGỮ: V/Adj + 得 + (很) Adj hoặc kết quả (说得很好, 累得不想说话); cũng dùng cho bổ ngữ khả năng (看得懂). Mẹo: trước chỗ trống là động từ/tính từ.",
+  "得": "得 đứng SAU động từ/tính từ để dẫn BỔ NGỮ: V/Adj + 得 + (很) Adj hoặc kết quả (说得很好, 累得不想说话); có tân ngữ thì lặp động từ (唱歌唱得好) hoặc đưa tân ngữ lên trước (歌唱得好); cũng dùng cho bổ ngữ khả năng (看得懂). Mẹo: trước chỗ trống là động từ/tính từ.",
   "地": "地 nối TRẠNG NGỮ với ĐỘNG TỪ: trạng ngữ + 地 + động từ (高兴地说, 慢慢地走, 认真地学习). Mẹo: sau chỗ trống là động từ."
 };
 const DD_Q = `的|这是我＿手机。|的|Đây là điện thoại của tôi.|
@@ -3502,7 +3641,7 @@ const GQ_Q = `得|Anh ấy nói rất tốt.|他说得很好。|他说的很好�
 得|Anh ấy chạy nhanh hơn tôi.|他跑得比我快。|他跑比我得快。|他比跑得我快。|
 得|Hôm nay bạn đến sớm thật.|你今天来得真早。|你今天来真得早。|你今天得来真早。|
 得|Cô ấy học tiếng Hán rất chăm chỉ.|她汉语学得很认真。|她汉语学的很认真。|她得汉语学很认真。|
-得|Hôm qua tôi ngủ rất muộn.|昨天我睡得很晚。|昨天我睡的很晚。|昨天我得睡很晚。|
+得|Cô ấy hát cực kỳ hay.|她歌唱得非常好听。|她歌得唱非常好听。|她唱得歌非常好听。|Cách 2: đẩy tân ngữ lên trước động từ: O + V + 得 + Adj (≈ lặp động từ: V + O + V + 得 + Adj). Không đặt 得 ngay sau tân ngữ.
 得|Anh ấy lái xe rất nhanh.|他开车开得很快。|他开车得很快。|他开得车很快。|
 得|Bọn trẻ chơi rất vui.|孩子们玩儿得很开心。|孩子们玩儿的很开心。|孩子们得玩儿很开心。|
 得|Cô ấy nấu ăn không ngon.|她做饭做得不好吃。|她做饭得不好吃。|她不做饭得好吃。|
@@ -3513,13 +3652,13 @@ const GQ_Q = `得|Anh ấy nói rất tốt.|他说得很好。|他说的很好�
 得|Trời nóng đến mức tôi không muốn ra ngoài.|天气热得我不想出门。|天气热的我不想出门。|天气得热我不想出门。|
 得|Bạn nghe hiểu anh ấy nói không?|你听得懂他说的话吗？|你听懂得他说的话吗？|你听不得懂他说的话吗？|
 得|Anh ấy bơi giỏi hơn tôi.|他游得比我好。|他游比得我好。|他得游比我好。|
-得|Em trai ăn rất nhiều.|弟弟吃得很多。|弟弟吃的很多。|弟弟得吃很多。|
-得|Cô ấy cười rất vui.|她笑得很开心。|她笑的很开心。|她得笑很开心。|
-得|Chúng tôi đi bộ rất mệt.|我们走得很累。|我们走的很累。|我们得走很累。|
+得|Anh ấy nấu ăn rất ngon.|他饭做得很好吃。|他饭得做很好吃。|他做得饭很好吃。|Cách 2: đẩy tân ngữ lên trước động từ: O + V + 得 + Adj (≈ lặp động từ: V + O + V + 得 + Adj). Không đặt 得 ngay sau tân ngữ.
+得|Cô ấy vẽ tranh rất đẹp.|她画儿画得很好看。|她画儿得画很好看。|她画得画儿很好看。|Cách 2: đẩy tân ngữ lên trước động từ: O + V + 得 + Adj (≈ lặp động từ: V + O + V + 得 + Adj). Không đặt 得 ngay sau tân ngữ.
+得|Tôi viết chữ Hán không giỏi lắm.|我汉字写得不太好。|我汉字不写得太好。|我写得汉字不太好。|Cách 2: đẩy tân ngữ lên trước động từ: O + V + 得 + Adj (≈ lặp động từ: V + O + V + 得 + Adj). Không đặt 得 ngay sau tân ngữ.
 得|Họ làm bài tập rất nhanh.|他们作业做得很快。|他们作业做的很快。|他们作业得做很快。|
 得|Mẹ nấu ăn rất ngon.|妈妈做菜做得很好吃。|妈妈做菜得很好吃。|妈妈做得菜很好吃。|
 得|Hôm nay anh ấy dậy rất sớm.|他今天起得很早。|他今天起的很早。|他今天起很得早。|
-得|Họ đi bộ rất chậm.|他们走得很慢。|他们走的很慢。|他们走很得慢。|
+得|Cô ấy nhảy cực kỳ đẹp.|她舞跳得非常漂亮。|她舞得跳非常漂亮。|她跳得舞非常漂亮。|Cách 2: đẩy tân ngữ lên trước động từ: O + V + 得 + Adj (≈ lặp động từ: V + O + V + 得 + Adj). Không đặt 得 ngay sau tân ngữ.
 得|Đứa bé lớn nhanh quá.|孩子长得真快。|孩子长的真快。|孩子得长真快。|长得 (zhǎng de) ở đây là “lớn lên”.
 得|Giáo viên giảng rất rõ ràng.|老师讲得很清楚。|老师讲的很清楚。|老师讲很清楚得。|
 得|Tôi vui đến mức nhảy lên.|我高兴得跳了起来。|我高兴的跳了起来。|我得高兴跳了起来。|
@@ -3530,19 +3669,19 @@ const GQ_Q = `得|Anh ấy nói rất tốt.|他说得很好。|他说的很好�
 得|Anh ấy học bài rất nghiêm túc.|他学习学得很认真。|他学习得很认真。|他学得习很认真。|
 得|Bạn xách nổi không?|你拿得动吗？|你拿动得吗？|你拿的动吗？|
 得|Anh ấy nói quá nhanh, tôi nghe không hiểu.|他说得太快了，我听不懂。|他说的太快了，我听不懂。|他得说太快了，我听不懂。|
-得|Bạn ngủ có ngon không?|你睡得好吗？|你睡的好吗？|你睡好得吗？|
+得|Anh ấy đá bóng rất giỏi.|他足球踢得很好。|他足球得踢很好。|他踢得足球很好。|Cách 2: đẩy tân ngữ lên trước động từ: O + V + 得 + Adj (≈ lặp động từ: V + O + V + 得 + Adj). Không đặt 得 ngay sau tân ngữ.
 得|Họ chơi bóng rất giỏi.|他们打球打得很好。|他们打球得很好。|他们打得球很好。|
-得|Hôm nay tôi ăn rất no.|今天我吃得很饱。|今天我吃的很饱。|今天我得吃很饱。|
+得|Bạn tôi chơi bóng rổ rất giỏi.|我朋友篮球打得很好。|我朋友篮球得打很好。|我朋友打得篮球很好。|Cách 2: đẩy tân ngữ lên trước động từ: O + V + 得 + Adj (≈ lặp động từ: V + O + V + 得 + Adj). Không đặt 得 ngay sau tân ngữ.
 得|Cô ấy hát không hay lắm.|她唱得不太好听。|她不唱得太好听。|她唱不得太好听。|
 得|Cuốn sách này viết rất hay.|这本书写得很好。|这本书写的很好。|这本书得写很好。|
 得|Anh ấy bận đến mức không có thời gian ăn cơm.|他忙得没有时间吃饭。|他忙的没有时间吃饭。|他得忙没有时间吃饭。|
-得|Bọn trẻ cười rất to.|孩子们笑得很大声。|孩子们笑的很大声。|孩子们得笑很大声。|
+得|Anh ấy lái xe nhanh quá.|他车开得太快了。|他车得开太快了。|他开得车太快了。|Cách 2: đẩy tân ngữ lên trước động từ: O + V + 得 + Adj (≈ lặp động từ: V + O + V + 得 + Adj). Không đặt 得 ngay sau tân ngữ.
 得|Anh ấy học nhanh hơn tôi.|他学得比我快。|他学比我得快。|他得学比我快。|
 得|Cô ấy nhảy rất đẹp.|她跳舞跳得很好看。|她跳舞得很好看。|她跳得舞很好看。|
-得|Hôm qua bạn ngủ có muộn không?|你昨天睡得晚吗？|你昨天睡晚得吗？|你昨天睡的晚吗？|
+得|Mẹ nấu ăn cực kỳ ngon.|妈妈菜做得非常好吃。|妈妈菜得做非常好吃。|妈妈做得菜非常好吃。|Cách 2: đẩy tân ngữ lên trước động từ: O + V + 得 + Adj (≈ lặp động từ: V + O + V + 得 + Adj). Không đặt 得 ngay sau tân ngữ.
 得|Cô ấy đi nhanh quá, tôi đuổi không kịp.|她走得太快了，我跟不上。|她走的太快了，我跟不上。|她得走太快了，我跟不上。|
 得|Anh ấy nói tiếng Hán không giỏi lắm.|他汉语说得不太好。|他汉语说的不太好。|他汉语不说得太好。|
-得|Họ đến rất sớm.|他们来得很早。|他们来的很早。|他们得来很早。|
+得|Bạn mặc quần áo rất đẹp.|你衣服穿得很漂亮。|你衣服得穿很漂亮。|你穿得衣服很漂亮。|Cách 2: đẩy tân ngữ lên trước động từ: O + V + 得 + Adj (≈ lặp động từ: V + O + V + 得 + Adj). Không đặt 得 ngay sau tân ngữ.
 地|Anh ấy vui vẻ nói: “Cảm ơn!”|他高兴地说：“谢谢！”|他高兴的说：“谢谢！”|他高兴说地：“谢谢！”|Trạng ngữ + 地 + động từ; 地 không đứng sau động từ.
 地|Bọn trẻ vui vẻ hát.|孩子们开心地唱歌。|孩子们开心的唱歌。|孩子们唱歌地开心。|
 地|Mời bạn nói chậm thôi.|请你慢慢地说。|请你慢慢的说。|请你慢慢得说。|Từ lặp (慢慢) làm trạng ngữ + 地.
@@ -4612,7 +4751,7 @@ exRender();
     if (vis("hsk2Pane")) {
       if (vis("npCard")) { orig.npBack(); return true; }
       if (vis("oralCard")) { orig.oralBack(); return true; }
-      for (const id of ["sanCard", "fillCard", "matCard", "trnCard", "bjCard", "antCard", "ddCard"]) if (vis(id)) { orig.stBack(id); return true; }
+      for (const id of ["sanCard", "fillCard", "matCard", "trnCard", "bjCard", "antCard", "ddCard", "rdCard"]) if (vis(id)) { orig.stBack(id); return true; }
     }
     return false;
   }
@@ -4622,7 +4761,7 @@ exRender();
     if (vis("libCard")) { orig.libBack(); any = true; }
     if (vis("npCard")) { orig.npBack(); any = true; }
     if (vis("oralCard")) { orig.oralBack(); any = true; }
-    for (const id of ["sanCard", "fillCard", "matCard", "trnCard", "bjCard", "antCard", "ddCard"]) if (vis(id)) { orig.stBack(id); any = true; }
+    for (const id of ["sanCard", "fillCard", "matCard", "trnCard", "bjCard", "antCard", "ddCard", "rdCard"]) if (vis(id)) { orig.stBack(id); any = true; }
     stack.forEach(e => { if (e.t === "screen" && !e.exam) e.dead = true; });
     return any;
   }
