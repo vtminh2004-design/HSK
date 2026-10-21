@@ -219,11 +219,6 @@ footer{text-align:center;color:#888;margin:16px;font-size:13px}
 .lib-words{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:8px}
 .lib-w{border:1px solid #cbd5e1;border-radius:10px;padding:8px 10px;background:#fff}
 .lib-hz{font-size:22px;font-weight:700}.lib-py{font-size:13px;color:#0369a1}
-.rd-img{border-radius:14px;overflow:hidden;margin:8px 0;border:1px solid #e5e7eb}.rd-img svg{display:block;width:100%;height:auto}
-.rd-scroll{height:260px;overflow-y:auto;scroll-snap-type:y proximity;border:2px solid #e2e8f0;border-radius:14px;padding:6px 8px;background:#fff;-webkit-overflow-scrolling:touch}.rd-scroll .rd-line{scroll-snap-align:start}.rd-hint{font-size:13px;color:#64748b;margin:6px 0 4px}.rd-qh{margin:18px 0 6px}.rd-q{margin-bottom:16px}
-.rd-tools{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0}.rd-line{display:flex;align-items:flex-start;gap:6px;margin:8px 0}.rd-line.b{flex-direction:row-reverse}
-.rd-who{font-size:12px;font-weight:700;color:#64748b;width:44px;text-align:center;padding-top:8px}.rd-bub{flex:1;padding:8px 12px;border-radius:14px;background:#f1f5f9;font-size:20px;cursor:pointer}.rd-line.b .rd-bub{background:#fee2e2}
-.rd-vi{font-size:14px;color:#475569;margin-top:4px}.rd-sp{padding:4px 8px}.rd-re{margin:8px 0}.rd-re summary{cursor:pointer;font-weight:700;color:#b91c1c}
 .np-q{margin:10px 0;padding:8px 12px;background:#fef2f2;border-radius:10px;font-weight:700;color:#b91c1c}
 .np-opts{display:flex;flex-direction:column;gap:8px}
 .np-opts button{text-align:left;font-size:22px;padding:10px 14px;border:1.5px solid #cbd5e1;border-radius:12px;background:#fff;cursor:pointer;min-height:44px}
@@ -679,10 +674,6 @@ body{background:var(--bg)}
 <button class="ex-item" onclick="stShow('antCard');antQ.start()"><div class="ex-item-no">↔️ Tìm từ trái nghĩa</div><div class="ex-item-meta">118 câu: chọn từ trái nghĩa (多 ↔ 少, 来 ↔ 去…)</div><div class="ex-item-go">Bắt đầu →</div></button>
 <button class="ex-item" onclick="stShow('bjCard');bjStart()"><div class="ex-item-no">🖌️ Ghép bộ kiện (ẩn nét)</div><div class="ex-item-meta">500 câu: từ bị ẩn nét, chọn bộ kiện để hoàn thành chữ</div><div class="ex-item-go">Bắt đầu →</div></button>
 </div>
-<div class="menu-sec">Đọc hiểu</div>
-<div class="ex-grid">
-<button class="ex-item" onclick="stShow('rdCard');rdOpen()"><div class="ex-item-no">🖼️ Hội thoại dài</div><div class="ex-item-meta">Đọc hội thoại có hình minh hoạ, rồi trả lời câu hỏi</div><div class="ex-item-go">Bắt đầu →</div></button>
-</div>
 <div class="menu-sec">Luyện nói</div>
 <div class="ex-grid">
 <button class="ex-item" onclick="openOral()"><div class="ex-item-no">🎲 Hỏi ngẫu nhiên</div><div class="ex-item-meta">40 câu khẩu ngữ, tự trả lời, bấm Pinyin / nghĩa / đáp án mẫu</div><div class="ex-item-go">Bắt đầu →</div></button>
@@ -731,12 +722,6 @@ body{background:var(--bg)}
       <h1>↔️ Tìm từ trái nghĩa</h1>
       <div class="sub">Đọc từ cho sẵn rồi chọn từ có nghĩa trái ngược. Ví dụ: 多 (nhiều) ↔ 少 (ít).</div>
       <div id="antArea"></div>
-    </div>
-    <div class="card hidden" id="rdCard">
-      <button class="toggle-btn back-btn" onclick="rdBack()">← Danh sách chức năng</button>
-      <h1>🖼️ Hội thoại dài</h1>
-      <div class="sub">Đọc hội thoại (chạm vào câu để xem nghĩa), rồi trả lời câu hỏi đọc hiểu.</div>
-      <div id="rdArea"></div>
     </div>
     <div class="card hidden" id="trnCard">
       <button class="toggle-btn back-btn" onclick="stBack('trnCard')">← Danh sách chức năng</button>
@@ -3072,156 +3057,7 @@ f|请给我便宜___。|一点儿|有点儿|都|0|Làm ơn rẻ cho tôi một c
 f|我___在学校，没回家。|还|再|又|0|Tôi vẫn đang ở trường, chưa về nhà.
 f|他___住在这里，不在别的地方。|就|再|也|0|Anh ấy ở ngay tại đây, không ở chỗ khác.`.split("\n").map(l => { const [tag, s, o1, o2, o3, ans, vi] = l.split("|"); return { tag, s, o: [o1, o2, o3], ans: +ans, vi }; });
 function stFill(q, x) { const p = x.split("/"); let k = 0; return q.s.replace(/___/g, () => p[k++] || ""); }
-/* ===== ĐỌC HIỂU HỘI THOẠI DÀI ===== */
-const RD_SVG_MARKET = `<svg viewBox="0 0 360 210" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Quầy trái cây ở chợ">
-<rect width="360" height="210" fill="#fef3c7"/><rect y="150" width="360" height="60" fill="#fde68a"/>
-<path d="M30 20h300l14 44H16z" fill="#ef4444"/><path d="M30 20h50l-8 44H16zM130 20h50l-4 44h-56zM230 20h50l4 44h-56z" fill="#fff"/>
-<rect x="40" y="64" width="6" height="86" fill="#92400e"/><rect x="314" y="64" width="6" height="86" fill="#92400e"/>
-<rect x="46" y="112" width="268" height="44" rx="6" fill="#b45309"/><rect x="46" y="112" width="268" height="8" fill="#92400e"/>
-<g fill="#dc2626"><circle cx="70" cy="104" r="12"/><circle cx="94" cy="104" r="12"/><circle cx="118" cy="104" r="12"/><circle cx="82" cy="88" r="12"/><circle cx="106" cy="88" r="12"/></g>
-<g fill="#15803d"><path d="M82 74q6-8 12-2q-6 6-12 2z"/><path d="M106 74q6-8 12-2q-6 6-12 2z"/></g>
-<g fill="none" stroke="#eab308" stroke-width="9" stroke-linecap="round"><path d="M160 108q18 6 38-10"/><path d="M162 98q18 6 38-10"/><path d="M166 88q16 4 32-10"/></g>
-<g fill="#f97316"><circle cx="232" cy="104" r="12"/><circle cx="256" cy="104" r="12"/><circle cx="244" cy="88" r="12"/></g>
-<rect x="132" y="30" width="96" height="26" rx="6" fill="#fff" stroke="#92400e" stroke-width="2"/><text x="180" y="49" text-anchor="middle" font-size="16" font-weight="700" fill="#b91c1c">苹果 5元/斤</text>
-<g><circle cx="318" cy="120" r="20" fill="#fcd9b6"/><path d="M298 116q2-22 20-22q18 0 20 22q-8-10-20-10q-12 0-20 10z" fill="#1f2937"/><circle cx="311" cy="122" r="2.4" fill="#111"/><circle cx="325" cy="122" r="2.4" fill="#111"/><path d="M310 130q8 7 16 0" stroke="#b45309" stroke-width="2" fill="none"/><rect x="298" y="140" width="40" height="16" rx="6" fill="#f97316"/></g>
-<g><circle cx="46" cy="136" r="22" fill="#fcd9b6"/><path d="M22 136q-2-30 24-30q26 0 24 30q-4-18-24-18q-20 0-24 18z" fill="#3b2314"/><circle cx="38" cy="140" r="2.6" fill="#111"/><circle cx="54" cy="140" r="2.6" fill="#111"/><path d="M38 149q8 7 16 0" stroke="#b45309" stroke-width="2" fill="none"/><rect x="22" y="160" width="48" height="50" rx="12" fill="#f9a8d4"/></g>
-</svg>`;
-const RD_LESSONS = [{
-  id: "market", title: "在水果市场", vi: "Ở chợ trái cây", svg: RD_SVG_MARKET, tag: "Mua sắm · giá cả",
-  note: "Mẫu giá: 五块钱一斤 = 5 tệ/cân. 块 = đồng (tệ), 斤 = cân (500g).",
-  who: { A: "老板", B: "小美" },
-  lines: [
-    ["A", "你好！欢迎！你想买什么？", "Xin chào! Chào mừng! Bạn muốn mua gì?"],
-    ["B", "你好，这个苹果怎么卖？", "Chào ông, táo này bán thế nào?"],
-    ["A", "五块钱一斤。", "Năm tệ một cân."],
-    ["B", "有点贵，可以便宜一点吗？", "Hơi đắt, có thể rẻ hơn một chút không?"],
-    ["A", "今天的苹果很新鲜，也很甜。你尝一个吧。", "Táo hôm nay rất tươi, cũng rất ngọt. Bạn nếm thử một quả đi."],
-    ["B", "好吃！真的很甜。", "Ngon! Thật sự rất ngọt."],
-    ["A", "这样吧，四块五一斤。", "Thế này nhé, bốn tệ rưỡi một cân."],
-    ["B", "好的，我要两斤。香蕉怎么卖？", "Được, tôi lấy hai cân. Chuối bán thế nào?"],
-    ["A", "香蕉三块钱一斤。", "Chuối ba tệ một cân."],
-    ["B", "我也要一斤香蕉。", "Tôi cũng lấy một cân chuối."],
-    ["A", "还要别的吗？橙子今天也很便宜。", "Còn muốn mua gì nữa không? Cam hôm nay cũng rất rẻ."],
-    ["B", "橙子多少钱一斤？", "Cam bao nhiêu tiền một cân?"],
-    ["A", "六块一斤，但是今天买两斤，只要十块钱。", "Sáu tệ một cân, nhưng hôm nay mua hai cân chỉ cần mười tệ."],
-    ["B", "太好了，我也要两斤橙子。", "Tuyệt quá, tôi cũng lấy hai cân cam."],
-    ["A", "好的。苹果两斤九块，香蕉一斤三块，橙子两斤十块。", "Được. Táo hai cân chín tệ, chuối một cân ba tệ, cam hai cân mười tệ."],
-    ["B", "一共多少钱？", "Tổng cộng bao nhiêu tiền?"],
-    ["A", "一共二十二块。", "Tổng cộng hai mươi hai tệ."],
-    ["B", "给你五十块。", "Gửi ông năm mươi tệ."],
-    ["A", "找您二十八块。需要袋子吗？", "Thối lại bà hai mươi tám tệ. Có cần túi không?"],
-    ["B", "需要，谢谢。", "Cần, cảm ơn."],
-    ["A", "不客气，欢迎下次再来！", "Không có gì, hoan nghênh lần sau lại đến!"],
-    ["B", "再见！", "Tạm biệt!"]
-  ],
-  qs: [
-    {"q": "苹果一开始多少钱一斤？", "vi": "Lúc đầu táo bao nhiêu tiền một cân?", "o": ["三块", "四块五", "五块"], "a": 2, "ex": "Ông chủ nói đầu tiên: 五块钱一斤. 四块五 là giá sau khi giảm."},
-    {"q": "小美尝了苹果以后觉得怎么样？", "vi": "Tiểu Mỹ nếm táo xong thấy thế nào?", "o": ["很甜", "不新鲜", "太贵"], "a": 0, "ex": "Cô nói: 好吃！真的很甜。"},
-    {"q": "最后苹果多少钱一斤？", "vi": "Cuối cùng táo bao nhiêu một cân?", "o": ["五块", "四块五", "三块"], "a": 1, "ex": "Ông chủ nói: 这样吧，四块五一斤。"},
-    {"q": "买两斤橙子要多少钱？", "vi": "Mua hai cân cam hết bao nhiêu?", "o": ["六块", "十二块", "十块"], "a": 2, "ex": "Cam 六块一斤, nhưng hôm nay 买两斤，只要十块钱."},
-    {"q": "小美一共买了什么？", "vi": "Tiểu Mỹ mua tất cả những gì?", "o": ["苹果和香蕉", "苹果、香蕉和橙子", "香蕉和橙子"], "a": 1, "ex": "Cô mua 2 cân táo, 1 cân chuối và 2 cân cam."},
-    {"q": "一共多少钱？", "vi": "Tổng cộng bao nhiêu tiền?", "o": ["二十块", "二十二块", "二十八块"], "a": 1, "ex": "9 + 3 + 10 = 22 → 一共二十二块."},
-    {"q": "老板找给小美多少钱？", "vi": "Ông chủ thối lại cho Tiểu Mỹ bao nhiêu?", "o": ["二十二块", "二十八块", "三十八块"], "a": 1, "ex": "Cô đưa 五十块, phải trả 二十二块 → 找二十八块 (50 − 22 = 28)."},
-    {"q": "最后小美还需要什么？", "vi": "Cuối cùng Tiểu Mỹ còn cần gì?", "o": ["袋子", "香蕉", "橙子"], "a": 0, "ex": "Ông chủ hỏi: 需要袋子吗？ Cô đáp: 需要，谢谢。"}
-  ]
-}];
-Object.entries({"香蕉":"xiāngjiāo","甜":"tián","小美":"Xiǎoměi","老板":"lǎobǎn","市场":"shìchǎng","下次":"xiàcì","再来":"zàilái","怎么卖":"zěnme mài","这样":"zhèyàng","这样吧":"zhèyàng ba","一斤":"yì jīn","在水果市场":"zài shuǐguǒ shìchǎng"}).forEach(([k, v]) => { if (!(k in PYD)) PYD[k] = v; });
-Object.entries({"尝":"cháng","橙子":"chéngzi","袋子":"dàizi","别的":"biéde","真的":"zhēnde","需要":"xūyào","还要":"háiyào","不客气":"bú kèqi","好吃":"hǎochī","只要":"zhǐyào","太好了":"tài hǎo le"}).forEach(([k, v]) => { if (!(k in PYD)) PYD[k] = v; });
-/* ===== 4 bài hội thoại thêm ===== */
-const rdPer = (x, y, shirt, hair, s) => `<g transform="translate(${x} ${y}) scale(${s || 1})"><rect x="-22" y="26" width="44" height="52" rx="14" fill="${shirt}"/><circle cx="0" cy="0" r="22" fill="#fcd9b6"/><path d="M-23 -2q-2-26 23-26q25 0 23 26q-5-16-23-16q-18 0-23 16z" fill="${hair}"/><circle cx="-8" cy="3" r="2.6" fill="#111"/><circle cx="8" cy="3" r="2.6" fill="#111"/><path d="M-8 12q8 7 16 0" stroke="#b45309" stroke-width="2" fill="none"/></g>`;
-const RD_SVG_STREET = `<svg viewBox="0 0 360 210" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Hỏi đường"><rect width="360" height="210" fill="#dbeafe"/><rect y="150" width="360" height="60" fill="#9ca3af"/><rect y="146" width="360" height="8" fill="#d1d5db"/><g stroke="#fff" stroke-width="4" stroke-dasharray="18 14"><path d="M0 182H360"/></g>
-<rect x="196" y="60" width="86" height="86" fill="#fde68a"/><rect x="190" y="52" width="98" height="12" fill="#b45309"/><rect x="214" y="72" width="50" height="22" rx="4" fill="#fff"/><text x="239" y="89" text-anchor="middle" font-size="16" font-weight="700" fill="#b91c1c">银行</text><rect x="228" y="108" width="22" height="38" fill="#92400e"/>
-<rect x="290" y="80" width="62" height="66" fill="#bbf7d0"/><rect x="290" y="74" width="62" height="10" fill="#15803d"/><text x="321" y="108" text-anchor="middle" font-size="14" font-weight="700" fill="#166534">超市</text>
-<rect x="150" y="50" width="8" height="96" fill="#475569"/><rect x="140" y="30" width="28" height="56" rx="8" fill="#1f2937"/><circle cx="154" cy="42" r="7" fill="#ef4444"/><circle cx="154" cy="58" r="7" fill="#fde047"/><circle cx="154" cy="74" r="7" fill="#22c55e"/>
-${rdPer(60, 100, "#3b82f6", "#1f2937", 1)}${rdPer(105, 106, "#f59e0b", "#3b2314", .9)}<path d="M120 170h70" stroke="#ef4444" stroke-width="5" stroke-linecap="round"/><path d="M180 160l14 10-14 10z" fill="#ef4444"/></svg>`;
-const RD_SVG_DOCTOR = `<svg viewBox="0 0 360 210" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Khám bệnh"><rect width="360" height="210" fill="#ecfeff"/><rect y="160" width="360" height="50" fill="#cffafe"/>
-<rect x="150" y="24" width="60" height="60" rx="8" fill="#fff" stroke="#fca5a5" stroke-width="3"/><path d="M174 36h12v14h14v12h-14v14h-12V62h-14V50h14z" fill="#ef4444"/>
-<rect x="30" y="120" width="300" height="14" rx="4" fill="#92400e"/><rect x="50" y="134" width="10" height="46" fill="#92400e"/><rect x="300" y="134" width="10" height="46" fill="#92400e"/>
-<g transform="translate(90 70)"><rect x="-26" y="26" width="52" height="56" rx="14" fill="#fff" stroke="#cbd5e1" stroke-width="2"/><circle cx="0" cy="0" r="22" fill="#fcd9b6"/><path d="M-23 -2q-2-26 23-26q25 0 23 26q-5-16-23-16q-18 0-23 16z" fill="#1f2937"/><circle cx="-8" cy="3" r="2.6" fill="#111"/><circle cx="8" cy="3" r="2.6" fill="#111"/><path d="M-8 12q8 7 16 0" stroke="#b45309" stroke-width="2" fill="none"/><path d="M-12 36q12 22 24 0" stroke="#0ea5e9" stroke-width="3" fill="none"/></g>
-${rdPer(270, 72, "#fb923c", "#3b2314", 1)}<g transform="translate(236 104) rotate(-20)"><rect width="40" height="7" rx="3" fill="#e5e7eb" stroke="#94a3b8"/><rect width="14" height="7" rx="3" fill="#ef4444"/></g><rect x="205" y="42" width="52" height="22" rx="10" fill="#fff" stroke="#fca5a5" stroke-width="2"/><text x="231" y="58" text-anchor="middle" font-size="13" font-weight="700" fill="#b91c1c">38°C</text></svg>`;
-const RD_SVG_MOVIE = `<svg viewBox="0 0 360 210" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Hẹn xem phim"><rect width="360" height="210" fill="#ede9fe"/>
-<g><rect x="20" y="40" width="82" height="150" rx="14" fill="#1f2937"/><rect x="28" y="54" width="66" height="104" rx="4" fill="#fce7f3"/>${rdPer(61, 98, "#ec4899", "#3b2314", .6)}<circle cx="61" cy="176" r="6" fill="#64748b"/></g>
-<g><rect x="258" y="40" width="82" height="150" rx="14" fill="#1f2937"/><rect x="266" y="54" width="66" height="104" rx="4" fill="#dbeafe"/>${rdPer(299, 98, "#3b82f6", "#1f2937", .6)}<circle cx="299" cy="176" r="6" fill="#64748b"/></g>
-<g transform="translate(180 96) rotate(-6)"><rect x="-56" y="-34" width="112" height="68" rx="8" fill="#fde047" stroke="#ca8a04" stroke-width="3"/><path d="M-20 -34v68" stroke="#ca8a04" stroke-width="2" stroke-dasharray="4 4"/><text x="18" y="-6" text-anchor="middle" font-size="16" font-weight="700" fill="#7c2d12">电影票</text><text x="18" y="18" text-anchor="middle" font-size="16" font-weight="700" fill="#b91c1c">50元</text><text x="-38" y="6" text-anchor="middle" font-size="22">🎬</text></g>
-<path d="M108 70q20-18 40-4M252 70q-20-18-40-4" stroke="#8b5cf6" stroke-width="3" fill="none" stroke-linecap="round"/></svg>`;
-const RD_SVG_REST = `<svg viewBox="0 0 360 210" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Nhà hàng"><rect width="360" height="210" fill="#fff7ed"/><rect y="150" width="360" height="60" fill="#fed7aa"/>
-<path d="M30 20h300l-14 30H44z" fill="#dc2626"/><g fill="#fbbf24"><circle cx="70" cy="36" r="9"/><circle cx="130" cy="36" r="9"/><circle cx="190" cy="36" r="9"/><circle cx="250" cy="36" r="9"/><circle cx="310" cy="36" r="9"/></g>
-<ellipse cx="170" cy="150" rx="130" ry="22" fill="#92400e"/><rect x="40" y="150" width="260" height="10" fill="#7c2d12"/>
-<g><ellipse cx="110" cy="140" rx="30" ry="12" fill="#fff" stroke="#cbd5e1"/><ellipse cx="108" cy="136" rx="20" ry="8" fill="#f97316"/><path d="M130 136l14-8v16z" fill="#f97316"/><circle cx="96" cy="134" r="2" fill="#111"/></g>
-<g><path d="M172 134h50l-6 20h-38z" fill="#fff" stroke="#cbd5e1"/><path d="M180 134q8-14 16 0q8-14 16 0" stroke="#fbbf24" stroke-width="4" fill="none"/></g>
-<g><path d="M246 134h44l-5 18h-34z" fill="#fff" stroke="#cbd5e1"/><circle cx="268" cy="132" r="10" fill="#fde047"/></g>
-${rdPer(58, 88, "#0f172a", "#1f2937", .9)}<rect x="80" y="84" width="30" height="38" rx="3" fill="#fff" stroke="#94a3b8"/><text x="95" y="108" text-anchor="middle" font-size="11" font-weight="700" fill="#b91c1c">菜单</text>
-${rdPer(310, 100, "#a855f7", "#3b2314", .8)}</svg>`;
-Object.entries({"银行":"yínháng","超市":"chāoshì","红绿灯":"hónglǜdēng","往右":"wǎng yòu","一直":"yìzhí","大概":"dàgài","关门":"guānmén","咖啡店":"kāfēidiàn","咖啡":"kāfēi","头疼":"tóuténg","发烧":"fāshāo","感冒":"gǎnmào","开药":"kāi yào","饭后":"fàn hòu","饭前":"fàn qián","休息":"xiūxi","舒服":"shūfu","不舒服":"bù shūfu","电影院":"diànyǐngyuàn","电影票":"diànyǐngpiào","面条店":"miàntiáodiàn","欢迎光临":"huānyíng guānglín","菜单":"càidān","服务员":"fúwùyuán","牛肉面":"niúròumiàn","牛肉":"niúròu","鸡蛋面":"jīdànmiàn","青菜":"qīngcài","果汁":"guǒzhī","啤酒":"píjiǔ","买单":"mǎidān","慢用":"mànyòng","有名":"yǒumíng","几位":"jǐ wèi","马上":"mǎshàng","小王":"Xiǎo Wáng","小李":"Xiǎo Lǐ","小明":"Xiǎomíng","小张":"Xiǎo Zhāng","小红":"Xiǎohóng","医生":"yīshēng","路人":"lùrén","路上小心":"lùshang xiǎoxīn","周末":"zhōumò","星期天":"xīngqītiān","星期六":"xīngqīliù","上课":"shàngkè","有意思":"yǒu yìsi","面条":"miàntiáo","门口":"ménkǒu","网上":"wǎngshang","请客":"qǐngkè","米":"mǐ","三百米":"sānbǎi mǐ","不用":"búyòng","用":"yòng","嗯":"èn","重":"zhòng","片":"piàn","牙":"yá","肚子":"dùzi","肚":"dù","碗":"wǎn","酒":"jiǔ","牙疼":"yáténg","肚子疼":"dùziténg","两片":"liǎng piàn","不太重":"bú tài zhòng"}).forEach(([k, v]) => { if (!(k in PYD)) PYD[k] = v; });
-const RD_NEW = [
-{ id: "street", title: "问路", vi: "Hỏi đường", svg: RD_SVG_STREET, note: "Chỉ đường: 一直走 = đi thẳng, 往右走 = đi về bên phải, 在……旁边 = ở bên cạnh…", who: { A: "小王", B: "路人" },
-  lines: [["A","你好，请问银行在哪儿？","Xin chào, cho hỏi ngân hàng ở đâu ạ?"],["B","银行？离这儿不太远。","Ngân hàng à? Cách đây không xa lắm."],["A","我怎么走？","Tôi đi thế nào?"],["B","你一直往前走，到第二个红绿灯往右走。","Bạn cứ đi thẳng về phía trước, đến đèn giao thông thứ hai thì rẽ phải."],["A","第二个红绿灯往右走，然后呢？","Đèn thứ hai thì rẽ phải, sau đó thì sao?"],["B","然后再走三百米，银行就在超市旁边。","Sau đó đi thêm 300 mét nữa, ngân hàng ở ngay bên cạnh siêu thị."],["A","走路要多长时间？","Đi bộ mất bao lâu?"],["B","大概十分钟。","Khoảng mười phút."],["A","太好了，那我不用打车了。","Tốt quá, vậy tôi không cần đi taxi nữa."],["B","对，走路比打车快。","Đúng, đi bộ nhanh hơn đi taxi."],["A","银行几点关门？","Ngân hàng mấy giờ đóng cửa?"],["B","现在是下午四点，银行五点关门。","Bây giờ là bốn giờ chiều, ngân hàng năm giờ đóng cửa."],["A","那我得快一点。","Vậy tôi phải nhanh lên một chút."],["B","别着急，还有一个小时呢。你走路十分钟就到了。","Đừng vội, còn một tiếng nữa mà. Bạn đi bộ mười phút là tới."],["A","谢谢你！","Cảm ơn bạn!"],["B","不客气。银行旁边还有一家咖啡店，你去完银行可以去坐坐。","Không có gì. Cạnh ngân hàng còn có một quán cà phê, đi ngân hàng xong bạn có thể ghé ngồi chơi."],["A","好的，我会去的。","Được, tôi sẽ đến."],["B","路上小心。","Đi đường cẩn thận nhé."],["A","再见！","Tạm biệt!"],["B","再见！","Tạm biệt!"]],
-  qs: [{q:"他要去哪儿？",vi:"Anh ấy muốn đến đâu?",o:["银行","超市","咖啡店"],a:0,ex:"Câu đầu tiên: 请问银行在哪儿？"},{q:"到第几个红绿灯往右走？",vi:"Đến đèn giao thông thứ mấy thì rẽ phải?",o:["第一个","第二个","第三个"],a:1,ex:"路人: 到第二个红绿灯往右走。"},{q:"走路大概要多长时间？",vi:"Đi bộ khoảng bao lâu?",o:["五分钟","十分钟","一个小时"],a:1,ex:"大概十分钟."},{q:"银行在哪儿？",vi:"Ngân hàng ở đâu?",o:["超市旁边","咖啡店对面","红绿灯前面"],a:0,ex:"银行就在超市旁边. Quán cà phê mới là cái ở cạnh ngân hàng."},{q:"银行几点关门？",vi:"Ngân hàng mấy giờ đóng cửa?",o:["四点","五点","六点"],a:1,ex:"银行五点关门. Bây giờ mới 四点."},{q:"为什么不用打车？",vi:"Vì sao không cần đi taxi?",o:["走路比打车快","打车太贵","没有出租车"],a:0,ex:"对，走路比打车快."}] },
-{ id: "doctor", title: "看医生", vi: "Đi khám bệnh", svg: RD_SVG_DOCTOR, note: "Đi khám: 头疼 = đau đầu, 发烧 = sốt, 感冒 = cảm, 吃药 = uống thuốc.", who: { A: "医生", B: "小李" },
-  lines: [["A","你好，请坐。你哪儿不舒服？","Chào bạn, mời ngồi. Bạn khó chịu ở đâu?"],["B","医生，我头疼，还有点儿发烧。","Bác sĩ, tôi đau đầu, còn hơi sốt nữa."],["A","什么时候开始的？","Bắt đầu từ khi nào?"],["B","昨天晚上。","Tối hôm qua."],["A","你吃饭了吗？","Bạn ăn cơm chưa?"],["B","今天早上只喝了一杯水，不想吃东西。","Sáng nay tôi chỉ uống một cốc nước, không muốn ăn gì."],["A","我看看。嗯，你发烧了，三十八度。","Để tôi xem. Ừm, bạn bị sốt rồi, 38 độ."],["B","我得了什么病？","Tôi bị bệnh gì vậy?"],["A","你感冒了，不太重。你最近是不是睡得很晚？","Bạn bị cảm, không nặng lắm. Gần đây bạn có hay ngủ muộn không?"],["B","是的，这几天我每天都睡得很晚。","Vâng, mấy ngày nay ngày nào tôi cũng ngủ rất muộn."],["A","那你要多休息，早点儿睡觉。","Vậy bạn cần nghỉ ngơi nhiều, đi ngủ sớm hơn."],["B","好的。要吃药吗？","Vâng. Có cần uống thuốc không ạ?"],["A","要，我给你开药。每天吃三次，每次两片。","Cần, tôi kê thuốc cho bạn. Mỗi ngày uống ba lần, mỗi lần hai viên."],["B","饭前吃还是饭后吃？","Uống trước bữa ăn hay sau bữa ăn?"],["A","饭后吃。还要多喝水，不要喝咖啡。","Sau bữa ăn. Còn phải uống nhiều nước, không nên uống cà phê."],["B","我明天可以上班吗？","Ngày mai tôi đi làm được không?"],["A","最好在家休息两天，不要去上班了。","Tốt nhất là ở nhà nghỉ hai ngày, đừng đi làm nữa."],["B","好的，谢谢医生。","Vâng, cảm ơn bác sĩ."],["A","不客气，希望你早点儿好。","Không có gì, hy vọng bạn sớm khỏe lại."]],
-  qs: [{q:"小李哪儿不舒服？",vi:"Tiểu Lý khó chịu ở đâu?",o:["头疼和发烧","肚子疼","牙疼"],a:0,ex:"我头疼，还有点儿发烧."},{q:"这些不舒服是从什么时候开始的？",vi:"Những khó chịu này bắt đầu từ khi nào?",o:["今天早上","昨天晚上","前天"],a:1,ex:"B trả lời: 昨天晚上."},{q:"他发烧多少度？",vi:"Anh ấy sốt bao nhiêu độ?",o:["三十七度","三十八度","三十九度"],a:1,ex:"你发烧了，三十八度."},{q:"医生说他怎么了？",vi:"Bác sĩ nói anh ấy bị sao?",o:["累了","感冒了","饿了"],a:1,ex:"你感冒了，不太重."},{q:"药每天吃几次？",vi:"Thuốc uống mấy lần mỗi ngày?",o:["一次","两次","三次"],a:2,ex:"每天吃三次，每次两片."},{q:"药什么时候吃？",vi:"Thuốc uống lúc nào?",o:["饭前","饭后","睡觉前"],a:1,ex:"饭后吃."},{q:"医生让他怎么做？",vi:"Bác sĩ bảo anh ấy làm gì?",o:["明天去上班","在家休息两天","多喝咖啡"],a:1,ex:"最好在家休息两天，不要去上班了。Cà phê thì 不要喝."}] },
-{ id: "movie", title: "周末看电影", vi: "Hẹn đi xem phim cuối tuần", svg: RD_SVG_MOVIE, note: "Hẹn bạn: 有时间吗？ = có rảnh không? · 我请你 = tôi mời bạn.", who: { A: "小美", B: "小明" },
-  lines: [["A","喂，小明，你好！你这个周末有时间吗？","A lô, Tiểu Minh, chào bạn! Cuối tuần này bạn có thời gian không?"],["B","星期六我要去上课，星期天有时间。怎么了？","Thứ bảy tôi phải đi học, chủ nhật thì rảnh. Có chuyện gì thế?"],["A","我想去看电影，你想去吗？","Tôi muốn đi xem phim, bạn có muốn đi không?"],["B","好啊！你想看什么电影？","Được chứ! Bạn muốn xem phim gì?"],["A","最近有一个新电影，我朋友昨天看了，他说很好看。","Gần đây có một bộ phim mới, bạn tôi hôm qua xem rồi, anh ấy nói rất hay."],["B","是什么电影？","Là phim gì vậy?"],["A","是一个旅游的电影，听说很有意思。","Là phim về du lịch, nghe nói rất thú vị."],["B","那太好了。几点的？","Vậy thì tuyệt. Suất mấy giờ?"],["A","有下午两点的，也有晚上七点半的。","Có suất hai giờ chiều, cũng có suất bảy giờ rưỡi tối."],["B","下午两点太早了，我们看晚上的吧。","Hai giờ chiều sớm quá, chúng ta xem suất tối đi."],["A","好，那我们先吃饭，再看电影。五点半在电影院门口见，怎么样？","Được, vậy chúng ta ăn cơm trước rồi xem phim. Năm giờ rưỡi gặp ở cửa rạp chiếu phim, thế nào?"],["B","可以。电影票多少钱一张？","Được. Vé xem phim bao nhiêu tiền một vé?"],["A","五十块一张。我已经在网上买好票了。","Năm mươi tệ một vé. Tôi đã mua vé xong trên mạng rồi."],["B","那我请你吃饭吧。","Vậy tôi mời bạn ăn cơm nhé."],["A","太好了！你想吃什么？","Tuyệt quá! Bạn muốn ăn gì?"],["B","电影院旁边有一家面条店，很好吃。","Cạnh rạp chiếu phim có một quán mì, ăn rất ngon."],["A","好的。星期天五点半见！","Được. Chủ nhật năm giờ rưỡi gặp nhé!"],["B","星期天见，再见！","Chủ nhật gặp, tạm biệt!"]],
-  qs: [{q:"星期六小明要做什么？",vi:"Thứ bảy Tiểu Minh phải làm gì?",o:["上课","看电影","去旅游"],a:0,ex:"星期六我要去上课."},{q:"他们什么时候看电影？",vi:"Khi nào họ xem phim?",o:["星期六下午两点","星期天下午两点","星期天晚上七点半"],a:2,ex:"Hai giờ chiều quá sớm → 我们看晚上的吧, nên xem suất 晚上七点半 vào chủ nhật."},{q:"谁说这个电影很好看？",vi:"Ai nói bộ phim này hay?",o:["小明","小美的朋友","电影院的人"],a:1,ex:"我朋友昨天看了，他说很好看."},{q:"他们几点在哪儿见面？",vi:"Họ gặp nhau lúc mấy giờ, ở đâu?",o:["五点半，电影院门口","七点半，面条店","两点，学校门口"],a:0,ex:"五点半在电影院门口见."},{q:"电影票买了吗？",vi:"Vé xem phim đã mua chưa?",o:["还没买","小美已经买了","小明已经买了"],a:1,ex:"我已经在网上买好票了 (小美说)."},{q:"吃饭谁请客？",vi:"Ai mời ăn cơm?",o:["小美","小明","他们的朋友"],a:1,ex:"小明说: 那我请你吃饭吧."},{q:"他们在哪儿吃饭？",vi:"Họ ăn cơm ở đâu?",o:["电影院里","电影院旁边的面条店","小明家"],a:1,ex:"电影院旁边有一家面条店."}] },
-{ id: "rest", title: "在饭馆吃饭", vi: "Gọi món ở nhà hàng", svg: RD_SVG_REST, note: "Ở nhà hàng: 几位？ = mấy vị? · 来一条鱼 = cho một con cá · 买单 = tính tiền.", who: { A: "服务员", B: "小张", C: "小红" },
-  lines: [["A","你好，欢迎光临！几位？","Xin chào, hoan nghênh quý khách! Mấy vị ạ?"],["B","两位。","Hai người."],["A","请这边坐。这是菜单。","Mời ngồi bên này. Đây là thực đơn."],["B","谢谢。请问，你们这儿什么菜最好吃？","Cảm ơn. Cho hỏi, ở đây món nào ngon nhất?"],["A","我们的鱼很有名，牛肉面也很好吃。","Món cá của chúng tôi rất nổi tiếng, mì bò cũng rất ngon."],["B","好，那我们来一条鱼，再来一个青菜。","Được, vậy chúng tôi lấy một con cá, thêm một đĩa rau."],["C","我想吃牛肉面。你呢？","Tôi muốn ăn mì bò. Còn bạn?"],["B","我也想吃面，但是我不吃牛肉，我吃鸡蛋面。","Tôi cũng muốn ăn mì, nhưng tôi không ăn thịt bò, tôi ăn mì trứng."],["A","好的，一条鱼，一个青菜，一碗牛肉面，一碗鸡蛋面。喝点什么？","Vâng, một con cá, một đĩa rau, một bát mì bò, một bát mì trứng. Quý khách uống gì ạ?"],["C","有什么喝的？","Có đồ uống gì?"],["A","有茶、果汁和啤酒。","Có trà, nước ép và bia."],["B","我们不喝酒，来两杯果汁吧。","Chúng tôi không uống rượu bia, cho hai ly nước ép."],["A","好的，请等一下。","Vâng, xin chờ một chút."],["A","菜都上好了，请慢用。","Món lên đủ rồi, mời quý khách dùng bữa."],["B","服务员，请再给我一杯水。","Phục vụ, làm ơn cho tôi thêm một cốc nước."],["A","好的，马上来。","Vâng, có ngay."],["C","这个鱼真好吃！","Món cá này ngon thật!"],["B","是啊。服务员，买单！","Đúng vậy. Phục vụ, tính tiền!"],["A","鱼四十，青菜十，两碗面三十，果汁十，一共九十块。","Cá bốn mươi, rau mười, hai bát mì ba mươi, nước ép mười, tổng cộng chín mươi tệ."],["B","给你一百块。","Gửi bạn một trăm tệ."],["A","找您十块。谢谢，欢迎再来！","Thối lại ông mười tệ. Cảm ơn, hoan nghênh lần sau lại đến!"]],
-  qs: [{q:"他们一共几位客人？",vi:"Họ có tất cả mấy vị khách?",o:["一位","两位","三位"],a:1,ex:"服务员问: 几位？ 小张答: 两位."},{q:"服务员说什么菜很有名？",vi:"Phục vụ nói món nào nổi tiếng?",o:["鱼","青菜","鸡蛋面"],a:0,ex:"我们的鱼很有名."},{q:"小张为什么不点牛肉面？",vi:"Vì sao Tiểu Trương không gọi mì bò?",o:["太贵了","他不吃牛肉","没有牛肉面"],a:1,ex:"我不吃牛肉，我吃鸡蛋面."},{q:"他们喝什么？",vi:"Họ uống gì?",o:["茶","啤酒","果汁"],a:2,ex:"我们不喝酒，来两杯果汁吧."},{q:"一共多少钱？",vi:"Tổng cộng bao nhiêu tiền?",o:["八十块","九十块","一百块"],a:1,ex:"40 + 10 + 30 + 10 = 90 → 一共九十块."},{q:"服务员找给小张多少钱？",vi:"Phục vụ thối lại cho Tiểu Trương bao nhiêu?",o:["五块","十块","二十块"],a:1,ex:"Đưa 一百块, phải trả 九十块 → 找十块."},{q:"吃饭的时候，小张还要了什么？",vi:"Trong lúc ăn, Tiểu Trương gọi thêm gì?",o:["一杯水","一碗面","一杯酒"],a:0,ex:"请再给我一杯水."}] }
-];
-RD_NEW.forEach(x => RD_LESSONS.push(x));
-const RD_SEX = { rest: { A: "f", B: "m", C: "f" } };
-RD_LESSONS.forEach(L => { if (RD_SEX[L.id]) L.sex = RD_SEX[L.id]; });
-
-const rd = { L: null, i: 0, score: 0, py: 1, vi: 0, view: "list" };
-function rdOpen() { rd.view = "list"; rdRender(); }
-function rdLine(l, k) {
-  const L = rd.L, who = L.who[l[0]];
-  return `<div class="rd-line ${l[0] === "A" ? "a" : "b"}"><div class="rd-who">${pyHtml(who)}</div><div class="rd-bub" onclick="rdTap(${k})"><div class="rd-zh">${rd.py ? pyHtml(l[1]) : l[1]}</div><div class="rd-vi" id="rdvi${k}" style="display:${rd.vi ? "block" : "none"}">${l[2]}</div></div><button class="toggle-btn rd-sp" onclick="rdSpeak(${k})">${(L.sex || RD_SEX_DEF)[l[0]] === "m" ? "👨" : "👩"}🔊</button></div>`;
-}
-function rdTap(k) { const e = document.getElementById("rdvi" + k); if (e) e.style.display = e.style.display === "none" ? "block" : "none"; }
-function rdTools() { return `<div class="rd-tools"><button class="toggle-btn" onclick="rdTog('py')">${rd.py ? "Ẩn" : "Hiện"} pinyin</button><button class="toggle-btn" onclick="rdTog('vi')">${rd.vi ? "Ẩn" : "Hiện"} nghĩa</button><button class="toggle-btn" onclick="rdPlayAll()">🔊 Nghe cả bài</button></div>`; }
-function rdTog(k) { const st = document.getElementById("rdScroll").scrollTop; rd[k] = !rd[k]; const keep = rd.ans, ord = rd.ord, sc = rd.score; rdRenderKeep(st, keep, ord, sc); }
-function rdRenderKeep(st, keep, ord, sc) { const A = document.getElementById("rdArea"), L = rd.L; A.querySelector(".rd-tools").outerHTML = rdTools(); document.getElementById("rdScroll").innerHTML = L.lines.map(rdLine).join(""); document.getElementById("rdScroll").scrollTop = st; }
-function rdQ(q, qi) { return `<div class="rd-q" id="rdq${qi}"><div class="np-q">${qi + 1}. ${pyHtml(q.q)}<div class="sub" style="color:#7f1d1d;font-weight:400">${q.vi}</div></div><div class="np-opts">${rd.ord[qi].map((k, n) => `<button id="rdo${qi}_${n}" onclick="rdPick(${qi},${n})">${"ABC"[n]}. ${pyHtml(q.o[k])}</button>`).join("")}</div><div id="rdFb${qi}"></div></div>`; }
-function rdText() { return `<div class="rd-tools"><button class="toggle-btn" onclick="rd.py=!rd.py;rdRender()">${rd.py ? "Ẩn" : "Hiện"} pinyin</button><button class="toggle-btn" onclick="rd.vi=!rd.vi;rdRender()">${rd.vi ? "Ẩn" : "Hiện"} nghĩa</button><button class="toggle-btn" onclick="rdPlayAll()">🔊 Nghe cả bài</button></div>` + rd.L.lines.map(rdLine).join(""); }
-const RD_SEX_DEF = { A: "m", B: "f", C: "f" };
-function rdRole(sex) {
-  const sel = lsGet(VOICE_KEY) || "", cur = sel && sel !== RANDOM_VOICE ? zhVoices.find(v => v.voiceURI === sel) : null;
-  const males = zhVoices.filter(vIsMale), others = zhVoices.filter(v => !vIsMale(v));
-  if (sex === "m") { const v = (cur && vIsMale(cur)) ? cur : males[0] || null; return v ? { v, p: 1, r: 1 } : { v: cur, p: .5, r: .95 }; }
-  const v = (cur && !vIsMale(cur)) ? cur : others[0] || null; return { v: v || (cur && !vIsMale(cur) ? cur : null), p: males.length ? 1 : 1.25, r: 1 };
-}
-function rdUtt(k) {
-  const L = rd.L, l = L.lines[k], sx = (L.sex || RD_SEX_DEF)[l[0]] || "f", ro = rdRole(sx);
-  const u = new SpeechSynthesisUtterance(l[1]); u.lang = "zh-CN"; u.rate = getRate() * ro.r; u.pitch = ro.p;
-  if (ro.v) { u.voice = ro.v; u.lang = ro.v.lang; } return u;
-}
-function rdSpeak(k) { try { window.speechSynthesis.cancel(); window.speechSynthesis.speak(rdUtt(k)); } catch (e) {} }
-function rdPlayAll() { try { window.speechSynthesis.cancel(); rd.L.lines.forEach((l, k) => window.speechSynthesis.speak(rdUtt(k))); } catch (e) {} }
-function rdRender() {
-  const A = document.getElementById("rdArea"); if (!A) return;
-  if (rd.view === "list") {
-    A.innerHTML = RD_LESSONS.map(L => `<button class="ex-item" onclick="rdStart('${L.id}')"><div class="ex-item-no">🖼️ ${pyHtml(L.title)}</div><div class="ex-item-meta">${L.vi} · ${L.lines.length} lượt thoại · ${L.qs.length} câu hỏi</div><div class="ex-item-go">Đọc →</div></button>`).join("");
-    return;
-  }
-  const L = rd.L;
-  if (rd.view === "read") {
-    rd.ord = L.qs.map(q => shuffleArray(q.o.map((_, k) => k))); rd.ans = {}; rd.score = 0;
-    A.innerHTML = `<h2>${pyHtml(L.title)} <span class="sub">· ${L.vi}</span></h2><div class="rd-img">${L.svg}</div><div class="sub">💡 ${pyHtml(L.note)}</div>${rdTools()}<div class="rd-hint">👇 Cuộn khung dưới để đọc tiếp (${L.lines.length} lượt thoại)</div><div class="rd-scroll" id="rdScroll">${L.lines.map(rdLine).join("")}</div><h3 class="rd-qh">❓ Câu hỏi</h3><div id="rdQs">${L.qs.map((q, qi) => rdQ(q, qi)).join("")}</div><div id="rdSum" class="sub"></div>`;
-  }
-}
-function rdStart(id) { rd.L = RD_LESSONS.find(x => x.id === id); rd.view = "read"; rdRender(); window.scrollTo(0, 0); }
-function rdGo() { rd.view = "quiz"; rd.i = 0; rd.score = 0; rdRender(); window.scrollTo(0, 0); }
-function rdPick(qi, n) {
-  if (rd.ans[qi] !== undefined) return; const q = rd.L.qs[qi], ok = rd.ord[qi][n] === q.a; rd.ans[qi] = n; if (ok) rd.score++;
-  document.getElementById("rdo" + qi + "_" + rd.ord[qi].indexOf(q.a)).style.background = "#bbf7d0";
-  if (!ok) document.getElementById("rdo" + qi + "_" + n).style.background = "#fecaca";
-  document.getElementById("rdFb" + qi).innerHTML = `<div class="ex-rv ${ok ? "good" : "bad"}">${ok ? "✅ Đúng!" : "❌ Chưa đúng."} <div class="np-tr">💡 ${q.ex}</div></div>`;
-  const done = Object.keys(rd.ans).length, tot = rd.L.qs.length;
-  document.getElementById("rdSum").innerHTML = done < tot ? `Đã làm ${done}/${tot} · Đúng: ${rd.score}` : `<h2>🎉 Hoàn thành: ${rd.score}/${tot} câu đúng</h2><button class="primary" onclick="rdStart('${rd.L.id}')">🔁 Làm lại</button>`;
-}
-
 function stShow(id) { document.getElementById("hsk2Menu").classList.add("hidden"); document.getElementById(id).classList.remove("hidden"); window.scrollTo(0, 0); }
-function rdBack() { if (rd.view !== "list") { rd.view = "list"; rdRender(); window.scrollTo(0, 0); } else stBack("rdCard"); }
 function stBack(id) { try { window.speechSynthesis && window.speechSynthesis.cancel(); } catch (e) {} document.getElementById(id).classList.add("hidden"); document.getElementById("hsk2Menu").classList.remove("hidden"); window.scrollTo(0, 0); }
 let sanDeck = [], sanI = 0, sanScore = 0, sanCur = null;
 function sanStart() { sanDeck = shuffleArray(SAN_Q); sanI = 0; sanScore = 0; sanRender(); }
@@ -4811,7 +4647,7 @@ exRender();
     if (vis("hsk2Pane")) {
       if (vis("npCard")) { orig.npBack(); return true; }
       if (vis("oralCard")) { orig.oralBack(); return true; }
-      for (const id of ["sanCard", "fillCard", "matCard", "trnCard", "bjCard", "antCard", "ddCard", "rdCard"]) if (vis(id)) { orig.stBack(id); return true; }
+      for (const id of ["sanCard", "fillCard", "matCard", "trnCard", "bjCard", "antCard", "ddCard"]) if (vis(id)) { orig.stBack(id); return true; }
     }
     return false;
   }
@@ -4821,7 +4657,7 @@ exRender();
     if (vis("libCard")) { orig.libBack(); any = true; }
     if (vis("npCard")) { orig.npBack(); any = true; }
     if (vis("oralCard")) { orig.oralBack(); any = true; }
-    for (const id of ["sanCard", "fillCard", "matCard", "trnCard", "bjCard", "antCard", "ddCard", "rdCard"]) if (vis(id)) { orig.stBack(id); any = true; }
+    for (const id of ["sanCard", "fillCard", "matCard", "trnCard", "bjCard", "antCard", "ddCard"]) if (vis(id)) { orig.stBack(id); any = true; }
     stack.forEach(e => { if (e.t === "screen" && !e.exam) e.dead = true; });
     return any;
   }
