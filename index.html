@@ -696,7 +696,7 @@ body{background:var(--bg)}
 </div>
 <div class="menu-sec">Hiểu &amp; phân tích</div>
 <div class="ex-grid">
-<button class="ex-item" onclick="h3Show('h3mCard');h3mQ.start()"><div class="ex-item-no">💬 Hiểu nghĩa cụm cố định</div><div class="ex-item-meta">22 câu: 不A不B, 有的是, 都…了, X什么X…</div><div class="ex-item-go">Bắt đầu →</div></button>
+<button class="ex-item" onclick="h3Show('h3sCard');h3sQ.start('')"><div class="ex-item-no">🔍 Nhặt sạn</div><div class="ex-item-meta">300 câu: chọn câu SAI, phủ 81 điểm ngữ pháp HSK3</div><div class="ex-item-go">Bắt đầu →</div></button>
 <button class="ex-item" onclick="h3Show('h3pCard');h3pQ.start()"><div class="ex-item-no">🧩 Phân tích thành phần câu</div><div class="ex-item-meta">10 câu: chủ / tân / định ngữ, cụm từ</div><div class="ex-item-go">Bắt đầu →</div></button>
 </div>
     </div>
@@ -737,12 +737,13 @@ body{background:var(--bg)}
       <div class="sub">Chọn từ điền vào chỗ trống.</div>
       <div id="h3eArea"></div>
     </div>
-    <div class="card hidden" id="h3mCard">
-      <button class="toggle-btn back-btn" onclick="h3Back('h3mCard')">← Danh sách chức năng</button>
-      <h1>💬 Hiểu nghĩa cụm cố định</h1>
+    <div class="card hidden" id="h3sCard">
+      <button class="toggle-btn back-btn" onclick="h3Back('h3sCard')">← Danh sách chức năng</button>
+      <h1>🔍 Nhặt sạn</h1>
       <div class="vis-tools"><button class="toggle-btn" data-tool="py" type="button"></button><button class="toggle-btn" data-tool="vi" type="button"></button></div>
-      <div class="sub">Đọc câu và chọn nghĩa tiếng Việt đúng.</div>
-      <div id="h3mArea"></div>
+      <div class="sub">Trong 3 câu có đúng 1 câu sai ngữ pháp. Chọn câu SAI. Lọc theo nhóm bên dưới.</div>
+      <div id="h3sChips" class="h3-chips"></div>
+      <div id="h3sArea"></div>
     </div>
     <div class="card hidden" id="h3pCard">
       <button class="toggle-btn back-btn" onclick="h3Back('h3pCard')">← Danh sách chức năng</button>
@@ -5838,7 +5839,7 @@ h3bQ.start = () => h3gStart("h3b", h3bQ.g); h3cQ.start = () => h3gStart("h3c", h
 /* HSK 3 (chuẩn 3.0) — 81 điểm ngữ pháp x 2 ví dụ, xếp vào 6 chế độ.
    Mỗi câu có trường gp (1–81) để theo dõi độ phủ / điểm yếu.
    h3a, h3c, h3d, h3e dùng đúng schema hiện tại của web (nối thêm vào H3A_Q, H3C_Q, H3D_Q, H3E_Q).
-   h3m, h3p là 2 chế độ mới (xem hướng dẫn gắn vào web ở cuối file). */
+   h3p là chế độ mới (h3m đã được thay bằng Nhặt sạn h3s) (xem hướng dẫn gắn vào web ở cuối file). */
 
 const H3A_NEW = [
   {"gp":27,"s":"妹妹把我的书弄坏了。","w":["妹妹","把","我的书","弄坏","了"],"vi":"Em gái làm hỏng sách của tôi rồi.","tag":"把 + O + V + kết quả","note":"Chủ ngữ + 把 + tân ngữ xác định + động từ + bổ ngữ kết quả + 了."},
@@ -5982,30 +5983,6 @@ const H3E_NEW = [
   {"gp":40,"s":"＿孩子来说，睡觉很重要。","o":["对","为","由"],"vi":"Đối với trẻ em, ngủ rất quan trọng.","note":"对……来说 mở đầu câu để nêu góc nhìn.","p":0}
 ];   // Điền từ phân biệt (52 câu) — p = vị trí đáp án đúng
 
-const H3M_Q = [
-  {"gp":31,"tag":"拟声词 哈哈","s":"他哈哈地笑了起来。","o":["Anh ấy cười ha hả.","Anh ấy cười khổ.","Anh ấy cười thầm."],"note":"哈哈 mô phỏng tiếng cười lớn, hay dùng: 哈哈地笑.","p":0},
-  {"gp":31,"tag":"拟声词 哈哈","s":"听到这个笑话，大家都哈哈大笑。","o":["Nghe chuyện này, mọi người đều im lặng.","Nghe chuyện cười này, mọi người đều cười phá lên.","Nghe chuyện này, mọi người đều khóc."],"note":"哈哈大笑: cười phá lên.","p":1},
-  {"gp":34,"tag":"不A不B","s":"这双鞋不大不小，正合适。","o":["Đôi giày này vừa to vừa nhỏ.","Đôi giày này không mua cũng không bán.","Đôi giày này không to không nhỏ, vừa đúng."],"note":"不A不B với A, B trái nghĩa: vừa phải.","p":2},
-  {"gp":34,"tag":"不A不B","s":"今天的天气不冷不热。","o":["Thời tiết hôm nay không lạnh không nóng (dễ chịu).","Thời tiết hôm nay vừa lạnh vừa nóng.","Thời tiết hôm nay rất lạnh."],"note":"不冷不热 = vừa phải, dễ chịu.","p":0},
-  {"gp":35,"tag":"看起来","s":"他看起来很累。","o":["Anh ấy nhìn lên rất mệt.","Trông anh ấy có vẻ rất mệt.","Anh ấy đã nhìn thấy rất mệt."],"note":"看起来 + Adj/mệnh đề: trông có vẻ, dựa trên ấn tượng chung.","p":1},
-  {"gp":35,"tag":"看起来","s":"这个菜看起来不错，吃起来也很香。","o":["Món này không nhìn thấy nhưng ăn rất thơm.","Món này trông tệ nhưng ăn rất thơm.","Món này trông không tồi, ăn cũng thơm."],"note":"看起来 (trông) đối ứng với 吃起来 (ăn vào thấy).","p":2},
-  {"gp":36,"tag":"看上去","s":"她看上去只有二十岁。","o":["Trông cô ấy chỉ khoảng hai mươi tuổi.","Cô ấy nhìn lên hai mươi tuổi.","Cô ấy đã hai mươi tuổi rồi."],"note":"看上去 nhấn vào ấn tượng thị giác bên ngoài.","p":0},
-  {"gp":36,"tag":"看上去","s":"这个孩子看上去很聪明。","o":["Đứa trẻ này nhìn thấy rất nhiều.","Đứa trẻ này trông rất thông minh.","Đứa trẻ này trông có vẻ rất mệt."],"note":"看上去 + Adj: trông có vẻ.","p":1},
-  {"gp":37,"tag":"有的是","s":"我们有的是时间，别着急。","o":["Chúng ta có một số thời gian, đừng vội.","Chúng ta không có thời gian, phải vội.","Chúng ta có thừa thời gian, đừng vội."],"note":"有的是 = rất nhiều, thừa thãi (khác 有的 = một số).","p":2},
-  {"gp":37,"tag":"有的是","s":"这里有的是好吃的东西。","o":["Ở đây có đầy món ngon.","Ở đây có vài món ngon.","Ở đây chẳng có món ngon nào."],"note":"有的是 nhấn mạnh sự phong phú.","p":0},
-  {"gp":76,"tag":"反问句","s":"你不是说今天去吗？","o":["Bạn không nói hôm nay đi à? (hỏi thật, chưa biết)","Chẳng phải bạn nói hôm nay đi sao? (nhấn mạnh bạn đã nói thế)","Bạn nói hôm nay không đi đúng không?"],"note":"不是……吗？ là câu phản vấn: khẳng định điều ngược lại với dạng phủ định.","p":1},
-  {"gp":76,"tag":"反问句","s":"难道你不知道吗？","o":["Bạn hỏi tôi có biết không?","Chắc chắn bạn không biết.","Lẽ nào bạn không biết sao? (ý là đáng lẽ phải biết)"],"note":"难道……吗？ nhấn mạnh sự ngạc nhiên, không tin.","p":2},
-  {"gp":77,"tag":"是 nhấn mạnh","s":"这个地方是很漂亮。","o":["Nơi này đúng là rất đẹp.","Nơi này là rất đẹp (định nghĩa).","Nơi này không đẹp."],"note":"是 đặt trước tính từ/động từ (đọc nhấn) để khẳng định: đúng là, quả thật.","p":0},
-  {"gp":77,"tag":"是 nhấn mạnh","s":"我是喜欢他，可是他不喜欢我。","o":["Tôi thích anh ấy vì anh ấy không thích tôi.","Tôi thích anh ấy thật, nhưng anh ấy không thích tôi.","Tôi không thích anh ấy."],"note":"是 + V thừa nhận một sự thật rồi chuyển ý với 可是.","p":1},
-  {"gp":78,"tag":"Hỏi bằng ngữ điệu","s":"你吃饭了？","o":["Bạn đã ăn cơm rồi. (câu trần thuật)","Bạn đừng ăn cơm nữa.","Bạn ăn cơm chưa? (câu hỏi bằng ngữ điệu lên cao)"],"note":"Câu trần thuật + ngữ điệu lên cuối câu = câu hỏi, không cần 吗.","p":2},
-  {"gp":78,"tag":"Hỏi bằng ngữ điệu","s":"他明天不来？","o":["Mai anh ấy không đến à?","Mai anh ấy không đến.","Mai anh ấy đến đấy."],"note":"Dấu ？ + giọng lên cao biểu thị nghi vấn.","p":0},
-  {"gp":79,"tag":"都……了","s":"都十二点了，你还不睡觉？","o":["Mười hai giờ đều ngủ rồi.","Đã mười hai giờ rồi mà bạn còn chưa ngủ?","Bạn đều ngủ lúc mười hai giờ."],"note":"都 + thời điểm + 了: đã … rồi (hàm ý sốt ruột).","p":1},
-  {"gp":79,"tag":"都……了","s":"他都三十岁了，还没结婚。","o":["Anh ấy ba mươi tuổi đều kết hôn rồi.","Anh ấy sẽ kết hôn năm ba mươi tuổi.","Anh ấy đã ba mươi tuổi rồi mà vẫn chưa kết hôn."],"note":"都……了 nhấn mạnh sự việc đã đến mức đó.","p":2},
-  {"gp":80,"tag":"X就X吧","s":"贵就贵吧，我喜欢就行。","o":["Đắt thì đắt vậy, tôi thích là được.","Rẻ quá nên mua.","Đắt quá nên tôi không mua."],"note":"X就X吧: chấp nhận miễn cưỡng, chẳng sao.","p":0},
-  {"gp":80,"tag":"X就X吧","s":"没有米饭，吃面条就吃面条吧。","o":["Không có cơm nên tôi không ăn.","Không có cơm thì ăn mì vậy.","Mì ngon hơn cơm nên ăn mì."],"note":"Nhượng bộ vì không có lựa chọn tốt hơn.","p":1},
-  {"gp":81,"tag":"X什么X","s":"哭什么哭，别哭了！","o":["Tại sao bạn khóc, kể cho tôi nghe.","Bạn muốn khóc cái gì?","Khóc cái gì mà khóc, đừng khóc nữa!"],"note":"V + 什么 + V: ngăn cản/phủ nhận, giọng bực.","p":2},
-  {"gp":81,"tag":"X什么X","s":"累什么累，才走了十分钟！","o":["Mệt gì mà mệt, mới đi mười phút!","Bạn mệt vì cái gì?","Mệt quá, đi mười phút rồi."],"note":"Adj + 什么 + Adj: phủ nhận tính chất người kia nói.","p":0}
-];   // Hiểu nghĩa cụm cố định (22 câu, chế độ MỚI) — p = vị trí đáp án đúng
 
 const H3P_Q = [
   {"gp":32,"tag":"Cụm từ","s":"他在图书馆看书。","ask":"“在图书馆” là loại cụm gì?","o":["Cụm giới từ - tân ngữ (介宾短语)","Cụm phương vị (方位短语)","Cụm đồng vị (同位短语)"],"note":"在 + địa điểm = cụm giới - tân, làm trạng ngữ trước động từ.","p":0},
@@ -6364,7 +6341,342 @@ const H3C_X300 = [
 H3C_Q.push(...H3C_X300); H3D_Q.push(...H3D_NEW); H3E_Q.push(...H3E_NEW);
 const h3dQ = mkQuiz("h3d", H3D_Q, q => ({ tag: "Phức câu · " + q.pair, ask: "Chọn vế sau để ghép thành câu đúng:", head: `<div class="lib-ex" style="margin:8px 0">${pyHtml(q.first)}＿＿＿</div>`, opts: [q.ok, q.w1, q.w2], full: q.first + q.ok, vi: q.vi, rule: "Cặp " + q.pair + "." }));
 const h3eQ = mkQuiz("h3e", H3E_Q, q => ({ tag: "Điền từ", ask: "Chọn từ điền vào chỗ trống:", head: `<div class="lib-ex" style="margin:8px 0;font-size:22px">${pyHtml(q.s.replace("＿", "＿＿"))}</div><div class="np-vi">🇻🇳 ${q.vi}</div>`, opts: q.o, fixed: true, p: q.p, full: q.s.replace("＿", q.o[q.p]), vi: q.vi, rule: q.note }));
-const h3mQ = mkQuiz("h3m", H3M_Q, q => ({ tag: "Cụm cố định · " + q.tag, ask: "Câu này có nghĩa là gì?", head: `<div class="lib-ex" style="margin:8px 0;font-size:22px">${pyHtml(q.s)}</div>`, opts: q.o, fixed: true, p: q.p, full: q.s, vi: q.o[q.p], rule: q.note }));
+Object.entries({"层": "céng", "当": "dāng", "科学家": "kēxuéjiā", "科": "kē", "耐心": "nàixīn", "各": "gè", "眼": "yǎn", "尝": "cháng", "骂": "mà", "部": "bù", "光": "guāng", "千": "qiān", "现场": "xiànchǎng", "讨论": "tǎolùn", "互相": "hùxiāng", "总经理": "zǒngjīnglǐ", "接待": "jiēdài", "天气预报": "tiānqì yùbào", "赢": "yíng", "请客": "qǐngkè", "氢": "qīng", "氧": "yǎng", "组成": "zǔchéng", "以来": "yǐlái", "将": "jiāng", "东": "dōng", "鼓掌": "gǔzhǎng", "录音": "lùyīn", "甜": "tián", "香蕉": "xiāngjiāo", "够": "gòu", "哈哈": "hāhā", "哈": "hā", "帅": "shuài", "咸": "xián", "淡": "dàn", "资料": "zīliào", "大多数": "dàduōshù", "屋子": "wūzi", "屋": "wū", "使": "shǐ", "女孩": "nǚhái", "袋子": "dàizi", "肚子": "dùzi", "收拾": "shōushi", "批评": "pīpíng", "吓": "xià", "另": "lìng", "害怕": "hàipà", "闹": "nào", "页": "yè", "其次": "qícì", "任务": "rènwu", "刮风": "guāfēng", "刮": "guā", "延期": "yánqī", "交通": "jiāotōng", "方便": "fāngbiàn", "锻炼": "duànliàn", "紧张": "jǐnzhāng", "答应": "dāying", "凉": "liáng", "火": "huǒ", "吵": "chǎo", "趟": "tàng", "理解": "lǐjiě", "挥": "huī", "一切": "yíqiè", "转": "zhuǎn", "安全": "ānquán", "系好": "jì hǎo", "好处": "hǎochu", "吸烟": "xīyān", "有害": "yǒuhài", "实话": "shíhuà", "算": "suàn"}).forEach(([k, v]) => { if (!(k in PYD)) PYD[k] = v; });
+Object.entries({"口袋":"kǒudài","发现":"fāxiàn","客气":"kèqi"}).forEach(([k, v]) => { if (!(k in PYD)) PYD[k] = v; });
+/* ===== HSK 3 - Nhặt sạn (300 câu, phủ 81 điểm ngữ pháp H3_GP) =====
+   Định dạng: gp | câu đúng 1 | câu đúng 2 | câu sai | sửa lại | giải thích */
+const H3S_Q = `1|他住在第三层。|我第一次来北京。|他住在三第层。|他住在第三层。|Thứ tự dùng 第 + số từ + lượng từ: 第三层; 第 luôn đứng trước số từ.
+1|老王是我的同事。|小李比我小三岁。|王老是我的同事。|老王是我的同事。|老 / 小 là tiền tố đứng trước họ (老王, 小李), không đặt sau họ.
+1|我是第二次来这里。|这是我的第一个中国朋友。|我是二第次来这里。|我是第二次来这里。|第 + số + 次: lần thứ mấy; không đặt 第 sau số từ.
+2|同学们都来了。|老师们在开会。|三个同学们都来了。|三个同学都来了。|们 chỉ số nhiều chung chung, không dùng cùng số từ cụ thể (三个同学 / 同学们).
+2|他是一位作家。|她想当科学家。|她想当科学子。|她想当科学家。|Hậu tố 家 chỉ người làm nghề / chuyên gia: 作家, 科学家; 子 không dùng cho nghĩa này.
+2|我有一个小孩儿。|桌子上有一个杯子。|桌上有一个杯头。|桌上有一个杯子。|杯子 mới đúng; 头 chỉ đi với một số từ (石头, 木头, 外头, 里头) chứ không gắn tùy tiện.
+2|外头很冷，多穿点儿。|里头有很多人。|外子很冷，多穿点儿。|外头很冷，多穿点儿。|外头 / 里头 là từ cố định có hậu tố 头 (bên ngoài / bên trong); 外子 không phải từ.
+3|我不敢一个人回家。|他不敢跟老师说话。|我一个人回家不敢。|我不敢一个人回家。|敢 là động từ năng nguyện, đứng trước động từ chính; phủ định đặt 不 trước 敢.
+3|你敢不敢上台唱歌？|她敢一个人去旅游。|你敢不敢唱歌上台？|你敢不敢上台唱歌？|敢 + động từ chính: 上台唱歌 là cụm động từ liên động, giữ đúng trật tự 上台 → 唱歌.
+4|你需要帮忙吗？|我们需要多休息。|我们需要休息多。|我们需要多休息。|多 là trạng ngữ, đứng trước động từ: 多休息, không đặt sau.
+4|这件事需要你来做。|你不需要买票。|你没需要买票。|你不需要买票。|Phủ định của 需要 dùng 不需要, không dùng 没需要.
+4|这个工作需要很多时间。|学汉语需要耐心。|这个工作需要了很多时间。|这个工作需要很多时间。|需要 chỉ nhu cầu chung, không gắn 了 ngay sau động từ khi nói về yêu cầu của công việc.
+5|我昨天洗了一个澡。|他们昨天见了一次面。|我昨天洗澡了一个。|我昨天洗了一个澡。|Từ ly hợp (洗澡): số lượng, 了 chen vào giữa: 洗 + 了 + 一个 + 澡.
+5|你帮我一个忙吧。|她帮了我很多忙。|她帮忙了我很多。|她帮了我很多忙。|帮忙 là từ ly hợp: người nhận đứng giữa 帮 và 忙 (帮 + người + 忙).
+5|我想跟他见面。|我们明天下午见面。|我想见面他。|我想跟他见面。|见面 không mang tân ngữ trực tiếp; dùng 跟 + người + 见面.
+5|他生我的气了。|你别生气。|他生气我了。|他生我的气了。|生气 là từ ly hợp, đối tượng giận đặt giữa: 生 + 我的 + 气.
+5|她洗了一个小时澡。|我们昨天游了两个小时泳。|她洗澡了一个小时。|她洗了一个小时澡。|Thời lượng chen vào giữa từ ly hợp: 洗 + 了 + 一个小时 + 澡.
+6|我听得见你说话。|我看不见黑板上的字。|我看见不黑板上的字。|我看不见黑板上的字。|Giữa động từ và bổ ngữ kết quả chen 得 / 不 để tạo bổ ngữ khả năng: 看不见.
+6|他吃得饱。|这么多菜，我吃不完。|这么多菜，我吃不了完。|这么多菜，我吃不完。|Dùng 吃不完 hoặc 吃不了, không dùng cùng lúc 了 và 完.
+6|他的成绩提高了不少。|你的汉语提高得很快。|他的成绩提了高不少。|他的成绩提高了不少。|提高 là động-bổ liền khối; 了 đặt sau cả từ, không chèn giữa.
+7|我什么都不想吃。|谁都知道这件事。|我都什么不想吃。|我什么都不想吃。|Đại từ nghi vấn phiếm chỉ đứng trước 都 / 也, rồi mới đến phủ định: 什么都不.
+7|你想吃什么就吃什么。|哪儿便宜就去哪儿买。|你想吃什么吃什么。|你想吃什么就吃什么。|Hai đại từ nghi vấn hô ứng cần 就 nối: 想……什么就……什么.
+7|我哪儿也没去。|他谁也不认识。|我没去哪儿也。|我哪儿也没去。|Cấu trúc 哪儿 + 也 + 没 + V: đại từ nghi vấn phải đứng trước 也.
+7|谁想去，谁就去。|谁先到，谁就先吃。|谁想去，谁去就。|谁想去，谁就去。|就 đứng trước động từ ở vế sau: 谁……，谁就…….
+8|各位同学，请坐。|我们班各个同学都很努力。|各位同学们，请坐。|各位同学，请坐。|各位 đã hàm ý số nhiều, không thêm 们.
+8|每个人都有自己的爱好。|每天我都跑步。|每个人有都自己的爱好。|每个人都有自己的爱好。|都 đứng trước động từ: 每个人都有.
+8|任何人都可以参加。|我没有任何问题。|任何人可以都参加。|任何人都可以参加。|都 đứng trước động từ năng nguyện: 都可以.
+8|各种水果我都喜欢。|各国的朋友都来了。|各种水果都我喜欢。|各种水果我都喜欢。|Tân ngữ đưa lên đầu câu thì đứng trước 都: 各种水果我都喜欢.
+9|我买了一双新鞋。|桌子上有一台电脑。|我买了一个新鞋。|我买了一双新鞋。|鞋 đi với 双 (đôi); 台 dùng cho máy móc như 电脑.
+9|他有一把雨伞。|墙上挂着一张地图。|他有一个雨伞。|他有一把雨伞。|伞 dùng lượng từ 把 (vật có cán cầm).
+9|我买了一条新裤子。|河里有一条鱼。|我买了一件新裤子。|我买了一条新裤子。|裤子 dùng 条 (vật dài); 件 dùng cho áo, việc.
+9|我有一件新衣服。|桌子上放着一本词典。|我有一张新衣服。|我有一件新衣服。|衣服 dùng 件; 张 dùng cho vật phẳng như giấy, bàn, vé.
+10|我们一起吃了一顿饭。|他看了我一眼。|我们一起吃了饭一顿。|我们一起吃了一顿饭。|Động lượng từ 顿 đứng sau 了 và trước tân ngữ: 吃了一顿饭.
+10|你尝一口吧。|他喝了一口水。|他喝一口了水。|他喝了一口水。|了 đứng ngay sau động từ, trước động lượng từ: 喝了一口.
+10|妈妈骂了我一顿。|他看了我一眼。|妈妈一顿骂了我。|妈妈骂了我一顿。|Động lượng từ đứng sau động từ; tân ngữ là đại từ đứng trước động lượng từ.
+11|他天天都来看我。|我们班同学个个都很努力。|他每天天都来看我。|他天天都来看我。|Lặp lượng từ / danh từ đã có nghĩa "mỗi", không dùng cùng 每 (không nói 每天天).
+11|人人都喜欢他。|个个都是好孩子。|人人喜欢都他。|人人都喜欢他。|Sau lặp lượng từ / danh từ, 都 đứng trước động từ.
+12|这个房间比较干净。|今天比昨天更加冷。|今天比昨天更加很冷。|今天比昨天更加冷。|更加 là phó từ mức độ, không dùng cùng 很.
+12|他的汉语相当好。|这部电影相当有意思。|这部电影比较很有意思。|这部电影比较有意思。|比较 là phó từ mức độ, không đi cùng 很.
+12|我比较喜欢喝茶。|她比较爱运动。|我喜欢比较喝茶。|我比较喜欢喝茶。|比较 đứng trước động từ tâm lý 喜欢, không đặt sau.
+12|他比我更加努力。|这个比那个更加贵。|他更加比我努力。|他比我更加努力。|Trong câu 比, 更加 đứng sau 比 + B và trước tính từ.
+13|光他一个人就吃了三碗饭。|他光说不做。|光一个人他就吃了三碗饭。|光他一个人就吃了三碗饭。|光 + danh từ / cụm: chỉ riêng; 光他一个人 phải đi liền nhau.
+13|这个手机至少五千块。|我至少等了两个小时。|这个手机五千块至少。|这个手机至少五千块。|至少 đứng trước số lượng: tối thiểu là bao nhiêu.
+13|这里仅有一家商店。|现场仅有十个人。|这里有仅一家商店。|这里仅有一家商店。|仅 là phó từ, đứng trước động từ 有.
+14|我本来想去，可是太累了。|这本来是我的书。|我本来想去，所以太累了。|我本来想去，可是太累了。|本来 nêu ý định ban đầu; vế sau chuyển ý nên dùng 可是, không dùng 所以.
+14|他曾经在北京住过。|我曾经学过日语。|他曾经正在北京住。|他曾经在北京住过。|曾经 chỉ việc đã từng xảy ra, đi với 过 / 了, không dùng với 正在.
+14|听到消息，他立刻回家了。|我立刻就来。|听到消息，他立刻了回家。|听到消息，他立刻回家了。|立刻 là phó từ, đứng trước động từ; 了 đặt sau cả cụm.
+14|他始终没有说话。|他始终相信我。|他没有始终说话。|他始终没有说话。|始终 đứng trước 没有: 始终没有 + V.
+15|我通常七点起床。|他往往一个人去图书馆。|我七点通常起床。|我通常七点起床。|通常 là phó từ tần suất, đứng ngay sau chủ ngữ, trước thời gian cụ thể.
+15|他总是迟到。|她总是笑着说话。|他迟到总是。|他总是迟到。|总是 là phó từ, đứng trước động từ.
+15|下雨的时候，路上往往很堵。|周末他往往睡到十点。|昨天他往往迟到了。|昨天他迟到了。|往往 chỉ quy luật thường xảy ra, không dùng cho một việc cụ thể đã xảy ra một lần.
+15|我们周末通常去爬山。|他通常坐地铁上班。|我们周末通常去爬山了。|我们周末通常去爬山。|通常 chỉ thói quen; không thêm 了 sau động từ.
+16|吃完饭再走吧。|先做作业，再看电视。|吃完饭走再吧。|吃完饭再走吧。|再 đứng trước động từ: 再 + V chỉ việc làm sau.
+16|你先看一下，再决定。|等我做完作业，再去玩。|你先看一下，又决定。|你先看一下，再决定。|再 diễn tả việc sẽ làm sau; 又 dùng cho việc đã lặp lại.
+16|我们明天再说吧。|这个问题以后再讨论。|我们明天又说吧。|我们明天再说吧。|Việc ở tương lai dùng 再, không dùng 又.
+17|我们要互相帮助。|他们互相学习。|我们要互相帮助他。|我们要互相帮助。|互相 đã hàm ý "nhau", không thêm tân ngữ sau động từ.
+17|请尽量早点儿来。|我会尽量帮你。|请早点儿尽量来。|请尽量早点儿来。|尽量 đứng trước động từ / cụm động từ: 尽量 + 早点儿来.
+17|总经理亲自接待了客人。|这件事我要亲自问他。|这件事我要问亲自他。|这件事我要亲自问他。|亲自 là phó từ, đứng trước động từ.
+18|他大概五点到。|我大概十点睡觉。|他到大概五点。|他大概五点到。|大概 đứng trước thời gian / số lượng ước chừng, sau chủ ngữ.
+18|恐怕要下雨了。|他恐怕还没起床。|恐怕下雨要了。|恐怕要下雨了。|恐怕 đứng đầu vị ngữ / câu, trước 要…了; không đảo trật tự 下雨要.
+18|这个包大概三百块。|今天大概有三十度。|这个包大概三百块左右。|这个包大概三百块。|大概 và 左右 đều chỉ ước chừng, dùng trùng lặp là thừa.
+19|你到底去不去？|这到底是怎么回事？|你到底去不去吗？|你到底去不去？|到底 dùng trong câu hỏi; câu hỏi chính phản không thêm 吗.
+19|我根本不知道这件事。|他根本没来过。|我根本知道这件事。|我根本不知道这件事。|根本 thường đi với phủ định: 根本不 / 根本没.
+19|等了三个小时，车终于来了。|他终于考上大学了。|他终于不考上大学了。|他终于考上大学了。|终于 chỉ kết quả mong đợi cuối cùng cũng xảy ra, không đi với 不.
+19|今天简直太热了。|这里简直像春天一样。|今天简直有点儿热。|今天简直太热了。|简直 nhấn mạnh mức độ cao, đi với 太……了 / 像……一样, không đi với 有点儿.
+19|天气预报说有雨，果然下雨了。|他说会赢，果然赢了。|天气预报说有雨，果然没下雨。|天气预报说有雨，果然下雨了。|果然 xác nhận điều dự đoán là đúng; kết quả phải khớp với dự đoán.
+20|这个问题由他来回答。|活动由学校组织。|这个问题由他回答来。|这个问题由他来回答。|由 + người thực hiện + 来 + V: 来 đứng trước động từ.
+20|这件事由经理决定。|这顿饭由我请客。|由经理这件事决定。|这件事由经理决定。|Chủ đề đứng đầu câu, 由 + tác nhân đứng ngay trước động từ.
+20|水由氢和氧组成。|这本书由三个人写成。|水氢和氧由组成。|水由氢和氧组成。|由 + thành phần + 组成: nước do hydro và oxy tạo thành.
+21|自从来北京，他一直很忙。|自从毕业以后，我们没见过面。|自从明天开始，我每天跑步。|从明天开始，我每天跑步。|自从 chỉ mốc bắt đầu trong quá khứ; tương lai dùng 从.
+21|自从认识他以来，我一直很开心。|自从搬家以后，他很少来。|自从认识他以来，我将会很开心。|自从认识他以来，我一直很开心。|自从……以来 đi với 一直 / 都 (kéo dài đến hiện tại), không dùng 将会.
+22|他朝我笑了笑。|请朝前走。|他朝笑我了。|他朝我笑了笑。|朝 + người / hướng + động từ: 朝 đứng trước động từ.
+22|这座房子朝东。|窗户朝南。|这座房子东朝。|这座房子朝东。|朝 + phương hướng: 朝东, 朝南.
+22|他朝门口走去。|孩子朝妈妈跑过去。|孩子朝跑妈妈过去。|孩子朝妈妈跑过去。|朝 + đối tượng / hướng + động từ.
+23|我为你高兴。|大家为他鼓掌。|我高兴为你。|我为你高兴。|为 + đối tượng + động từ / tính từ: giới từ đứng trước vị ngữ.
+23|他为大家准备了饭菜。|妈妈为孩子做了新衣服。|他准备为大家了饭菜。|他为大家准备了饭菜。|为 + người hưởng lợi đứng trước động từ; 了 đặt sau động từ.
+24|他向我借了一本书。|请向大家介绍一下。|他借向我一本书。|他向我借了一本书。|向 + người + động từ: giới từ đứng trước động từ.
+24|我要向你学习。|向左走，再向右走。|我要学习向你。|我要向你学习。|向 + đối tượng + học / hỏi / mượn…: giới từ đứng trước động từ.
+25|由于下雨，比赛取消了。|因为天气不好，我们没去。|由于他生病，因为没来。|由于他生病，所以没来。|由于 chỉ nguyên nhân (vế trước); vế kết quả dùng 所以, không lặp nguyên nhân bằng 因为.
+25|因为我很累，所以想早点儿睡。|由于堵车，他迟到了。|因为我很累，可是想早点儿睡。|因为我很累，所以想早点儿睡。|因为 đi với 所以; 可是 chỉ chuyển ý.
+26|为了学好汉语，他每天听录音。|为了健康，他不吃甜的。|为了健康，所以他不吃甜的。|为了健康，他不吃甜的。|为了 nêu mục đích, vế sau không dùng 所以.
+26|为了考试，他每天学到很晚。|为了孩子，她换了工作。|他每天学到很晚，为了考试了。|为了考试，他每天学到很晚。|为了 + mục đích thường đặt ở vế trước để dẫn dắt hành động.
+27|我把作业做完了。|他把杯子打破了。|我把作业做。|我把作业做完了。|Câu 把 cần thành phần sau động từ (bổ ngữ, 了…), không để động từ trần.
+27|请把门关上。|我把钥匙忘在家里了。|我把钥匙在家里忘了。|我把钥匙忘在家里了。|把 + O + V + 在 + nơi chốn: 在 + nơi chốn đứng sau động từ.
+27|我的书被他借走了。|杯子被弟弟打破了。|我的书被借走他了。|我的书被他借走了。|被 + tác nhân + V + thành phần: tác nhân đứng giữa 被 và động từ.
+27|我的伞让风吹走了。|手机叫小偷偷走了。|我的伞让吹走了。|我的伞让风吹走了。|叫 / 让 trong câu bị động bắt buộc phải có tác nhân (风).
+27|我没把作业做完。|他没把钱带来。|我把作业没做完。|我没把作业做完。|Phó từ phủ định 没 đứng trước 把, không đặt sau tân ngữ.
+27|他把房间打扫得很干净。|我把这本书看了三遍。|他把打扫房间得很干净。|他把房间打扫得很干净。|把 + O + V + 得 + …: tân ngữ đứng ngay sau 把.
+28|除了苹果，我还喜欢香蕉。|除了他，我们都去。|除了苹果以外，我喜欢也香蕉。|除了苹果以外，我也喜欢香蕉。|除了……(以外)，还 / 也 đứng trước động từ ở vế sau.
+28|除了周末，我每天都上班。|这个菜除了辣，别的都好。|除了周末，我每天上班都。|除了周末，我每天都上班。|都 đứng trước động từ: 每天都上班.
+28|除了英语，他还会说汉语。|除了小王，没有人知道。|除了英语，他会说还汉语。|除了英语，他还会说汉语。|还 đứng trước động từ năng nguyện 会.
+29|请按顺序排队。|按照老师的要求做。|请顺序按排队。|请按顺序排队。|按 + danh từ + động từ: 按 là giới từ đứng trước danh từ.
+29|按照规定，这里不能停车。|他按照说明书做。|他说明书按照做。|他按照说明书做。|按照 + căn cứ + động từ: giới từ đứng trước căn cứ.
+30|他会说汉语，并且说得很好。|这个房间很大，并且很干净。|我喜欢红色，并且我不喜欢蓝色。|我喜欢红色，但是我不喜欢蓝色。|并且 chỉ quan hệ tăng tiến; ý đối lập phải dùng 但是.
+30|天气不好，因此比赛取消了。|他生病了，因此没来。|他生病了，因此所以没来。|他生病了，因此没来。|因此 đã nêu kết quả, không dùng cùng 所以.
+30|我要买书。另外，我还想买一支笔。|这个问题很难，另外时间也不够。|我要买书。另外，我想还买一支笔。|我要买书。另外，我还想买一支笔。|还 đứng trước động từ năng nguyện 想.
+30|他不但会说汉语，并且会写汉字。|她唱歌很好，并且跳舞也很好。|她唱歌很好，并且很跳舞好。|她唱歌很好，并且跳舞也很好。|Sau 并且 vẫn giữ trật tự câu bình thường: chủ ngữ – vị ngữ.
+31|他哈哈地笑了起来。|听了这个笑话，大家哈哈大笑。|他哈哈地哭了起来。|他哈哈地笑了起来。|哈哈 là từ tượng thanh chỉ tiếng cười, không đi với 哭.
+31|他说了句笑话，大家都哈哈大笑。|老师哈哈地笑着说：“好！”|他说了句笑话，大家都大笑哈哈。|他说了句笑话，大家都哈哈大笑。|哈哈大笑 là cụm cố định, 哈哈 đứng trước 大笑.
+32|我喜欢红色和蓝色。|他又高又帅。|我昨天去商店和买东西。|我昨天去商店买东西。|和 chỉ nối từ / cụm cùng loại; hai hành động nối tiếp dùng liên động, không dùng 和.
+32|我的新手机很贵。|他是一个很好的老师。|新我的手机很贵。|我的新手机很贵。|Cụm định-trung: sở hữu (我的) đứng trước, rồi tính từ (新), rồi danh từ.
+33|同学们一个一个地回答问题。|请一个一个地进来。|同学们一个一个回答问题地。|同学们一个一个地回答问题。|Lặp số-lượng + 地 + động từ: 地 đứng ngay sau 一个一个.
+33|孩子们两个两个地排队。|大家一个一个地走。|孩子们两个两个排队地。|孩子们两个两个地排队。|Số-lượng lặp là trạng ngữ, 地 nằm trước động từ.
+34|这双鞋不大不小，正合适。|今天的天气不冷不热。|今天的天气不很冷不热。|今天的天气不冷不热。|不A不B: A, B là hai từ đơn trái nghĩa, không thêm 很.
+34|他的汉语不好不坏。|这个菜不咸不淡，刚好。|这个菜不咸不好，刚好。|这个菜不咸不淡，刚好。|不A不B cần hai tính từ trái nghĩa cùng nhóm: 咸 – 淡.
+34|这些书不多不少，正好十本。|他不快不慢地走着。|他不快不慢走着地。|他不快不慢地走着。|不快不慢 là trạng ngữ, đi với 地 trước động từ.
+35|他看起来很累。|这件衣服看起来很贵。|他很累看起来。|他看起来很累。|看起来 + tính từ / mệnh đề: trông có vẻ; 看起来 đứng trước phần miêu tả.
+35|这个菜看起来很好吃。|她看起来比我小。|这个菜看起来好吃很。|这个菜看起来很好吃。|Trạng từ 很 đứng trước tính từ, không đặt sau.
+36|她看上去只有二十岁。|这个孩子看上去很聪明。|她看上去只二十岁有。|她看上去只有二十岁。|只有 + số lượng: chỉ có; 只 đứng trước 有.
+36|他看上去很年轻。|这座山看上去不高。|他上去看很年轻。|他看上去很年轻。|看上去 là cụm cố định (trông có vẻ); không tách 看 và 上去.
+37|我有的是时间。|这里有的是好玩的地方。|我有的是一点儿时间。|我有的是时间。|有的是 nghĩa "có rất nhiều", không đi với 一点儿 (rất ít).
+37|他有的是钱，你不用担心。|苹果，我家有的是。|我家没有的是苹果。|我家有的是苹果。|有的是 không có dạng phủ định 没有的是.
+37|网上有的是汉语学习资料。|商店里有的是新衣服。|商店里有的是几件新衣服。|商店里有的是新衣服。|有的是 nhấn mạnh số lượng rất nhiều, không đi với số lượng cụ thể nhỏ.
+38|除了数学，他还喜欢历史。|除了小王，大家都来了。|除了数学，他喜欢还历史。|除了数学，他还喜欢历史。|还 đứng trước động từ: 还喜欢.
+38|除了我，他们都不会游泳。|除了他，别人也都不知道。|除了我，都他们不会游泳。|除了我，他们都不会游泳。|都 đứng sau chủ ngữ (他们), trước 不会.
+38|除了苹果，我都喜欢。|除了周末，我每天都上课。|除了周末，我每天上课也。|除了周末，我每天都上课。|Phó từ 都 / 也 đứng trước động từ, không đặt cuối câu.
+39|从明天起，我每天跑步。|从下周一起，公司九点上班。|从明天，我起每天跑步。|从明天起，我每天跑步。|从……起 là cặp cố định: 起 đứng ngay sau mốc thời gian.
+39|从今天起，我不再抽烟了。|从八点起，我们开始上课。|从八点起，我们开始上课起。|从八点起，我们开始上课。|起 chỉ dùng một lần ngay sau mốc thời gian, không lặp ở cuối câu.
+39|从现在起，大家要认真学习。|从下个月起，价格会便宜一点儿。|从现在大家起要认真学习。|从现在起，大家要认真学习。|Mốc thời gian + 起 đi liền nhau, rồi mới đến chủ ngữ.
+40|对我来说，汉语很有意思。|对学生来说，时间很重要。|汉语对我很有意思来说。|对我来说，汉语很有意思。|对……来说: cụm cố định, đứng đầu câu hoặc trước vị ngữ.
+40|对孩子来说，睡觉很重要。|对大多数人来说，这个价格太高了。|来说对孩子，睡觉很重要。|对孩子来说，睡觉很重要。|Trật tự cố định: 对 + người + 来说.
+40|对他来说，这不难。|对我来说，这个问题很容易。|对他说来，这不难。|对他来说，这不难。|Cấu trúc cố định là 对……来说, không đổi thành 说来.
+41|我一个字也不认识。|他一口水都没喝。|我一个字不也认识。|我一个字也不认识。|一 + lượng từ + N + 也 / 都 + 不 / 没 + V: 也 đứng trước 不.
+41|屋子里一个人也没有。|我一天都没休息。|屋子里一个也人没有。|屋子里一个人也没有。|一个人也没有: 一 + lượng từ + danh từ đi liền, rồi mới đến 也.
+41|他一句话也不说。|我一分钱都没带。|他一句话也说不。|他一句话也不说。|不 / 没 đứng trước động từ: 也不说.
+41|我一次也没去过。|他一天也没休息。|我一天没也休息。|我一天也没休息。|也 / 都 đứng ngay sau cụm 一 + lượng từ, trước 没.
+42|雨越下越大。|他越说越高兴。|雨越下大越。|雨越下越大。|越 + V + 越 + Adj: hai 越 đứng trước động từ / tính từ.
+42|你越着急，越做不好。|孩子越大，越懂事。|孩子大越，越懂事。|孩子越大，越懂事。|越 đứng trước tính từ / động từ ở mỗi vế.
+42|这首歌我越听越喜欢。|他越跑越快。|这首歌我听越越喜欢。|这首歌我越听越喜欢。|Hai 越 đứng trước hai động từ: 越听越喜欢.
+42|天气越来越冷。|我越来越喜欢这个城市。|天气越来越很冷。|天气越来越冷。|越来越 + Adj / V tâm lý, không thêm 很.
+43|游泳对身体很好。|学习汉语很有意思。|游泳对很好身体。|游泳对身体很好。|对 + đối tượng đứng trước vị ngữ: 对身体很好.
+43|看书是我的爱好。|旅游使人快乐。|看书我的爱好是。|看书是我的爱好。|Động từ làm chủ ngữ, theo sau là 是 + danh từ.
+44|我喜欢游泳。|他觉得汉语很难。|他觉得很难汉语。|他觉得汉语很难。|觉得 + mệnh đề (chủ ngữ + vị ngữ): 汉语很难.
+44|我知道他是老师。|我听说她要结婚了。|我知道是他老师。|我知道他是老师。|Mệnh đề làm tân ngữ giữ trật tự chủ – vị: 他是老师.
+44|我打算明年去北京。|他决定不去了。|我打算去明年北京。|我打算明年去北京。|Thời gian đứng trước động từ: 明年去北京.
+45|这是我昨天买的书。|他是教我们汉语的老师。|这是我买昨天的书。|这是我昨天买的书。|Trạng ngữ thời gian đứng trước động từ trong định ngữ: 我昨天买的.
+45|我喜欢她做的菜。|他是我认识的人。|我喜欢她的做菜。|我喜欢她做的菜。|Cụm 主 + V + 的 làm định ngữ cho danh từ: 她做的菜.
+45|昨天来的人是我的同学。|这是妈妈给我买的衣服。|昨天来人的是我的同学。|昨天来的人是我的同学。|Định ngữ + 的 đứng trước danh từ trung tâm: 来的人.
+45|穿红衣服的女孩是我妹妹。|他是我们学校的老师。|穿的红衣服女孩是我妹妹。|穿红衣服的女孩是我妹妹。|Cả cụm 穿红衣服 làm định ngữ, 的 đứng sau cả cụm.
+46|我记住了他的名字。|请拿住这个袋子。|我记了住他的名字。|我记住了他的名字。|Bổ ngữ kết quả 住 đứng ngay sau động từ, 了 đặt sau bổ ngữ.
+46|我没买到火车票。|他没找到工作。|我买到没火车票。|我没买到火车票。|Phủ định 没 đứng trước động từ: 没买到.
+46|他把书带走了。|客人已经走了。|他带书走把了。|他把书带走了。|Câu 把: 把 + tân ngữ + 带走 (bổ ngữ 走).
+46|我听到有人叫我。|他看到了一只小鸟。|我听了到有人叫我。|我听到有人叫我。|到 đứng liền sau động từ; không chèn 了 vào giữa.
+47|他从楼上跑下来了。|请把书拿出去。|他从楼上跑来下了。|他从楼上跑下来了。|Bổ ngữ xu hướng kép: 下 / 上 / 进 / 出 đứng trước 来 / 去.
+47|老师走进教室来了。|孩子跑回家去了。|老师走进来教室了。|老师走进教室来了。|Tân ngữ nơi chốn đứng giữa 走进 và 来.
+47|他站起来了。|他慢慢走过来了。|他站来起了。|他站起来了。|起 đứng trước 来 trong 起来.
+48|这个字我看不懂。|这么多东西，我拿不动。|这个字我不看懂。|这个字我看不懂。|Bổ ngữ khả năng phủ định: V + 不 + bổ ngữ, 不 chen giữa động từ và bổ ngữ.
+48|你听得清楚吗？|我听得懂汉语。|我听懂得汉语。|我听得懂汉语。|Bổ ngữ khả năng khẳng định: V + 得 + bổ ngữ.
+48|他说得太快，我跟不上。|这个箱子我搬得动。|这个箱子我搬动得。|这个箱子我搬得动。|得 chen giữa động từ và bổ ngữ: 搬得动.
+48|太贵了，我买不起。|这么贵的东西，他买得起吗？|太贵了，我不买得起。|太贵了，我买不起。|买不起: 不 chen giữa động từ và 起.
+49|他高兴得跳了起来。|累得我不想说话。|他高兴跳得了起来。|他高兴得跳了起来。|Tính từ + 得 + kết quả: 得 đứng ngay sau tính từ.
+49|今天热死了。|我饿极了。|今天死热了。|今天热死了。|死了 / 极了 đứng sau tính từ để chỉ mức độ rất cao.
+49|这个电影好看极了。|她漂亮得很。|这个电影极了好看。|这个电影好看极了。|极了 đứng sau tính từ.
+49|他忙得很。|房间里热得很。|他很忙得。|他忙得很。|Adj + 得很: 很 đứng sau 得, không đặt thêm 很 trước tính từ.
+50|我去过一次北京。|我去过北京一次。|我去一次过北京。|我去过一次北京。|过 đứng ngay sau động từ, rồi mới đến động lượng từ.
+50|我见过他一次。|我见过他两回。|我见过一次他。|我见过他一次。|Tân ngữ là đại từ đứng trước bổ ngữ động lượng.
+50|请你再说一遍。|他看了我一眼。|请你再一遍说。|请你再说一遍。|Động lượng từ đứng sau động từ: 说一遍.
+51|我学了三年汉语。|他等了你半个小时。|我学汉语了三年。|我学了三年汉语。|Thời lượng đứng sau 了 và trước tân ngữ: V + 了 + thời lượng + O.
+51|他睡了八个小时。|我们聊了一个晚上。|他睡了八小时个。|他睡了八个小时。|Trật tự: số từ + lượng từ + 小时, 个 đứng trước 小时.
+51|我每天看两个小时电视。|他每天学一个小时汉语。|我每天两个小时看电视。|我每天看两个小时电视。|Thời lượng làm bổ ngữ đứng sau động từ, không đặt trước.
+52|他离开家三年了。|我毕业两年了。|他离开家了三年。|他离开家三年了。|Khoảng thời gian tính từ khi sự việc xảy ra đến nay: V + khoảng thời gian + 了 (cuối câu).
+52|我们认识十年了。|他来北京一个月了。|我们十年认识了。|我们认识十年了。|Khoảng thời gian đặt sau động từ, 了 ở cuối câu.
+52|他不抽烟两年了。|我不吃肉三年了。|他不抽烟了两年。|他不抽烟两年了。|Khoảng thời gian + 了 đặt cuối câu để chỉ trạng thái kéo dài đến nay.
+52|他下班两个小时了。|我来中国半年了。|他两个小时下班了。|他下班两个小时了。|Khoảng thời gian đặt sau động từ chứ không đặt trước.
+53|他身体很好。|我头疼。|他很身体好。|他身体很好。|Câu vị ngữ chủ-vị: 他 + (身体 + 很好); 很 đứng trước tính từ.
+53|这件事我不知道。|他个子很高。|这件事不知道我。|这件事我不知道。|Chủ đề 这件事 đứng đầu, rồi chủ ngữ 我, rồi vị ngữ.
+53|她眼睛很大。|北京冬天很冷。|北京很冬天冷。|北京冬天很冷。|Chủ ngữ lớn + chủ ngữ nhỏ + vị ngữ; 很 đứng trước tính từ.
+53|她头发很长。|我肚子饿了。|她很头发长。|她头发很长。|很 đứng ngay trước tính từ 长, không đứng trước 头发.
+54|请你把窗户打开。|他把钱放在口袋里。|请你把窗户。|请你把窗户打开。|Câu 把 phải có thành phần sau động từ (bổ ngữ), không dừng ở tân ngữ.
+54|我把书还给他了。|他把衣服洗干净了。|我把还给他书了。|我把书还给他了。|把 + tân ngữ đứng ngay sau 把.
+54|你把这个字写一遍。|他把作业交给老师了。|他把作业交老师给了。|他把作业交给老师了。|交给 là một cụm: 交 + 给 + người.
+54|我把你的话记住了。|她把房间收拾好了。|我把你的话记了。|我把你的话记住了。|Sau 把 động từ cần bổ ngữ kết quả (记住).
+55|杯子被弟弟打破了。|我的自行车被朋友骑走了。|杯子被打破弟弟了。|杯子被弟弟打破了。|被 + tác nhân + động từ + bổ ngữ.
+55|他被老师批评了。|我的钱包被偷了。|他被批评了老师。|他被老师批评了。|Tác nhân (老师) đứng giữa 被 và động từ.
+55|我的手机没被偷。|他没被老师发现。|我的手机被没偷。|我的手机没被偷。|Phủ định 没 đứng trước 被.
+55|我被雨淋湿了。|他被我吓了一跳。|我被雨湿淋了。|我被雨淋湿了。|Động từ 淋 đứng trước bổ ngữ kết quả 湿.
+56|我骑自行车去学校。|他去超市买水果。|我去学校骑自行车。|我骑自行车去学校。|Liên động: phương tiện (V1) đứng trước hành động chính (V2).
+56|他坐飞机去北京。|我们打车去机场。|他去北京坐飞机。|他坐飞机去北京。|Cách thức 坐飞机 đứng trước 去北京.
+56|他回家吃饭。|我去商店买东西。|我买东西去商店。|我去商店买东西。|Hai động từ xếp theo thứ tự xảy ra: 去商店 → 买东西.
+56|他笑着说了声谢谢。|她哭着跑了出去。|他说了声谢谢笑着。|他笑着说了声谢谢。|V1 + 着 chỉ cách thức đi kèm, đứng trước V2.
+57|老师让我们读课文。|公司请他参加会议。|老师让读我们课文。|老师让我们读课文。|Kiêm ngữ: 让 + người + động từ; người đứng ngay sau 让.
+57|妈妈叫我早点儿回家。|医生让他多休息。|妈妈叫早点儿我回家。|妈妈叫我早点儿回家。|叫 + người + (trạng ngữ) + động từ.
+57|他请我吃饭。|我想请你帮忙。|他请吃饭我。|他请我吃饭。|请 + người + động từ: 我 đứng ngay sau 请.
+57|老板派他去上海。|学校派老师去北京开会。|老板派去上海他。|老板派他去上海。|派 + người + 去 + nơi chốn.
+58|我比他高。|今天比昨天冷。|我比他很高。|我比他高。|Câu 比 không dùng 很 trước tính từ.
+58|他没有我高。|我的汉语不比他好。|他不有我高。|他没有我高。|Phủ định so sánh dùng 没有.
+58|姐姐比我大三岁。|弟弟比我小两岁。|姐姐比我三岁大。|姐姐比我大三岁。|Chênh lệch đặt sau tính từ: 大三岁.
+58|我跑得比他快。|他说得比我好。|我比他跑快。|我跑得比他快。|Động từ có bổ ngữ 得 giữ nguyên cấu trúc: 跑得比他快.
+58|这个比那个贵一点儿。|这个房间比那个大得多。|这个比那个一点儿贵。|这个比那个贵一点儿。|一点儿 đứng sau tính từ trong câu 比.
+59|他说汉语说得很流利。|我看书看了两个小时。|他说汉语得很流利。|他说汉语说得很流利。|Lặp động từ: V + O + V + 得 + bổ ngữ.
+59|她唱歌唱得很好。|他开车开得很慢。|她唱歌得很好。|她唱歌唱得很好。|Có tân ngữ thì phải lặp động từ trước 得.
+59|他写汉字写得很漂亮。|她做饭做得很好吃。|他写得汉字很漂亮。|他写汉字写得很漂亮。|Tân ngữ đứng sau động từ thứ nhất, bổ ngữ sau động từ lặp.
+60|他也会唱歌，也会跳舞。|她也喜欢茶，也喜欢咖啡。|他也会唱歌，会也跳舞。|他也会唱歌，也会跳舞。|也 ở hai vế đều đứng trước động từ (năng nguyện).
+60|我也想去，他也想去。|你也是学生，我也是学生。|我想也去，他想也去。|我也想去，他也想去。|也 đứng sau chủ ngữ, trước động từ năng nguyện 想.
+60|她也会说英语，也会说日语。|周末我也看书，也看电影。|她会也说英语，也会说日语。|她也会说英语，也会说日语。|也 đứng ngay trước 会, không chen sau 会.
+60|他也不去，我也不去。|你也不累，我也不累。|他也不去，我不也去。|他也不去，我也不去。|也 đứng trước 不.
+61|孩子一会儿哭，一会儿笑。|天气一会儿晴，一会儿阴。|孩子一会儿哭，一会笑儿。|孩子一会儿哭，一会儿笑。|Cặp 一会儿……一会儿……: 儿 đi liền sau 一会.
+61|他一会儿看电视，一会儿玩手机。|她一会儿站起来，一会儿坐下去。|他一会看电视儿，一会儿玩手机。|他一会儿看电视，一会儿玩手机。|一会儿 là một cụm cố định, không tách 儿 ra.
+61|水一会儿热，一会儿冷。|他的心情一会儿好，一会儿坏。|水一会儿热，一下儿冷。|水一会儿热，一会儿冷。|Cặp cố định: 一会儿 + A，一会儿 + B (luân phiên).
+61|他一会儿说好，一会儿说不好。|她一会儿高兴，一会儿难过。|他一会儿说好，一边说不好。|他一会儿说好，一会儿说不好。|一会儿……一会儿 (luân phiên) khác 一边……一边 (đồng thời).
+62|一方面要努力学习，另一方面要注意休息。|一方面他很忙，另一方面他身体不好。|一方面要努力学习，一方面另要注意休息。|一方面要努力学习，另一方面要注意休息。|Cặp cố định 一方面……另一方面……, 另 đứng trước 一方面.
+62|学汉语一方面要多听，另一方面要多说。|一方面我想去，另一方面我没有时间。|一方面我想去，另外方面我没有时间。|一方面我想去，另一方面我没有时间。|Dạng cố định là 另一方面, không đổi thành 另外方面.
+62|他一方面在工作，另一方面在学习。|一方面价格便宜，另一方面质量也好。|他一方面在工作，另一在学习方面。|他一方面在工作，另一方面在学习。|另一方面 đứng ở đầu vế sau, không đảo 方面.
+62|一方面我很想去，另一方面我也很害怕。|一方面天气冷，另一方面工作忙。|另一方面我想去，一方面我没有时间。|一方面我想去，另一方面我没有时间。|Trật tự bắt buộc: 一方面 trước, 另一方面 sau.
+63|这个菜又好吃又便宜。|她又高又漂亮。|这个菜又好吃又很便宜。|这个菜又好吃又便宜。|又……又……: không thêm 很 trước tính từ.
+63|他又说又笑。|孩子又哭又闹。|他又说笑又。|他又说又笑。|Mỗi 又 đứng ngay trước một động từ / tính từ.
+63|她又会唱歌又会跳舞。|他又聪明又努力。|她又会唱歌，会又跳舞。|她又会唱歌又会跳舞。|Hai 又 đứng trước hai vị ngữ song song.
+64|首先要洗手，然后才能吃饭。|首先打开书，然后看第一页。|首先要洗手，然后才吃能饭。|首先要洗手，然后才能吃饭。|才 đứng trước động từ năng nguyện 能, rồi mới đến động từ chính.
+64|首先问一下价格，然后再决定。|首先要做完作业，然后才能玩。|然后问一下价格，首先再决定。|首先问一下价格，然后再决定。|首先 đứng trước (bước 1), 然后 đứng sau (bước 2).
+64|首先要认真听，其次要多练习。|首先我想谢谢大家，其次想谢谢老师。|首先要认真听，然后其次要多练习。|首先要认真听，其次要多练习。|首先 đi cùng 其次 (thứ hai); không chồng 然后 và 其次.
+64|首先我去商店，然后我回家了。|首先他洗了手，然后吃了饭。|首先我去商店，然后我了回家。|首先我去商店，然后我回家了。|了 đứng sau động từ (回家了), không đứng trước động từ.
+65|他会开车，并且开得很好。|我同意你的看法，并且愿意帮助你。|他会开车，并且开车得很好。|他会开车，并且开得很好。|Lặp động từ phải tuân theo 开车开得: nếu đã lược động từ thì dùng 开得.
+65|她很聪明，并且很可爱。|他读了这本书，并且写了一篇文章。|她很聪明，并且不可爱。|她很聪明，但是不可爱。|并且 chỉ tăng tiến (cùng chiều); ý đối lập phải dùng 但是.
+65|我们完成了任务，并且完成得很好。|他是医生，并且是我的邻居。|我们完成了任务，并且得完成很好。|我们完成了任务，并且完成得很好。|得 đứng ngay sau động từ 完成.
+66|他不仅会说汉语，而且会写汉字。|她不光漂亮，而且很聪明。|他不仅会说汉语，所以会写汉字。|他不仅会说汉语，而且会写汉字。|不仅……而且……: tăng tiến, không dùng 所以.
+66|这个房间不仅大，而且很干净。|他不光学习好，还很会唱歌。|这个房间不仅大，但是很干净。|这个房间不仅大，而且很干净。|不仅 phải đi cùng 而且 / 还, không đi cùng 但是.
+66|不仅我去，他也去。|不仅我喜欢，我朋友也喜欢。|我不仅去，他也去。|不仅我去，他也去。|Hai vế khác chủ ngữ thì 不仅 đứng trước chủ ngữ của vế đầu.
+66|他不仅是老师，而且是作家。|她不仅会做饭，还会做蛋糕。|他仅不是老师，而且是作家。|他不仅是老师，而且是作家。|Dạng cố định 不仅, không đảo thành 仅不.
+67|他每天不是看书，就是看电影。|周末我不是睡觉，就是看电视。|他每天不是看书，是就看电影。|他每天不是看书，就是看电影。|Cặp cố định 不是……就是……, 就 đứng trước 是.
+67|这几天不是下雨，就是刮风。|他不是在教室，就是在图书馆。|这几天不是下雨，也是刮风。|这几天不是下雨，就是刮风。|Dùng 就是 đi cặp với 不是, không dùng 也是.
+67|周末他不是去爬山，就是去游泳。|晚上她不是看书，就是写作业。|周末他不是去爬山，就去是游泳。|周末他不是去爬山，就是去游泳。|就是 liền nhau, không chen 去 vào giữa.
+68|这个菜好吃是好吃，就是太贵了。|他聪明是聪明，不过不努力。|这个菜好吃好吃，就是太贵了。|这个菜好吃是好吃，就是太贵了。|X是X，就是……: giữa hai tính từ phải có 是.
+68|房子大是大，就是太旧了。|这件衣服漂亮是漂亮，不过有点儿贵。|房子是大大，就是太旧了。|房子大是大，就是太旧了。|Cấu trúc A是A: 是 chen giữa hai tính từ giống nhau.
+68|我喜欢是喜欢，就是没时间去。|他说是说，不过不一定去。|他说是说，所以不一定去。|他说是说，不过不一定去。|Vế sau của X是X là chuyển ý (就是 / 不过), không dùng 所以.
+68|这个手机便宜是便宜，不过质量不太好。|他去是去，就是不想去太久。|这个手机便宜是便宜，不过质量不太好吗。|这个手机便宜是便宜，不过质量不太好。|Câu trần thuật không thêm 吗.
+69|要是明天下雨，我就不去了。|要是你有时间，就来看我吧。|要是明天下雨，我所以不去了。|要是明天下雨，我就不去了。|要是……就……: giả thiết → kết quả, không dùng 所以.
+69|要是你不舒服，就回家休息吧。|要是他来，我们就开始。|要是你不舒服，就吧回家休息。|要是你不舒服，就回家休息吧。|吧 đứng cuối câu.
+69|要是你有问题，就问老师。|要是我是你，我就去。|要是我是你，我去就。|要是我是你，我就去。|就 đứng trước động từ.
+69|要是天气好，我们就去公园。|要是你累了，就休息一下。|要是天气好，我们才去公园。|要是天气好，我们就去公园。|要是……就……; 才 dùng trong 只有……才…….
+70|只有努力学习，才能考好。|只有他去，我才去。|只有努力学习，就能考好。|只有努力学习，才能考好。|只有……才……: 才 hô ứng với 只有, không dùng 就.
+70|只有你同意，我才做。|只有经理来，会议才开始。|只有你同意，我再做。|只有你同意，我才做。|才 (chứ không phải 再) hô ứng với 只有.
+70|只有这样，问题才能解决。|只有多听多说，才能学好汉语。|只有这样，才问题能解决。|只有这样，问题才能解决。|才 đứng sau chủ ngữ, trước động từ năng nguyện.
+71|由于天气不好，所以比赛取消了。|由于工作忙，他很少回家。|由于天气不好，但是比赛取消了。|由于天气不好，所以比赛取消了。|由于 → 所以 / 因此; 但是 là chuyển ý.
+71|由于生病，他没来上课。|由于下雨，比赛延期了。|他由于，生病没来上课。|由于生病，他没来上课。|由于 + nguyên nhân đi liền nhau, đứng đầu vế.
+71|由于没有时间，我们没有去旅游。|由于交通不方便，因此人很少。|由于没有时间，我们去旅游没有。|由于没有时间，我们没有去旅游。|没有 đứng trước động từ: 没有去.
+72|为了赶飞机，他很早就起床了。|为了学好汉语，他来到中国。|为了让孩子上好大学，所以他努力工作。|为了让孩子上好大学，他努力工作。|为了 nêu mục đích, vế sau không có 所以.
+72|为了身体好，他每天锻炼。|为了让大家高兴，他唱了一首歌。|为了身体好，他每天锻炼了。|为了身体好，他每天锻炼。|Thói quen hằng ngày không dùng 了.
+72|为了不迟到，他六点就起床了。|为了健康，大家都应该运动。|为了不迟到，他六点就起床为了。|为了不迟到，他六点就起床了。|为了 chỉ dùng ở đầu vế mục đích, không lặp ở cuối.
+73|我吃了饭就去。|他下了课就回家。|我吃饭了就去。|我吃了饭就去。|V + 了 + O + 就 + V2: 了 đứng ngay sau động từ.
+73|你到了就给我打电话。|我看了就明白了。|你到了就给我电话打。|你到了就给我打电话。|给 + người + 打电话: 打电话 đi liền.
+73|他做完作业就睡觉了。|她洗了澡就睡觉。|他做完作业就了睡觉。|他做完作业就睡觉了。|了 đứng cuối câu hoặc sau động từ, không đứng trước động từ.
+74|这个班有三十来个学生。|这个班有二十多个学生。|这个班有三十个来学生。|这个班有三十来个学生。|来 đứng sau số từ chẵn, trước lượng từ: 三十来个.
+74|桌子上有七八本书。|他三十岁左右。|桌子上有七八个本书。|桌子上有七八本书。|Hai số liền kề + lượng từ phù hợp (本).
+74|他三十岁左右。|我六点左右到。|他左右三十岁。|他三十岁左右。|左右 đứng sau số lượng.
+74|我等了十多分钟。|他有五十多岁。|我等了多十分钟。|我等了十多分钟。|多 đứng sau số từ chẵn: 十多.
+75|这个菜一点儿也不好吃。|我今天一点儿也不累。|这个菜也一点儿不好吃。|这个菜一点儿也不好吃。|一点儿 + 也 + 不 + Adj: 一点儿 đứng trước 也.
+75|他一点儿也没生气。|我一点儿都不想去。|他一点儿也生气没。|他一点儿也没生气。|没 đứng trước động từ, sau 也.
+75|这件事我一点儿也不知道。|我一点儿也不饿。|这件事我也一点儿不知道。|这件事我一点儿也不知道。|Trật tự cố định: 一点儿 + 也 / 都 + 不.
+75|他一点儿也不紧张。|她一点儿都不害怕。|他一点儿不也紧张。|他一点儿也不紧张。|也 đứng trước 不.
+76|你不是已经知道了吗？|他不是学生吗？|你不是已经知道了。|你不是已经知道了吗？|Câu phản vấn 不是……吗 cần có 吗 ở cuối câu.
+76|难道他没告诉你吗？|这么简单，难道你不会吗？|难道他没告诉你。|难道他没告诉你吗？|难道 phải đi với 吗 cuối câu.
+76|你不是答应我了吗？|你不是说今天来吗？|你不是答应我吗了？|你不是答应我了吗？|吗 đứng ở cuối câu, sau 了.
+76|他难道不是你的朋友吗？|难道你不知道吗？|难道他吗不是你的朋友？|他难道不是你的朋友吗？|难道 đứng trước phủ định, 吗 ở cuối câu.
+77|我是昨天来的。|他是坐飞机去的。|我是昨天来了的。|我是昨天来的。|Câu 是……的 nhấn mạnh thời gian / cách thức của việc đã xảy ra, không dùng 了.
+77|你是在哪儿学的汉语？|她是跟朋友一起来的。|你是哪儿在学的汉语？|你是在哪儿学的汉语？|是 + giới từ + nơi chốn + động từ + 的.
+77|这本书是我买的。|这个蛋糕是他做的。|这本书我买是的。|这本书是我买的。|是 đứng trước phần nhấn mạnh (我买), 的 ở cuối.
+77|我不是昨天来的。|他不是坐飞机来的。|我是不昨天来的。|我不是昨天来的。|Phủ định của 是……的 là 不是……的, 不 đứng trước 是.
+78|你已经吃饭了？|他明天不来？|你是不是明天去吗？|你是不是明天去？|Câu hỏi chính phản (是不是) không thêm 吗.
+78|你一个人去？|他走了？|你想喝茶还是咖啡吗？|你想喝茶还是咖啡？|Câu hỏi lựa chọn 还是 không thêm 吗.
+78|你们都来了？|他不想去？|你怎么还没走吗？|你怎么还没走？|Câu có đại từ nghi vấn (怎么) không thêm 吗.
+79|都十二点了，快睡吧。|都三十岁了，他还没结婚。|十二点都了，快睡吧。|都十二点了，快睡吧。|都 đứng trước mốc thời gian / số lượng, 了 ở cuối.
+79|天都黑了，回家吧。|孩子都会走路了。|天黑都了，回家吧。|天都黑了，回家吧。|都 đứng ngay sau chủ ngữ, trước vị ngữ.
+79|你都这么大了，还哭。|都这么晚了，你怎么还不睡？|你大都这么了，还哭。|你都这么大了，还哭。|都 + 这么 + Adj + 了: trật tự cố định.
+79|饭都凉了，快吃吧。|水都开了，快关火。|饭凉了都，快吃吧。|饭都凉了，快吃吧。|都 đứng trước động từ / tính từ, không đặt sau.
+80|不去就不去吧，没关系。|坏了就坏了吧，再买一个。|不去就不去，吧没关系。|不去就不去吧，没关系。|X就X吧: 吧 đi liền sau X thứ hai.
+80|错了就错了吧，下次注意。|累了就累了吧，休息一下。|错了就错吧了，下次注意。|错了就错了吧，下次注意。|Cấu trúc 错了就错了吧: 了 đứng trước 吧.
+80|贵就贵吧，我喜欢。|来就来吧，反正没事。|贵吧就贵，我喜欢。|贵就贵吧，我喜欢。|吧 đặt ở cuối cụm X就X, không chen giữa.
+81|急什么急？|吵什么吵？|急什么着急？|急什么急？|X什么X: lặp lại đúng cùng một từ hai bên 什么.
+81|哭什么哭，别哭了。|看什么看，走吧。|哭哭什么，别哭了。|哭什么哭，别哭了。|什么 chen giữa hai từ giống nhau, không đứng cuối.
+81|谢什么谢，我们是朋友。|客气什么客气？|谢什么谢谢，我们是朋友。|谢什么谢，我们是朋友。|X什么X cần lặp đúng X (谢), không đổi thành 谢谢.
+81|忙什么忙，慢慢来。|说什么说，听我的。|忙什么忙吗，慢慢来。|忙什么忙，慢慢来。|Cấu trúc 什么 đã mang ngữ khí phản bác, không thêm 吗.
+3|你敢说真话吗？|他不敢告诉我。|我不告诉敢他真话。|我不敢告诉他真话。|敢 là động từ năng nguyện: 不 + 敢 + động từ chính.
+4|你需要带什么？|我们需要多练习。|你需要什么带？|你需要带什么？|需要 + động từ + tân ngữ nghi vấn: 带什么 giữ trật tự V + O.
+11|张张照片都很漂亮。|件件衣服都很贵。|张张照片很都漂亮。|张张照片都很漂亮。|都 đứng sau lượng từ lặp, trước 很 + tính từ.
+12|这个问题相当难。|他的汉语比较好。|这个问题难相当。|这个问题相当难。|相当 là phó từ mức độ, đứng trước tính từ.
+17|你亲自去一趟吧。|我们互相理解。|你去亲自一趟吧。|你亲自去一趟吧。|亲自 đứng trước động từ.
+18|他大概不会来了。|她恐怕不知道。|他不会来大概了。|他大概不会来了。|大概 đứng trước động từ / năng nguyện, thể hiện suy đoán.
+21|自从毕业，我们没有见过面。|自从搬家，他常常来看我。|我们自从毕业，没有过见面。|我们自从毕业，没有见过面。|过 đứng ngay sau động từ: 没有见过面.
+22|他朝我挥了挥手。|门朝北开。|他挥了挥手朝我。|他朝我挥了挥手。|朝 + đối tượng đứng trước động từ.
+23|他为公司工作了十年。|谢谢你为我做的一切。|他工作为公司了十年。|他为公司工作了十年。|为 + đối tượng đứng trước động từ.
+24|他向我点了点头。|请向右转。|他点了点头向我。|他向我点了点头。|向 + đối tượng đứng trước động từ.
+25|由于他的帮助，我完成了工作。|因为你的帮助，我完成了工作。|由于他帮助的，我完成了工作。|由于他的帮助，我完成了工作。|Danh từ chỉ nguyên nhân dùng 的 ở giữa: 他的帮助.
+26|为了让你开心，我做了蛋糕。|为了安全，请系好安全带。|让你开心为了，我做了蛋糕。|为了让你开心，我做了蛋糕。|为了 đứng ở đầu vế chỉ mục đích.
+29|大家按照老师说的做。|请按时吃药。|大家老师按照说的做。|大家按照老师说的做。|按照 + căn cứ + động từ: chủ ngữ đứng trước 按照.
+31|老师听了哈哈笑了起来。|孩子们哈哈地笑着。|老师听了哈哈起来笑。|老师听了哈哈笑了起来。|笑 + 了起来: 起来 đứng sau 笑了.
+32|他和我是同学。|我和你一起去。|他是和我同学。|他和我是同学。|Cụm danh từ nối bằng 和 đứng trước 是: 他和我.
+33|他一遍一遍地读课文。|她一次一次地试。|他一遍一遍读地课文。|他一遍一遍地读课文。|Số-lượng lặp + 地 + động từ.
+35|看起来他很高兴。|她看起来很年轻。|看起来他高兴很。|看起来他很高兴。|很 đứng trước tính từ.
+36|这本书看上去很有意思。|那个人看上去不太高兴。|这本书看上去有很意思。|这本书看上去很有意思。|很有意思: 很 đứng trước 有.
+43|锻炼身体对健康有好处。|吸烟有害健康。|锻炼身体对健康好处有。|锻炼身体对健康有好处。|有好处: 动词 有 đứng trước danh từ 好处.
+47|他跑出去了。|请你走进来。|他跑去出了。|他跑出去了。|Bổ ngữ xu hướng kép: 出 + 去.
+50|他去过两次上海。|我给他打过一次电话。|他去两次过上海。|他去过两次上海。|过 đứng ngay sau động từ, trước số lượng.
+51|我等了他一个小时。|我们学了两个小时汉语。|我等一个小时了他。|我等了他一个小时。|Tân ngữ đại từ đứng trước thời lượng: 等了他一个小时.
+59|他骑自行车骑得很快。|我做饭做得不太好。|我做饭得不太好。|我做饭做得不太好。|Phải lặp động từ trước 得 khi có tân ngữ.
+70|只有坚持，才能成功。|只有注意休息，病才能好。|只有坚持，成功才能。|只有坚持，才能成功。|才 đứng trước động từ năng nguyện 能.
+71|由于下雪，路很滑。|由于他不努力，成绩不好。|由于他不努力，所以成绩好不。|由于他不努力，所以成绩不好。|不 đứng trước tính từ 好.
+72|为了不让妈妈担心，他没说实话。|为了不迟到，他早点儿出发。|为了让不妈妈担心，他没说实话。|为了不让妈妈担心，他没说实话。|不 đứng ngay trước 让.
+73|我们到了就吃饭。|他起了床就看手机。|我们到就了吃饭。|我们到了就吃饭。|了 đứng ngay sau động từ, rồi mới đến 就.
+78|你也喜欢？|他还没吃饭？|你是不是也喜欢吗？|你是不是也喜欢？|Câu hỏi chính phản (是不是) không thêm 吗.
+80|不吃就不吃吧，别生气。|算了就算了吧，别想了。|不吃吧就不吃，别生气。|不吃就不吃吧，别生气。|吧 đặt ở cuối cụm X就X.`.split("\n").map(l => { const [gp, a, b, bad, fix, why] = l.split("|"); return { gp: +gp, ok: [a, b], bad, fix, why }; });
+const H3S_GROUPS = [
+  ["Từ loại · phó từ · giới từ", []],
+  ["把 · 被 · kiểu câu đặc biệt", [27, 54, 55, 56, 57, 59, 77]],
+  ["Bổ ngữ", [46, 47, 48, 49, 50, 51, 52]],
+  ["So sánh · lặp · số lượng", [11, 33, 41, 42, 58, 74, 75]],
+  ["Câu phức · liên từ", [30, 38, 39, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73]],
+  ["Cụm cố định · câu hỏi", [31, 34, 35, 36, 37, 76, 78, 79, 80, 81]],
+  ["Thành phần câu · cụm từ", [32, 40, 43, 44, 45, 53]]
+];
+const h3sGroupOf = gp => { for (const [n, a] of H3S_GROUPS) if (a.includes(gp)) return n; return H3S_GROUPS[0][0]; };
+H3S_Q.forEach(q => { q.g = h3sGroupOf(q.gp); const p = H3_GP.find(x => x.id === q.gp); q.tag = p ? p.name : ""; });
+const h3sQ = { deck: [], i: 0, score: 0, cur: null, g: "" };
+h3sQ.start = function (g) {
+  const st = h3sQ; st.g = g || "";
+  st.deck = shuffleArray(st.g ? H3S_Q.filter(q => q.g === st.g) : H3S_Q); st.i = 0; st.score = 0; st.render();
+  const cs = document.getElementById("h3sChips");
+  cs.innerHTML = [["", "Tất cả (" + H3S_Q.length + ")"]].concat(H3S_GROUPS.map(([n]) => [n, n + " (" + H3S_Q.filter(q => q.g === n).length + ")"])).map(([v, tx]) => `<button class="${v === st.g ? "active" : ""}" data-g="${v}">${tx}</button>`).join("");
+  cs.onclick = ev => { const bt = ev.target.closest("button"); if (bt) h3sQ.start(bt.dataset.g); };
+};
+h3sQ.render = function () {
+  const st = h3sQ, A = document.getElementById("h3sArea");
+  if (st.i >= st.deck.length) { A.innerHTML = `<h2>🎉 Hoàn thành: ${st.score}/${st.deck.length} câu đúng</h2><button class="primary" onclick="h3sQ.start(h3sQ.g)">🔁 Làm lại</button>`; return; }
+  const q = st.deck[st.i], o = shuffleArray([q.ok[0], q.ok[1], q.bad]); st.cur = { q, o, done: 0 };
+  A.innerHTML = `<div class="sub">Câu ${st.i + 1}/${st.deck.length} · Đúng: ${st.score} · ${q.tag}</div><div class="np-q">Chọn câu SAI:</div><div class="np-opts">${o.map((x, k) => `<button id="h3so${k}" onclick="h3sQ.pick(${k})">${"ABC"[k]}. ${pyHtml(x)}</button>`).join("")}</div><div id="h3sFb"></div>`;
+};
+h3sQ.pick = function (k) {
+  const st = h3sQ, c = st.cur; if (c.done) return; c.done = 1;
+  const q = c.q, ok = c.o[k] === q.bad; if (ok) st.score++;
+  document.getElementById("h3so" + c.o.indexOf(q.bad)).style.background = "#bbf7d0";
+  if (!ok) document.getElementById("h3so" + k).style.background = "#fecaca";
+  document.getElementById("h3sFb").innerHTML = `<div class="ex-rv ${ok ? "good" : "bad"}">${ok ? "✅ Đúng, đó là câu sai!" : "❌ Chưa đúng, câu sai là câu được tô xanh."}<div>Câu sai: <s>${q.bad}</s> → Câu đúng: <b>${pyHtml(q.fix)}</b> <button class="toggle-btn" onclick="speakSafe('${q.fix}')">🔊</button></div><div class="np-tr">💡 ${q.why}</div></div><button class="primary np-next" onclick="h3sQ.i++;h3sQ.render()">Câu tiếp →</button>`;
+};
 const h3pQ = mkQuiz("h3p", H3P_Q, q => ({ tag: "Phân tích · " + q.tag, ask: q.ask, head: `<div class="lib-ex" style="margin:8px 0;font-size:22px">${pyHtml(q.s)}</div>`, opts: q.o, fixed: true, p: q.p, full: q.s, vi: q.o[q.p], rule: q.note }));
 const h3a = { deck: [], i: 0, score: 0, pool: [], ans: [] };
 function h3aStart() { h3a.deck = shuffleArray(H3A_Q); h3a.i = 0; h3a.score = 0; h3aRender(); }
@@ -6410,7 +6722,7 @@ for (const pane in VIS_PANES) {
 }
 function h3Show(id) { document.getElementById("hsk3Menu").classList.add("hidden"); document.getElementById(id).classList.remove("hidden"); window.scrollTo(0, 0); }
 function h3Back(id) { try { window.speechSynthesis && window.speechSynthesis.cancel(); } catch (e) {} document.getElementById(id).classList.add("hidden"); document.getElementById("hsk3Menu").classList.remove("hidden"); window.scrollTo(0, 0); }
-const H3_CARDS = ["h3aCard", "h3bCard", "h3cCard", "h3dCard", "h3eCard", "h3mCard", "h3pCard"];
+const H3_CARDS = ["h3aCard", "h3bCard", "h3cCard", "h3dCard", "h3eCard", "h3sCard", "h3pCard"];
 
 /* ================= THI THỬ HSK 1 (chuẩn 3.0) ================= */
 const HSK_EXAMS = [{"id":1,"parts":[{"id":"L1","sec":"L","type":"pic3","items":[{"zh":"我去商店买东西。","py":"Wǒ qù shāngdiàn mǎi dōngxi.","vi":"Tôi đến cửa hàng mua đồ.","opts":["🏫","🏥","🏪"],"ans":2},{"zh":"我想喝水。","py":"Wǒ xiǎng hē shuǐ.","vi":"Tôi muốn uống nước.","opts":["💧","🍚","📖"],"ans":0},{"zh":"他坐飞机去北京。","py":"Tā zuò fēijī qù Běijīng.","vi":"Anh ấy đi máy bay đến Bắc Kinh.","opts":["🚕","🚆","✈️"],"ans":2},{"zh":"妹妹在睡觉。","py":"Mèimei zài shuìjiào.","vi":"Em gái đang ngủ.","opts":["😴","📺","🏀"],"ans":0},{"zh":"我想买一个电脑。","py":"Wǒ xiǎng mǎi yí ge diànnǎo.","vi":"Tôi muốn mua một cái máy tính.","opts":["📖","💻","📱"],"ans":1}]},{"id":"L2","sec":"L","type":"short3","items":[{"zh":"你今天几点起床？","py":"Nǐ jīntiān jǐ diǎn qǐchuáng?","vi":"Hôm nay bạn mấy giờ dậy? - 6 giờ rưỡi.","opts":["五个人。","星期天。","六点半。"],"optpy":["Wǔ ge rén.","Xīngqītiān.","Liù diǎn bàn."],"ans":2},{"zh":"你叫什么名字？","py":"Nǐ jiào shénme míngzi?","vi":"Bạn tên là gì? - Lý Tiểu Vân.","opts":["李小云。","在北京。","很高兴。"],"optpy":["Lǐ Xiǎoyún.","Zài Běijīng.","Hěn gāoxìng."],"ans":0},{"zh":"这个多少钱？","py":"Zhè ge duōshao qián?","vi":"Cái này bao nhiêu tiền? - 30 tệ.","opts":["三点钟。","三十块。","三个人。"],"optpy":["Sān diǎn zhōng.","Sān shí kuài.","Sān ge rén."],"ans":1},{"zh":"你喜欢什么运动？","py":"Nǐ xǐhuan shénme yùndòng?","vi":"Bạn thích môn thể thao nào? - Bóng rổ.","opts":["看电视。","打篮球。","吃苹果。"],"optpy":["Kàn diànshì.","Dǎ lánqiú.","Chī píngguǒ."],"ans":1},{"zh":"你是哪国人？","py":"Nǐ shì nǎ guó rén?","vi":"Bạn là người nước nào? - Người Việt Nam.","opts":["很好。","三年了。","越南人。"],"optpy":["Hěn hǎo.","Sān nián le.","Yuènán rén."],"ans":2}]},{"id":"L3","sec":"L","type":"dlgpic6","bank":["🛒","🚕","🍚","📞","🕗","🏥"],"items":[{"lines":["女：你好，请问超市在哪儿？","男：就在前面，走五分钟就到。"],"linespy":["Nǚ: Nǐ hǎo, qǐng wèn chāoshì zài nǎr?","Nán: Jiù zài qiánmiàn, zǒu wǔ fēnzhōng jiù dào."],"vi":"Nữ: Xin hỏi siêu thị ở đâu? Nam: Ngay phía trước, đi bộ 5 phút là tới.","ans":0},{"lines":["女：我们怎么去机场？","男：坐出租车吧，很快。"],"linespy":["Nǚ: Wǒmen zěnme qù jīchǎng?","Nán: Zuò chūzūchē ba, hěn kuài."],"vi":"Nữ: Chúng ta ra sân bay thế nào? Nam: Đi taxi nhé, rất nhanh.","ans":1},{"lines":["女：你想吃什么？","男：我想吃米饭和鱼。"],"linespy":["Nǚ: Nǐ xiǎng chī shénme?","Nán: Wǒ xiǎng chī mǐfàn hé yú."],"vi":"Nữ: Bạn muốn ăn gì? Nam: Tôi muốn ăn cơm với cá.","ans":2},{"lines":["女：喂，你在家吗？","男：在，我正在等你的电话。"],"linespy":["Nǚ: Wèi, nǐ zài jiā ma?","Nán: Zài, wǒ zhèngzài děng nǐ de diànhuà."],"vi":"Nữ: Alo, bạn có ở nhà không? Nam: Có, mình đang đợi điện thoại của bạn.","ans":3},{"lines":["女：现在几点了？","男：八点了，我们快走吧。"],"linespy":["Nǚ: Xiànzài jǐ diǎn le?","Nán: Bā diǎn le, wǒmen kuài zǒu ba."],"vi":"Nữ: Bây giờ mấy giờ rồi? Nam: 8 giờ rồi, mình đi nhanh thôi.","ans":4}]},{"id":"L4","sec":"L","type":"passage3","items":[{"zh":"今天是星期六，我不上班。我想在家看电影。","py":"Jīntiān shì xīngqī liù, wǒ bú shàngbān. Wǒ xiǎng zài jiā kàn diànyǐng.","q":"说话人星期六做什么？","qpy":"Shuōhuàrén xīngqī liù zuò shénme?","vi":"Hôm nay thứ Bảy, tôi không đi làm. Tôi muốn xem phim ở nhà.","opts":["看电影","上班","学汉语"],"optpy":["Kàn diànyǐng","Shàngbān","Xué Hànyǔ"],"ans":0},{"zh":"我家离学校很近，走路十分钟就到。","py":"Wǒ jiā lí xuéxiào hěn jìn, zǒu lù shí fēnzhōng jiù dào.","q":"说话人怎么去学校？","qpy":"Shuōhuàrén zěnme qù xuéxiào?","vi":"Nhà tôi gần trường, đi bộ 10 phút là tới.","opts":["开车","坐车","走路"],"optpy":["Kāichē","Zuò chē","Zǒu lù"],"ans":2},{"zh":"这件衣服太大了，我想换一件小的。","py":"Zhè jiàn yīfu tài dà le, wǒ xiǎng huàn yí jiàn xiǎo de.","q":"说话人想做什么？","qpy":"Shuōhuàrén xiǎng zuò shénme?","vi":"Cái áo này to quá, tôi muốn đổi cái nhỏ hơn.","opts":["吃饭","换衣服","买书"],"optpy":["Chīfàn","Huàn yīfu","Mǎi shū"],"ans":1},{"zh":"明天下雨，我们不去公园了，在家休息吧。","py":"Míngtiān xiàyǔ, wǒmen bú qù gōngyuán le, zài jiā xiūxi ba.","q":"他们明天做什么？","qpy":"Tāmen míngtiān zuò shénme?","vi":"Mai mưa, chúng ta không đi công viên nữa, ở nhà nghỉ ngơi đi.","opts":["在家休息","去学校","去公园"],"optpy":["Zài jiā xiūxi","Qù xuéxiào","Qù gōngyuán"],"ans":0},{"zh":"我有两个哥哥，没有姐姐。","py":"Wǒ yǒu liǎng ge gēge, méi yǒu jiějie.","q":"说话人有几个哥哥？","qpy":"Shuōhuàrén yǒu jǐ ge gēge?","vi":"Tôi có hai anh trai, không có chị gái.","opts":["一个","三个","两个"],"optpy":["Yí ge","Sān ge","Liǎng ge"],"ans":2}]},{"id":"R1","sec":"R","type":"pic6","bank":["🐶","🍚","🚆","📞","🏥","🌧️"],"items":[{"zh":"我想坐火车去北京。","py":"Wǒ xiǎng zuò huǒchē qù Běijīng.","vi":"Tôi muốn đi tàu hỏa đến Bắc Kinh.","ans":2},{"zh":"他在打电话。","py":"Tā zài dǎ diànhuà.","vi":"Anh ấy đang gọi điện thoại.","ans":3},{"zh":"我的狗很大。","py":"Wǒ de gǒu hěn dà.","vi":"Con chó của tôi rất to.","ans":0},{"zh":"她生病了，在医院。","py":"Tā shēngbìng le, zài yīyuàn.","vi":"Cô ấy bị ốm, đang ở bệnh viện.","ans":4},{"zh":"我们去吃米饭吧。","py":"Wǒmen qù chī mǐfàn ba.","vi":"Chúng ta đi ăn cơm nhé.","ans":1}]},{"id":"R2","sec":"R","type":"word6","bank":["喜欢","在","和","很","离","没有"],"bankpy":["xǐhuan","zài","hé","hěn","lí","méi yǒu"],"items":[{"zh":"我（___）朋友一起去看电影。","py":"Wǒ (___) péngyou yìqǐ qù kàn diànyǐng.","vi":"Tôi cùng bạn đi xem phim.","ans":2},{"zh":"这个苹果（___）好吃。","py":"Zhè ge píngguǒ (___) hǎochī.","vi":"Quả táo này rất ngon.","ans":3},{"zh":"他家（___）学校很近。","py":"Tā jiā (___) xuéxiào hěn jìn.","vi":"Nhà anh ấy cách trường rất gần.","ans":4},{"zh":"我最（___）喝水。","py":"Wǒ zuì (___) hē shuǐ.","vi":"Tôi thích uống nước nhất.","ans":0},{"zh":"他（___）北京工作。","py":"Tā (___) Běijīng gōngzuò.","vi":"Anh ấy làm việc ở Bắc Kinh.","ans":1}]},{"id":"R3","sec":"R","type":"dlgword6","bank":["谁","哪儿","几","什么","怎么","多少"],"bankpy":["shéi","nǎr","jǐ","shénme","zěnme","duōshao"],"items":[{"lines":["A：你在（___）工作？","B：我在医院工作。"],"linespy":["A: Nǐ zài (___) gōngzuò?","B: Wǒ zài yīyuàn gōngzuò."],"vi":"A: Bạn làm việc ở đâu? B: Tôi làm ở bệnh viện.","ans":1},{"lines":["A：你和（___）一起去？","B：我和朋友一起去。"],"linespy":["A: Nǐ hé (___) yìqǐ qù?","B: Wǒ hé péngyou yìqǐ qù."],"vi":"A: Bạn đi cùng ai? B: Mình đi cùng bạn.","ans":0},{"lines":["A：你想吃（___）？","B：我想吃米饭。"],"linespy":["A: Nǐ xiǎng chī (___)?","B: Wǒ xiǎng chī mǐfàn."],"vi":"A: Bạn muốn ăn gì? B: Tôi muốn ăn cơm.","ans":3},{"lines":["A：这个杯子（___）钱？","B：十五块。"],"linespy":["A: Zhè ge bēizi (___) qián?","B: Shíwǔ kuài."],"vi":"A: Cái cốc này bao nhiêu tiền? B: 15 tệ.","ans":5},{"lines":["A：现在（___）点了？","B：现在九点了。"],"linespy":["A: Xiànzài (___) diǎn le?","B: Xiànzài jiǔ diǎn le."],"vi":"A: Bây giờ mấy giờ rồi? B: Bây giờ 9 giờ.","ans":2}]},{"id":"R4","sec":"R","type":"read3","items":[{"zh":"明天是星期天，我们不上课。","py":"Míngtiān shì xīngqītiān, wǒmen bú shàngkè.","q":"★ 我们可以知道什么？","qpy":"★ Wǒmen kěyǐ zhīdào shénme?","vi":"Mai là Chủ nhật, chúng tôi không đi học.","opts":["明天上班","明天要考试","明天不上课"],"optpy":["Míngtiān shàngbān","Míngtiān yào kǎoshì","Míngtiān bú shàngkè"],"ans":2},{"zh":"请问，这里有没有汉语书？","py":"Qǐng wèn, zhèlǐ yǒu méi yǒu Hànyǔ shū?","q":"★ 说话人想知道什么？","qpy":"★ Shuōhuàrén xiǎng zhīdào shénme?","vi":"Xin hỏi ở đây có sách tiếng Trung không?","opts":["书店在哪儿","有没有汉语书","书多少钱"],"optpy":["Shūdiàn zài nǎr","Yǒu méi yǒu Hànyǔ shū","Shū duōshao qián"],"ans":1},{"zh":"我今天不去公园了，我想在家看电视。","py":"Wǒ jīntiān bú qù gōngyuán le, wǒ xiǎng zài jiā kàn diànshì.","q":"★ 说话人今天想做什么？","qpy":"★ Shuōhuàrén jīntiān xiǎng zuò shénme?","vi":"Hôm nay tôi không đi công viên, tôi muốn ở nhà xem ti vi.","opts":["在家看电视","去商店","去公园"],"optpy":["Zài jiā kàn diànshì","Qù shāngdiàn","Qù gōngyuán"],"ans":0},{"zh":"爸爸做的菜很好吃，我吃了三个米饭。","py":"Bàba zuò de cài hěn hǎochī, wǒ chī le sān ge mǐfàn.","q":"★ 爸爸做的菜怎么样？","qpy":"★ Bàba zuò de cài zěnmeyàng?","vi":"Món bố nấu rất ngon, tôi ăn ba bát cơm.","opts":["很好吃","不好看","很贵"],"optpy":["Hěn hǎochī","Bù hǎokàn","Hěn guì"],"ans":0},{"zh":"天很冷，我穿了很多衣服。","py":"Tiān hěn lěng, wǒ chuān le hěn duō yīfu.","q":"★ 天气怎么样？","qpy":"★ Tiānqì zěnmeyàng?","vi":"Trời rất lạnh, tôi mặc nhiều áo.","opts":["下雨","很热","很冷"],"optpy":["Xiàyǔ","Hěn rè","Hěn lěng"],"ans":2}]}]},{"id":2,"parts":[{"id":"L1","sec":"L","type":"pic3","items":[{"zh":"我在椅子上看书。","py":"Wǒ zài yǐzi shàng kàn shū.","vi":"Tôi ngồi trên ghế đọc sách.","opts":["🚪","🛏️","🪑"],"ans":2},{"zh":"她喜欢听音乐。","py":"Tā xǐhuan tīng yīnyuè.","vi":"Cô ấy thích nghe nhạc.","opts":["🎧","🎬","📖"],"ans":0},{"zh":"爸爸开车去公司。","py":"Bàba kāichē qù gōngsī.","vi":"Bố lái xe đến công ty.","opts":["✈️","🚗","🚆"],"ans":1},{"zh":"我的哥哥在踢足球。","py":"Wǒ de gēge zài tī zúqiú.","vi":"Anh trai tôi đang đá bóng.","opts":["🏀","🏊","⚽"],"ans":2},{"zh":"我想吃米饭。","py":"Wǒ xiǎng chī mǐfàn.","vi":"Tôi muốn ăn cơm.","opts":["🍎","🍚","🍞"],"ans":1}]},{"id":"L2","sec":"L","type":"short3","items":[{"zh":"你的汉语老师是谁？","py":"Nǐ de Hànyǔ lǎoshī shì shéi?","vi":"Giáo viên tiếng Trung của bạn là ai? - Thầy/cô Vương.","opts":["在学校。","我的朋友。","王老师。"],"optpy":["Zài xuéxiào.","Wǒ de péngyou.","Wáng lǎoshī."],"ans":2},{"zh":"你想喝什么？","py":"Nǐ xiǎng hē shénme?","vi":"Bạn muốn uống gì? - Một cốc trà.","opts":["一个人。","一杯茶。","一本书。"],"optpy":["Yí ge rén.","Yì bēi chá.","Yì běn shū."],"ans":1},{"zh":"现在几点？","py":"Xiànzài jǐ diǎn?","vi":"Bây giờ mấy giờ? - 8 giờ 10.","opts":["八点十分。","八个人。","八月。"],"optpy":["Bā diǎn shí fēn.","Bā ge rén.","Bā yuè."],"ans":0},{"zh":"你家有几口人？","py":"Nǐ jiā yǒu jǐ kǒu rén?","vi":"Nhà bạn có mấy người? - Bốn người.","opts":["四块钱。","四口人。","四点。"],"optpy":["Sì kuài qián.","Sì kǒu rén.","Sì diǎn."],"ans":1},{"zh":"你今年多大？","py":"Nǐ jīnnián duō dà?","vi":"Năm nay bạn bao nhiêu tuổi? - 20 tuổi.","opts":["二十块。","二十个。","二十岁。"],"optpy":["Èr shí kuài.","Èr shí ge.","Èr shí suì."],"ans":2}]},{"id":"L3","sec":"L","type":"dlgpic6","bank":["📖","🌧️","🏀","💻","🍎","🛏️"],"items":[{"lines":["女：你在做什么？","男：我在看书，明天有考试。"],"linespy":["Nǚ: Nǐ zài zuò shénme?","Nán: Wǒ zài kàn shū, míngtiān yǒu kǎoshì."],"vi":"Nữ: Bạn đang làm gì? Nam: Mình đang đọc sách, mai có thi.","ans":0},{"lines":["女：外面下大雨了。","男：那我们不出去了。"],"linespy":["Nǚ: Wàimiàn xià dà yǔ le.","Nán: Nà wǒmen bù chūqù le."],"vi":"Nữ: Bên ngoài mưa to rồi. Nam: Vậy chúng ta không ra ngoài nữa.","ans":1},{"lines":["女：下午你想做什么？","男：我想和朋友去打篮球。"],"linespy":["Nǚ: Xiàwǔ nǐ xiǎng zuò shénme?","Nán: Wǒ xiǎng hé péngyou qù dǎ lánqiú."],"vi":"Nữ: Chiều bạn muốn làm gì? Nam: Mình muốn đi chơi bóng rổ với bạn.","ans":2},{"lines":["女：你的电脑真新！","男：对，这是我昨天买的。"],"linespy":["Nǚ: Nǐ de diànnǎo zhēn xīn!","Nán: Duì, zhè shì wǒ zuótiān mǎi de."],"vi":"Nữ: Máy tính của bạn mới thật! Nam: Ừ, mình mới mua hôm qua.","ans":3},{"lines":["女：这个苹果怎么样？","男：很好吃，也不贵。"],"linespy":["Nǚ: Zhè ge píngguǒ zěnmeyàng?","Nán: Hěn hǎochī, yě bú guì."],"vi":"Nữ: Quả táo này thế nào? Nam: Rất ngon, cũng không đắt.","ans":4}]},{"id":"L4","sec":"L","type":"passage3","items":[{"zh":"小李昨天生病了，没来上课，今天好了。","py":"Xiǎo Lǐ zuótiān shēngbìng le, méi lái shàngkè, jīntiān hǎo le.","q":"小李昨天为什么没来上课？","qpy":"Xiǎo Lǐ zuótiān wèishénme méi lái shàngkè?","vi":"Tiểu Lý hôm qua bị ốm, không đi học, hôm nay khỏi rồi.","opts":["他很忙","他去北京","他生病了"],"optpy":["Tā hěn máng","Tā qù Běijīng","Tā shēngbìng le"],"ans":2},{"zh":"我妈妈是老师，爸爸是医生。","py":"Wǒ māma shì lǎoshī, bàba shì yīshēng.","q":"妈妈做什么工作？","qpy":"Māma zuò shénme gōngzuò?","vi":"Mẹ tôi là giáo viên, bố là bác sĩ.","opts":["学生","医生","老师"],"optpy":["Xuésheng","Yīshēng","Lǎoshī"],"ans":2},{"zh":"现在三点五十，我们四点见面。","py":"Xiànzài sān diǎn wǔ shí, wǒmen sì diǎn jiànmiàn.","q":"他们几点见面？","qpy":"Tāmen jǐ diǎn jiànmiàn?","vi":"Bây giờ 3 giờ 50, 4 giờ chúng ta gặp nhau.","opts":["四点","三点","五点"],"optpy":["Sì diǎn","Sān diǎn","Wǔ diǎn"],"ans":0},{"zh":"我最喜欢吃苹果，不太喜欢喝茶。","py":"Wǒ zuì xǐhuan chī píngguǒ, bú tài xǐhuan hē chá.","q":"说话人喜欢什么？","qpy":"Shuōhuàrén xǐhuan shénme?","vi":"Tôi thích ăn táo nhất, không thích uống trà lắm.","opts":["茶","苹果","面包"],"optpy":["Chá","Píngguǒ","Miànbāo"],"ans":1},{"zh":"我的手机很旧了，我想买一个新的。","py":"Wǒ de shǒujī hěn jiù le, wǒ xiǎng mǎi yí ge xīn de.","q":"说话人想买什么？","qpy":"Shuōhuàrén xiǎng mǎi shénme?","vi":"Điện thoại của tôi cũ rồi, tôi muốn mua cái mới.","opts":["电脑","手机","衣服"],"optpy":["Diànnǎo","Shǒujī","Yīfu"],"ans":1}]},{"id":"R1","sec":"R","type":"pic6","bank":["💰","🛒","🐟","👕","🌸","🎤"],"items":[{"zh":"她在商店买东西。","py":"Tā zài shāngdiàn mǎi dōngxi.","vi":"Cô ấy mua đồ ở cửa hàng.","ans":1},{"zh":"这件衣服很好看。","py":"Zhè jiàn yīfu hěn hǎokàn.","vi":"Cái áo này rất đẹp.","ans":3},{"zh":"我想吃鱼。","py":"Wǒ xiǎng chī yú.","vi":"Tôi muốn ăn cá.","ans":2},{"zh":"他有很多钱。","py":"Tā yǒu hěn duō qián.","vi":"Anh ấy có rất nhiều tiền.","ans":0},{"zh":"她唱歌唱得很好听。","py":"Tā chànggē chàng de hěn hǎotīng.","vi":"Cô ấy hát rất hay.","ans":5}]},{"id":"R2","sec":"R","type":"word6","bank":["太","会","和","的","去","都"],"bankpy":["tài","huì","hé","de","qù","dōu"],"items":[{"zh":"今天（___）热了，我不想出去。","py":"Jīntiān (___) rè le, wǒ bù xiǎng chūqù.","vi":"Hôm nay nóng quá, tôi không muốn ra ngoài.","ans":0},{"zh":"我（___）说一点儿汉语。","py":"Wǒ (___) shuō yìdiǎnr Hànyǔ.","vi":"Tôi biết nói một chút tiếng Trung.","ans":1},{"zh":"明天我（___）商店，你去吗？","py":"Míngtiān wǒ (___) shāngdiàn, nǐ qù ma?","vi":"Mai tôi đi cửa hàng, bạn đi không?","ans":4},{"zh":"这是我（___）书。","py":"Zhè shì wǒ (___) shū.","vi":"Đây là sách của tôi.","ans":3},{"zh":"我们（___）是学生。","py":"Wǒmen (___) shì xuésheng.","vi":"Chúng tôi đều là học sinh.","ans":5}]},{"id":"R3","sec":"R","type":"dlgword6","bank":["不","都","很","和","没","正在"],"bankpy":["bù","dōu","hěn","hé","méi","zhèngzài"],"items":[{"lines":["A：你喜欢喝茶吗？","B：我（___）喜欢，我喜欢喝水。"],"linespy":["A: Nǐ xǐhuan hē chá ma?","B: Wǒ (___) xǐhuan, wǒ xǐhuan hē shuǐ."],"vi":"A: Bạn thích uống trà không? B: Mình không thích, mình thích uống nước.","ans":0},{"lines":["A：你们是学生吗？","B：对，我们（___）是学生。"],"linespy":["A: Nǐmen shì xuésheng ma?","B: Duì, wǒmen (___) shì xuésheng."],"vi":"A: Các bạn là học sinh à? B: Đúng, chúng mình đều là học sinh.","ans":1},{"lines":["A：你的汉语怎么样？","B：我的汉语（___）好。"],"linespy":["A: Nǐ de Hànyǔ zěnmeyàng?","B: Wǒ de Hànyǔ (___) hǎo."],"vi":"A: Tiếng Trung của bạn thế nào? B: Tiếng Trung của mình rất tốt.","ans":2},{"lines":["A：你吃饭了吗？","B：（___）有，我现在很饿。"],"linespy":["A: Nǐ chīfàn le ma?","B: (___) yǒu, wǒ xiànzài hěn è."],"vi":"A: Bạn ăn cơm chưa? B: Chưa, giờ mình đang đói.","ans":4},{"lines":["A：你在做什么？","B：我（___）看电视。"],"linespy":["A: Nǐ zài zuò shénme?","B: Wǒ (___) kàn diànshì."],"vi":"A: Bạn đang làm gì? B: Mình đang xem ti vi.","ans":5}]},{"id":"R4","sec":"R","type":"read3","items":[{"zh":"我的同学小李是北京人，他汉语说得很好。","py":"Wǒ de tóngxué Xiǎo Lǐ shì Běijīng rén, tā Hànyǔ shuō de hěn hǎo.","q":"★ 小李是哪里人？","qpy":"★ Xiǎo Lǐ shì nǎ lǐ rén?","vi":"Bạn học Tiểu Lý của tôi là người Bắc Kinh, nói tiếng Trung rất giỏi.","opts":["越南人","美国人","北京人"],"optpy":["Yuènán rén","Měiguó rén","Běijīng rén"],"ans":2},{"zh":"我想坐飞机去上海，请问飞机票多少钱？","py":"Wǒ xiǎng zuò fēijī qù Shànghǎi, qǐng wèn fēijī piào duōshao qián?","q":"★ 说话人想知道什么？","qpy":"★ Shuōhuàrén xiǎng zhīdào shénme?","vi":"Tôi muốn đi máy bay đến Thượng Hải, xin hỏi vé bao nhiêu tiền?","opts":["去上海的时间","飞机票多少钱","上海的天气"],"optpy":["Qù Shànghǎi de shíjiān","Fēijī piào duōshao qián","Shànghǎi de tiānqì"],"ans":1},{"zh":"医生说我要多喝水，多休息。","py":"Yīshēng shuō wǒ yào duō hē shuǐ, duō xiūxi.","q":"★ 医生说什么？","qpy":"★ Yīshēng shuō shénme?","vi":"Bác sĩ nói tôi phải uống nhiều nước, nghỉ ngơi nhiều.","opts":["多运动","多看书","多休息"],"optpy":["Duō yùndòng","Duō kàn shū","Duō xiūxi"],"ans":2},{"zh":"爸爸今天很忙，没有时间做饭，我们去饭馆吃饭。","py":"Bàba jīntiān hěn máng, méi yǒu shíjiān zuòfàn, wǒmen qù fànguǎn chīfàn.","q":"★ 他们在哪儿吃饭？","qpy":"★ Tāmen zài nǎr chīfàn?","vi":"Hôm nay bố rất bận, không có thời gian nấu ăn, chúng tôi ra quán ăn.","opts":["饭馆","学校","家里"],"optpy":["Fànguǎn","Xuéxiào","Jiā lǐ"],"ans":0},{"zh":"下午我和朋友去商店，我想买一件新衣服。","py":"Xiàwǔ wǒ hé péngyou qù shāngdiàn, wǒ xiǎng mǎi yí jiàn xīn yīfu.","q":"★ 说话人想买什么？","qpy":"★ Shuōhuàrén xiǎng mǎi shénme?","vi":"Chiều tôi cùng bạn đi cửa hàng, tôi muốn mua một cái áo mới.","opts":["新衣服","新手机","新电脑"],"optpy":["Xīn yīfu","Xīn shǒujī","Xīn diànnǎo"],"ans":0}]}]},{"id":3,"parts":[{"id":"L1","sec":"L","type":"pic3","items":[{"zh":"我的姐姐是医生。","py":"Wǒ de jiějie shì yīshēng.","vi":"Chị gái tôi là bác sĩ.","opts":["👩‍⚕️","👩‍🏫","🧑‍🎓"],"ans":0},{"zh":"我想买一杯茶。","py":"Wǒ xiǎng mǎi yì bēi chá.","vi":"Tôi muốn mua một cốc trà.","opts":["🍎","🍚","🍵"],"ans":2},{"zh":"下雨了，我没有去公园。","py":"Xiàyǔ le, wǒ méi yǒu qù gōngyuán.","vi":"Mưa rồi, tôi không đi công viên.","opts":["☀️","❄️","🌧️"],"ans":2},{"zh":"她给妈妈打电话。","py":"Tā gěi māma dǎ diànhuà.","vi":"Cô ấy gọi điện cho mẹ.","opts":["🚗","📞","📺"],"ans":1},{"zh":"我们坐出租车去学校。","py":"Wǒmen zuò chūzūchē qù xuéxiào.","vi":"Chúng tôi đi taxi đến trường.","opts":["🚕","🏫","🚲"],"ans":0}]},{"id":"L2","sec":"L","type":"short3","items":[{"zh":"你什么时候去北京？","py":"Nǐ shénme shíhou qù Běijīng?","vi":"Khi nào bạn đi Bắc Kinh? - Chiều mai.","opts":["明天下午。","三个。","在北京。"],"optpy":["Míngtiān xiàwǔ.","Sān ge.","Zài Běijīng."],"ans":0},{"zh":"你想吃什么？","py":"Nǐ xiǎng chī shénme?","vi":"Bạn muốn ăn gì? - Cơm.","opts":["三点。","米饭。","医院。"],"optpy":["Sān diǎn.","Mǐfàn.","Yīyuàn."],"ans":1},{"zh":"你和谁一起去？","py":"Nǐ hé shéi yìqǐ qù?","vi":"Bạn đi cùng ai? - Bạn của tôi.","opts":["星期五。","很好吃。","我的朋友。"],"optpy":["Xīngqī wǔ.","Hěn hǎochī.","Wǒ de péngyou."],"ans":2},{"zh":"你在哪儿工作？","py":"Nǐ zài nǎr gōngzuò?","vi":"Bạn làm việc ở đâu? - Ở bệnh viện.","opts":["在医院。","很忙。","三年。"],"optpy":["Zài yīyuàn.","Hěn máng.","Sān nián."],"ans":0},{"zh":"今天几月几号？","py":"Jīntiān jǐ yuè jǐ hào?","vi":"Hôm nay ngày mấy tháng mấy? - Ngày 10 tháng 10.","opts":["十块钱。","十个人。","十月十号。"],"optpy":["Shí kuài qián.","Shí ge rén.","Shí yuè shí hào."],"ans":2}]},{"id":"L3","sec":"L","type":"dlgpic6","bank":["🏫","🎧","🥶","👕","🚗","🌙"],"items":[{"lines":["女：明天几点上课？","男：八点，你别晚了。"],"linespy":["Nǚ: Míngtiān jǐ diǎn shàngkè?","Nán: Bā diǎn, nǐ bié wǎn le."],"vi":"Nữ: Mai mấy giờ vào học? Nam: 8 giờ, bạn đừng đến muộn.","ans":0},{"lines":["女：你喜欢听什么？","男：我最喜欢听中国音乐。"],"linespy":["Nǚ: Nǐ xǐhuan tīng shénme?","Nán: Wǒ zuì xǐhuan tīng Zhōngguó yīnyuè."],"vi":"Nữ: Bạn thích nghe gì? Nam: Mình thích nghe nhạc Trung Quốc nhất.","ans":1},{"lines":["女：今天太冷了！","男：对，我们回家吧。"],"linespy":["Nǚ: Jīntiān tài lěng le!","Nán: Duì, wǒmen huí jiā ba."],"vi":"Nữ: Hôm nay lạnh quá! Nam: Ừ, chúng ta về nhà thôi.","ans":2},{"lines":["女：这件红的多少钱？","男：一百块，很好看。"],"linespy":["Nǚ: Zhè jiàn hóng de duōshao qián?","Nán: Yì bǎi kuài, hěn hǎokàn."],"vi":"Nữ: Cái màu đỏ này bao nhiêu tiền? Nam: 100 tệ, rất đẹp.","ans":3},{"lines":["女：爸爸，你去哪儿？","男：我开车去公司。"],"linespy":["Nǚ: Bàba, nǐ qù nǎr?","Nán: Wǒ kāichē qù gōngsī."],"vi":"Nữ: Bố ơi, bố đi đâu? Nam: Bố lái xe đến công ty.","ans":4}]},{"id":"L4","sec":"L","type":"passage3","items":[{"zh":"我每天早上七点起床，七点半吃早饭。","py":"Wǒ měi tiān zǎoshang qī diǎn qǐchuáng, qī diǎn bàn chī zǎofàn.","q":"说话人几点吃早饭？","qpy":"Shuōhuàrén jǐ diǎn chī zǎofàn?","vi":"Mỗi sáng tôi 7 giờ dậy, 7 rưỡi ăn sáng.","opts":["八点","七点半","七点"],"optpy":["Bā diǎn","Qī diǎn bàn","Qī diǎn"],"ans":1},{"zh":"我朋友在中国学习，他说中国菜很好吃。","py":"Wǒ péngyou zài Zhōngguó xuéxí, tā shuō Zhōngguó cài hěn hǎochī.","q":"他朋友在哪儿学习？","qpy":"Tā péngyou zài nǎr xuéxí?","vi":"Bạn tôi học ở Trung Quốc, anh ấy nói món Trung rất ngon.","opts":["越南","美国","中国"],"optpy":["Yuènán","Měiguó","Zhōngguó"],"ans":2},{"zh":"今天我很累，晚上不想做饭，我们去饭馆吧。","py":"Jīntiān wǒ hěn lèi, wǎnshang bù xiǎng zuòfàn, wǒmen qù fànguǎn ba.","q":"他们晚上去哪儿？","qpy":"Tāmen wǎnshang qù nǎr?","vi":"Hôm nay tôi rất mệt, tối không muốn nấu, chúng ta ra quán ăn nhé.","opts":["饭馆","医院","学校"],"optpy":["Fànguǎn","Yīyuàn","Xuéxiào"],"ans":0},{"zh":"我的女儿三岁了，她会唱很多歌。","py":"Wǒ de nǚ'ér sān suì le, tā huì chàng hěn duō gē.","q":"女儿会做什么？","qpy":"Nǚ'ér huì zuò shénme?","vi":"Con gái tôi ba tuổi, bé biết hát nhiều bài.","opts":["看书","唱歌","写字"],"optpy":["Kàn shū","Chànggē","Xiě zì"],"ans":1},{"zh":"请你等一下，王老师正在打电话。","py":"Qǐng nǐ děng yíxià, Wáng lǎoshī zhèngzài dǎ diànhuà.","q":"王老师在做什么？","qpy":"Wáng lǎoshī zài zuò shénme?","vi":"Mời bạn đợi một chút, thầy Vương đang gọi điện thoại.","opts":["打电话","上课","吃饭"],"optpy":["Dǎ diànhuà","Shàngkè","Chīfàn"],"ans":0}]},{"id":"R1","sec":"R","type":"pic6","bank":["📖","🏊","🐱","🏠","💻","🌙"],"items":[{"zh":"我喜欢看书。","py":"Wǒ xǐhuan kàn shū.","vi":"Tôi thích đọc sách.","ans":0},{"zh":"他会游泳。","py":"Tā huì yóuyǒng.","vi":"Anh ấy biết bơi.","ans":1},{"zh":"我的猫在睡觉。","py":"Wǒ de māo zài shuìjiào.","vi":"Mèo của tôi đang ngủ.","ans":2},{"zh":"我在家里工作。","py":"Wǒ zài jiā lǐ gōngzuò.","vi":"Tôi làm việc ở nhà.","ans":3},{"zh":"她的电脑很新。","py":"Tā de diànnǎo hěn xīn.","vi":"Máy tính của cô ấy rất mới.","ans":4}]},{"id":"R2","sec":"R","type":"word6","bank":["在","是","有","吗","不","一起"],"bankpy":["zài","shì","yǒu","ma","bù","yìqǐ"],"items":[{"zh":"我（___）两个哥哥，没有姐姐。","py":"Wǒ (___) liǎng ge gēge, méi yǒu jiějie.","vi":"Tôi có hai anh trai, không có chị gái.","ans":2},{"zh":"他（___）我的同学。","py":"Tā (___) wǒ de tóngxué.","vi":"Anh ấy là bạn học của tôi.","ans":1},{"zh":"你想去看电影（___）？","py":"Nǐ xiǎng qù kàn diànyǐng (___)?","vi":"Bạn muốn đi xem phim không?","ans":3},{"zh":"我们（___）去公园吧。","py":"Wǒmen (___) qù gōngyuán ba.","vi":"Chúng ta cùng đi công viên nhé.","ans":5},{"zh":"书（___）桌子上。","py":"Shū (___) zhuōzi shàng.","vi":"Sách ở trên bàn.","ans":0}]},{"id":"R3","sec":"R","type":"dlgword6","bank":["在","是","有","想","去","给"],"bankpy":["zài","shì","yǒu","xiǎng","qù","gěi"],"items":[{"lines":["A：你的书（___）桌子上吗？","B：对，在桌子上。"],"linespy":["A: Nǐ de shū (___) zhuōzi shàng ma?","B: Duì, zài zhuōzi shàng."],"vi":"A: Sách của bạn ở trên bàn à? B: Đúng, ở trên bàn.","ans":0},{"lines":["A：他（___）谁？","B：他是我的哥哥。"],"linespy":["A: Tā (___) shéi?","B: Tā shì wǒ de gēge."],"vi":"A: Anh ấy là ai? B: Anh ấy là anh trai tôi.","ans":1},{"lines":["A：你家（___）猫吗？","B：有，我家有两个。"],"linespy":["A: Nǐ jiā (___) māo ma?","B: Yǒu, wǒ jiā yǒu liǎng ge."],"vi":"A: Nhà bạn có mèo không? B: Có, nhà mình có hai con.","ans":2},{"lines":["A：明天你（___）学校吗？","B：去，我八点上课。"],"linespy":["A: Míngtiān nǐ (___) xuéxiào ma?","B: Qù, wǒ bā diǎn shàngkè."],"vi":"A: Mai bạn có đến trường không? B: Có, mình 8 giờ vào học.","ans":4},{"lines":["A：我可以（___）你打电话吗？","B：可以，晚上打吧。"],"linespy":["A: Wǒ kěyǐ (___) nǐ dǎ diànhuà ma?","B: Kěyǐ, wǎnshang dǎ ba."],"vi":"A: Mình gọi điện cho bạn được không? B: Được, tối gọi nhé.","ans":5}]},{"id":"R4","sec":"R","type":"read3","items":[{"zh":"我哥哥在大学学习汉语，他明年想去北京。","py":"Wǒ gēge zài dàxué xuéxí Hànyǔ, tā míngnián xiǎng qù Běijīng.","q":"★ 哥哥明年想做什么？","qpy":"★ Gēge míngnián xiǎng zuò shénme?","vi":"Anh trai tôi học tiếng Trung ở đại học, năm sau anh muốn đi Bắc Kinh.","opts":["去北京","去美国","去医院"],"optpy":["Qù Běijīng","Qù Měiguó","Qù yīyuàn"],"ans":0},{"zh":"现在是晚上十点，我的女儿已经睡觉了。","py":"Xiànzài shì wǎnshang shí diǎn, wǒ de nǚ'ér yǐjīng shuìjiào le.","q":"★ 女儿现在在做什么？","qpy":"★ Nǚ'ér xiànzài zài zuò shénme?","vi":"Bây giờ là 10 giờ tối, con gái tôi đã ngủ rồi.","opts":["看书","吃饭","睡觉"],"optpy":["Kàn shū","Chīfàn","Shuìjiào"],"ans":2},{"zh":"你好，我想买一个杯子，要红色的。","py":"Nǐ hǎo, wǒ xiǎng mǎi yí ge bēizi, yào hóngsè de.","q":"★ 说话人想买什么？","qpy":"★ Shuōhuàrén xiǎng mǎi shénme?","vi":"Xin chào, tôi muốn mua một cái cốc màu đỏ.","opts":["新手机","白色的杯子","红色的杯子"],"optpy":["Xīn shǒujī","Báisè de bēizi","Hóngsè de bēizi"],"ans":2},{"zh":"这个电影很好看，我已经看过两次了。","py":"Zhè ge diànyǐng hěn hǎokàn, wǒ yǐjīng kàn guo liǎng cì le.","q":"★ 说话人看过几次？","qpy":"★ Shuōhuàrén kàn guo jǐ cì?","vi":"Bộ phim này rất hay, tôi đã xem hai lần rồi.","opts":["三次","两次","一次"],"optpy":["Sān cì","Liǎng cì","Yí cì"],"ans":1},{"zh":"我家旁边有一个很大的超市，买东西很方便。","py":"Wǒ jiā pángbiān yǒu yí ge hěn dà de chāoshì, mǎi dōngxi hěn fāngbiàn.","q":"★ 超市在哪儿？","qpy":"★ Chāoshì zài nǎr?","vi":"Cạnh nhà tôi có một siêu thị rất lớn, mua đồ rất tiện.","opts":["医院前面","家旁边","学校里"],"optpy":["Yīyuàn qiánmiàn","Jiā pángbiān","Xuéxiào lǐ"],"ans":1}]}]},{"id":4,"parts":[{"id":"L1","sec":"L","type":"pic3","items":[{"zh":"请坐，喝杯茶。","py":"Qǐng zuò, hē bēi chá.","vi":"Mời ngồi, uống cốc trà.","opts":["🏀","🍞","🍵"],"ans":2},{"zh":"他在桌子上写字。","py":"Tā zài zhuōzi shàng xiě zì.","vi":"Anh ấy viết chữ trên bàn.","opts":["🏃","✍️","🎤"],"ans":1},{"zh":"我坐火车去上海。","py":"Wǒ zuò huǒchē qù Shànghǎi.","vi":"Tôi đi tàu hỏa đến Thượng Hải.","opts":["🚌","🚆","✈️"],"ans":1},{"zh":"妈妈买了很多水果。","py":"Māma mǎi le hěn duō shuǐguǒ.","vi":"Mẹ mua rất nhiều hoa quả.","opts":["📖","🍚","🍎🍌🍇"],"ans":2},{"zh":"我要去医院看病。","py":"Wǒ yào qù yīyuàn kànbìng.","vi":"Tôi phải đến bệnh viện khám bệnh.","opts":["🏥","🏪","🏫"],"ans":0}]},{"id":"L2","sec":"L","type":"short3","items":[{"zh":"她是谁？","py":"Tā shì shéi?","vi":"Cô ấy là ai? - Bạn học của tôi.","opts":["在家里。","很高。","我的同学。"],"optpy":["Zài jiā lǐ.","Hěn gāo.","Wǒ de tóngxué."],"ans":2},{"zh":"你坐什么去学校？","py":"Nǐ zuò shénme qù xuéxiào?","vi":"Bạn đi gì đến trường? - Đi tàu điện ngầm.","opts":["六点。","坐三个。","坐地铁。"],"optpy":["Liù diǎn.","Zuò sān ge.","Zuò dìtiě."],"ans":2},{"zh":"你的生日是几号？","py":"Nǐ de shēngrì shì jǐ hào?","vi":"Sinh nhật bạn là ngày mấy? - Ngày 5.","opts":["五号。","五块。","五个。"],"optpy":["Wǔ hào.","Wǔ kuài.","Wǔ ge."],"ans":0},{"zh":"你喜欢哪个？","py":"Nǐ xǐhuan nǎ ge?","vi":"Bạn thích cái nào? - Cái này.","opts":["星期五。","这个。","三点。"],"optpy":["Xīngqī wǔ.","Zhè ge.","Sān diǎn."],"ans":1},{"zh":"你爸爸做什么工作？","py":"Nǐ bàba zuò shénme gōngzuò?","vi":"Bố bạn làm nghề gì? - Bác sĩ.","opts":["明天。","医生。","苹果。"],"optpy":["Míngtiān.","Yīshēng.","Píngguǒ."],"ans":1}]},{"id":"L3","sec":"L","type":"dlgpic6","bank":["🍵","🏊","🐶","📺","🏠","🎤"],"items":[{"lines":["女：你想喝什么？","男：给我一杯茶，谢谢。"],"linespy":["Nǚ: Nǐ xiǎng hē shénme?","Nán: Gěi wǒ yì bēi chá, xièxie."],"vi":"Nữ: Bạn muốn uống gì? Nam: Cho mình một cốc trà, cảm ơn.","ans":0},{"lines":["女：你会游泳吗？","男：会，我每个星期游两次。"],"linespy":["Nǚ: Nǐ huì yóuyǒng ma?","Nán: Huì, wǒ měi ge xīngqī yóu liǎng cì."],"vi":"Nữ: Bạn biết bơi không? Nam: Biết, mỗi tuần mình bơi hai lần.","ans":1},{"lines":["女：它叫什么名字？","男：它叫小白，是我的狗。"],"linespy":["Nǚ: Tā jiào shénme míngzi?","Nán: Tā jiào Xiǎo Bái, shì wǒ de gǒu."],"vi":"Nữ: Nó tên gì? Nam: Nó tên Tiểu Bạch, là chó của mình.","ans":2},{"lines":["女：电视里有什么？","男：有一个很好看的电影。"],"linespy":["Nǚ: Diànshì lǐ yǒu shénme?","Nán: Yǒu yí ge hěn hǎokàn de diànyǐng."],"vi":"Nữ: Trên ti vi có gì? Nam: Có một bộ phim rất hay.","ans":3},{"lines":["女：你家大不大？","男：不大，但是很漂亮。"],"linespy":["Nǚ: Nǐ jiā dà bú dà?","Nán: Bú dà, dànshì hěn piàoliang."],"vi":"Nữ: Nhà bạn có to không? Nam: Không to, nhưng rất đẹp.","ans":4}]},{"id":"L4","sec":"L","type":"passage3","items":[{"zh":"明天是我朋友的生日，我想送他一本书。","py":"Míngtiān shì wǒ péngyou de shēngrì, wǒ xiǎng sòng tā yì běn shū.","q":"说话人想送朋友什么？","qpy":"Shuōhuàrén xiǎng sòng péngyou shénme?","vi":"Mai là sinh nhật bạn tôi, tôi muốn tặng bạn một quyển sách.","opts":["一杯茶","一本书","一件衣服"],"optpy":["Yì bēi chá","Yì běn shū","Yí jiàn yīfu"],"ans":1},{"zh":"这个商店的东西很便宜，所以人很多。","py":"Zhè ge shāngdiàn de dōngxi hěn piányi, suǒyǐ rén hěn duō.","q":"商店为什么人多？","qpy":"Shāngdiàn wèishénme rén duō?","vi":"Đồ ở cửa hàng này rất rẻ nên rất đông người.","opts":["东西很贵","天气很好","东西便宜"],"optpy":["Dōngxi hěn guì","Tiānqì hěn hǎo","Dōngxi piányi"],"ans":2},{"zh":"我下午有课，所以不能和你去看电影。","py":"Wǒ xiàwǔ yǒu kè, suǒyǐ bù néng hé nǐ qù kàn diànyǐng.","q":"说话人下午做什么？","qpy":"Shuōhuàrén xiàwǔ zuò shénme?","vi":"Chiều tôi có lớp nên không thể đi xem phim với bạn.","opts":["上课","睡觉","看电影"],"optpy":["Shàngkè","Shuìjiào","Kàn diànyǐng"],"ans":0},{"zh":"她在北京工作，每个星期天回家。","py":"Tā zài Běijīng gōngzuò, měi ge xīngqītiān huí jiā.","q":"她星期天做什么？","qpy":"Tā xīngqītiān zuò shénme?","vi":"Cô ấy làm việc ở Bắc Kinh, mỗi Chủ nhật về nhà.","opts":["回家","工作","上课"],"optpy":["Huí jiā","Gōngzuò","Shàngkè"],"ans":0},{"zh":"我想喝水，请问这儿有水吗？","py":"Wǒ xiǎng hē shuǐ, qǐng wèn zhèr yǒu shuǐ ma?","q":"说话人想要什么？","qpy":"Shuōhuàrén xiǎng yào shénme?","vi":"Tôi muốn uống nước, xin hỏi ở đây có nước không?","opts":["茶","米饭","水"],"optpy":["Chá","Mǐfàn","Shuǐ"],"ans":2}]},{"id":"R1","sec":"R","type":"pic6","bank":["🚗","📱","🐶","🍚","🧑‍🎓","🌧️"],"items":[{"zh":"我的手机在桌子上。","py":"Wǒ de shǒujī zài zhuōzi shàng.","vi":"Điện thoại của tôi ở trên bàn.","ans":1},{"zh":"我们开车去公司。","py":"Wǒmen kāichē qù gōngsī.","vi":"Chúng tôi lái xe đến công ty.","ans":0},{"zh":"他是一个大学生。","py":"Tā shì yí ge dàxuéshēng.","vi":"Anh ấy là một sinh viên đại học.","ans":4},{"zh":"外面下雨了。","py":"Wàimiàn xiàyǔ le.","vi":"Bên ngoài mưa rồi.","ans":5},{"zh":"我的狗在家里。","py":"Wǒ de gǒu zài jiā lǐ.","vi":"Con chó của tôi ở trong nhà.","ans":2}]},{"id":"R2","sec":"R","type":"word6","bank":["多少","几","谁","哪儿","什么","怎么"],"bankpy":["duōshao","jǐ","shéi","nǎr","shénme","zěnme"],"items":[{"zh":"这个苹果（___）钱？","py":"Zhè ge píngguǒ (___) qián?","vi":"Quả táo này bao nhiêu tiền?","ans":0},{"zh":"现在（___）点了？","py":"Xiànzài (___) diǎn le?","vi":"Bây giờ mấy giờ rồi?","ans":1},{"zh":"他是（___）？我不认识他。","py":"Tā shì (___)? Wǒ bú rènshi tā.","vi":"Anh ấy là ai? Tôi không quen anh ấy.","ans":2},{"zh":"你的书在（___）？","py":"Nǐ de shū zài (___)?","vi":"Sách của bạn ở đâu?","ans":3},{"zh":"这个汉字（___）读？","py":"Zhè ge hànzì (___) dú?","vi":"Chữ Hán này đọc thế nào?","ans":5}]},{"id":"R3","sec":"R","type":"dlgword6","bank":["大","小","多","少","长","快"],"bankpy":["dà","xiǎo","duō","shǎo","cháng","kuài"],"items":[{"lines":["A：你家有几个人？","B：我家人很（___），有八口人。"],"linespy":["A: Nǐ jiā yǒu jǐ ge rén?","B: Wǒ jiā rén hěn (___), yǒu bā kǒu rén."],"vi":"A: Nhà bạn có mấy người? B: Nhà mình đông người, có tám người.","ans":2},{"lines":["A：这个杯子太（___）了，我拿不了。","B：那你要小一点儿的吗？"],"linespy":["A: Zhè ge bēizi tài (___) le, wǒ ná bù le.","B: Nà nǐ yào xiǎo yìdiǎnr de ma?"],"vi":"A: Cái cốc này to quá, mình cầm không nổi. B: Vậy bạn lấy cái nhỏ hơn không?","ans":0},{"lines":["A：我们坐出租车去吧。","B：好，坐车很（___）。"],"linespy":["A: Wǒmen zuò chūzūchē qù ba.","B: Hǎo, zuò chē hěn (___)."],"vi":"A: Chúng ta đi taxi nhé. B: Được, đi xe rất nhanh.","ans":5},{"lines":["A：你今天为什么没吃饭？","B：我吃得很（___），因为不饿。"],"linespy":["A: Nǐ jīntiān wèishénme méi chīfàn?","B: Wǒ chī de hěn (___), yīnwèi bú è."],"vi":"A: Sao hôm nay bạn không ăn cơm? B: Mình ăn rất ít vì không đói.","ans":3},{"lines":["A：你的头发真（___）！","B：对，我喜欢长头发。"],"linespy":["A: Nǐ de tóufa zhēn (___)!","B: Duì, wǒ xǐhuan cháng tóufa."],"vi":"A: Tóc bạn dài thật! B: Ừ, mình thích tóc dài.","ans":4}]},{"id":"R4","sec":"R","type":"read3","items":[{"zh":"明天我有考试。","py":"Míngtiān wǒ yǒu kǎoshì.","q":"★ 说话人明天做什么？","qpy":"★ Shuōhuàrén míngtiān zuò shénme?","vi":"Mai tôi có bài thi.","opts":["旅游","考试","上班"],"optpy":["Lǚyóu","Kǎoshì","Shàngbān"],"ans":1},{"zh":"我昨天没有睡好，今天有点儿累。","py":"Wǒ zuótiān méi yǒu shuì hǎo, jīntiān yǒu diǎnr lèi.","q":"★ 说话人今天怎么样？","qpy":"★ Shuōhuàrén jīntiān zěnmeyàng?","vi":"Hôm qua tôi ngủ không ngon, hôm nay hơi mệt.","opts":["有点儿累","很高兴","很忙"],"optpy":["Yǒu diǎnr lèi","Hěn gāoxìng","Hěn máng"],"ans":0},{"zh":"请在这里等一下，王老师马上来。","py":"Qǐng zài zhèlǐ děng yíxià, Wáng lǎoshī mǎshàng lái.","q":"★ 说话人让你做什么？","qpy":"★ Shuōhuàrén ràng nǐ zuò shénme?","vi":"Mời đợi ở đây một chút, thầy Vương đến ngay.","opts":["回家","写字","等一下"],"optpy":["Huí jiā","Xiě zì","Děng yíxià"],"ans":2},{"zh":"今天不冷也不热，我们去公园玩儿吧。","py":"Jīntiān bù lěng yě bú rè, wǒmen qù gōngyuán wánr ba.","q":"★ 今天天气怎么样？","qpy":"★ Jīntiān tiānqì zěnmeyàng?","vi":"Hôm nay không lạnh cũng không nóng, chúng ta đi công viên chơi nhé.","opts":["很冷","不冷不热","下雨"],"optpy":["Hěn lěng","Bù lěng bú rè","Xiàyǔ"],"ans":1},{"zh":"我的汉语老师是王老师，她教我们说汉语。","py":"Wǒ de Hànyǔ lǎoshī shì Wáng lǎoshī, tā jiāo wǒmen shuō Hànyǔ.","q":"★ 王老师做什么工作？","qpy":"★ Wáng lǎoshī zuò shénme gōngzuò?","vi":"Giáo viên tiếng Trung của tôi là cô Vương, cô dạy chúng tôi nói tiếng Trung.","opts":["老师","学生","医生"],"optpy":["Lǎoshī","Xuésheng","Yīshēng"],"ans":0}]}]},{"id":5,"parts":[{"id":"L1","sec":"L","type":"pic3","items":[{"zh":"我想吃面包。","py":"Wǒ xiǎng chī miànbāo.","vi":"Tôi muốn ăn bánh mì.","opts":["🍚","🍞","🍎"],"ans":1},{"zh":"他在给妈妈打电话。","py":"Tā zài gěi māma dǎ diànhuà.","vi":"Anh ấy đang gọi điện cho mẹ.","opts":["💻","📖","📞"],"ans":2},{"zh":"今天天气很好，我们去公园玩儿。","py":"Jīntiān tiānqì hěn hǎo, wǒmen qù gōngyuán wánr.","vi":"Hôm nay thời tiết đẹp, chúng ta đi công viên chơi.","opts":["☀️🌳","🌧️","❄️"],"ans":0},{"zh":"我家有一个狗。","py":"Wǒ jiā yǒu yí ge gǒu.","vi":"Nhà tôi có một con chó.","opts":["🐟","🐶","🐱"],"ans":1},{"zh":"她在做饭。","py":"Tā zài zuòfàn.","vi":"Cô ấy đang nấu ăn.","opts":["😴","📺","🍳"],"ans":2}]},{"id":"L2","sec":"L","type":"short3","items":[{"zh":"你家在哪儿？","py":"Nǐ jiā zài nǎr?","vi":"Nhà bạn ở đâu? - Ở Bắc Kinh.","opts":["在北京。","很大。","三口人。"],"optpy":["Zài Běijīng.","Hěn dà.","Sān kǒu rén."],"ans":0},{"zh":"你什么时候下班？","py":"Nǐ shénme shíhou xiàbān?","vi":"Khi nào bạn tan làm? - 5 rưỡi.","opts":["很忙。","五点半。","在公司。"],"optpy":["Hěn máng.","Wǔ diǎn bàn.","Zài gōngsī."],"ans":1},{"zh":"你想买什么？","py":"Nǐ xiǎng mǎi shénme?","vi":"Bạn muốn mua gì? - Một cái áo.","opts":["三点。","在商店。","一件衣服。"],"optpy":["Sān diǎn.","Zài shāngdiàn.","Yí jiàn yīfu."],"ans":2},{"zh":"谁在打电话？","py":"Shéi zài dǎ diànhuà?","vi":"Ai đang gọi điện thoại? - Mẹ tôi.","opts":["手机。","我妈妈。","三点。"],"optpy":["Shǒujī.","Wǒ māma.","Sān diǎn."],"ans":1},{"zh":"你有几个哥哥？","py":"Nǐ yǒu jǐ ge gēge?","vi":"Bạn có mấy anh trai? - Hai người.","opts":["两个。","两块。","两岁。"],"optpy":["Liǎng ge.","Liǎng kuài.","Liǎng suì."],"ans":0}]},{"id":"L3","sec":"L","type":"dlgpic6","bank":["🍞","📱","🏃","🌸","🧑‍⚕️","🎬"],"items":[{"lines":["女：早上你吃什么？","男：我吃面包，喝牛奶。"],"linespy":["Nǚ: Zǎoshang nǐ chī shénme?","Nán: Wǒ chī miànbāo, hē niúnǎi."],"vi":"Nữ: Sáng bạn ăn gì? Nam: Mình ăn bánh mì, uống sữa.","ans":0},{"lines":["女：这是谁的手机？","男：是我的，你看，它很新。"],"linespy":["Nǚ: Zhè shì shéi de shǒujī?","Nán: Shì wǒ de, nǐ kàn, tā hěn xīn."],"vi":"Nữ: Đây là điện thoại của ai? Nam: Của mình, bạn xem, nó rất mới.","ans":1},{"lines":["女：你喜欢跑步吗？","男：喜欢，我每天早上跑。"],"linespy":["Nǚ: Nǐ xǐhuan pǎobù ma?","Nán: Xǐhuan, wǒ měi tiān zǎoshang pǎo."],"vi":"Nữ: Bạn thích chạy bộ không? Nam: Thích, mỗi sáng mình đều chạy.","ans":2},{"lines":["女：这些花真漂亮！","男：是的，送给你。"],"linespy":["Nǚ: Zhèxiē huā zhēn piàoliang!","Nán: Shì de, sòng gěi nǐ."],"vi":"Nữ: Những bông hoa này đẹp quá! Nam: Ừ, tặng bạn.","ans":3},{"lines":["女：医生，我头疼。","男：别怕，你要多休息。"],"linespy":["Nǚ: Yīshēng, wǒ tóu téng.","Nán: Bié pà, nǐ yào duō xiūxi."],"vi":"Nữ: Bác sĩ ơi, tôi đau đầu. Nam: Đừng sợ, bạn cần nghỉ ngơi nhiều.","ans":4}]},{"id":"L4","sec":"L","type":"passage3","items":[{"zh":"我哥哥会开车，也会说汉语。","py":"Wǒ gēge huì kāichē, yě huì shuō Hànyǔ.","q":"哥哥会做什么？","qpy":"Gēge huì zuò shénme?","vi":"Anh trai tôi biết lái xe, cũng biết nói tiếng Trung.","opts":["跳舞","游泳","开车"],"optpy":["Tiàowǔ","Yóuyǒng","Kāichē"],"ans":2},{"zh":"你的杯子在桌子上，我的书在椅子上。","py":"Nǐ de bēizi zài zhuōzi shàng, wǒ de shū zài yǐzi shàng.","q":"书在哪儿？","qpy":"Shū zài nǎr?","vi":"Cốc của bạn ở trên bàn, sách của tôi ở trên ghế.","opts":["桌子上","椅子上","学校里"],"optpy":["Zhuōzi shàng","Yǐzi shàng","Xuéxiào lǐ"],"ans":1},{"zh":"我们八点上课，十点下课。","py":"Wǒmen bā diǎn shàngkè, shí diǎn xiàkè.","q":"他们几点下课？","qpy":"Tāmen jǐ diǎn xiàkè?","vi":"Chúng tôi 8 giờ vào học, 10 giờ tan học.","opts":["九点","八点","十点"],"optpy":["Jiǔ diǎn","Bā diǎn","Shí diǎn"],"ans":2},{"zh":"今天太热了，我想喝一杯冷水。","py":"Jīntiān tài rè le, wǒ xiǎng hē yì bēi lěng shuǐ.","q":"今天天气怎么样？","qpy":"Jīntiān tiānqì zěnmeyàng?","vi":"Hôm nay nóng quá, tôi muốn uống một cốc nước lạnh.","opts":["很热","下雨","很冷"],"optpy":["Hěn rè","Xiàyǔ","Hěn lěng"],"ans":0},{"zh":"我昨天看了一个很好看的电影，我想再看一次。","py":"Wǒ zuótiān kàn le yí ge hěn hǎokàn de diànyǐng, wǒ xiǎng zài kàn yí cì.","q":"说话人觉得电影怎么样？","qpy":"Shuōhuàrén juéde diànyǐng zěnmeyàng?","vi":"Hôm qua tôi xem một bộ phim rất hay, tôi muốn xem lại.","opts":["很长","很好看","不好看"],"optpy":["Hěn cháng","Hěn hǎokàn","Bù hǎokàn"],"ans":1}]},{"id":"R1","sec":"R","type":"pic6","bank":["🏪","📺","🍎","🏊","🥛","🌙"],"items":[{"zh":"我在商店买苹果。","py":"Wǒ zài shāngdiàn mǎi píngguǒ.","vi":"Tôi mua táo ở cửa hàng.","ans":2},{"zh":"他喜欢看电视。","py":"Tā xǐhuan kàn diànshì.","vi":"Anh ấy thích xem ti vi.","ans":1},{"zh":"她喝了一杯牛奶。","py":"Tā hē le yì bēi niúnǎi.","vi":"Cô ấy uống một cốc sữa.","ans":4},{"zh":"我们去游泳吧。","py":"Wǒmen qù yóuyǒng ba.","vi":"Chúng ta đi bơi nhé.","ans":3},{"zh":"我家旁边有一个超市。","py":"Wǒ jiā pángbiān yǒu yí ge chāoshì.","vi":"Cạnh nhà tôi có một siêu thị.","ans":0}]},{"id":"R2","sec":"R","type":"word6","bank":["为什么","因为","但是","所以","还","已经"],"bankpy":["wèishénme","yīnwèi","dànshì","suǒyǐ","hái","yǐjīng"],"items":[{"zh":"我不去，（___）我很累。","py":"Wǒ bú qù, (___) wǒ hěn lèi.","vi":"Tôi không đi vì tôi rất mệt.","ans":1},{"zh":"他很忙，（___）今天不来了。","py":"Tā hěn máng, (___) jīntiān bù lái le.","vi":"Anh ấy rất bận nên hôm nay không đến.","ans":3},{"zh":"你（___）不吃饭？","py":"Nǐ (___) bù chīfàn?","vi":"Sao bạn không ăn cơm?","ans":0},{"zh":"这个很好看，（___）太贵了。","py":"Zhè ge hěn hǎokàn, (___) tài guì le.","vi":"Cái này rất đẹp, nhưng đắt quá.","ans":2},{"zh":"我（___）没吃早饭，很饿。","py":"Wǒ (___) méi chī zǎofàn, hěn è.","vi":"Tôi vẫn chưa ăn sáng, đói lắm.","ans":4}]},{"id":"R3","sec":"R","type":"dlgword6","bank":["再","正在","就","才","已经","和"],"bankpy":["zài","zhèngzài","jiù","cái","yǐjīng","hé"],"items":[{"lines":["A：我们去吃饭吧。","B：不用了，我（___）吃过了。"],"linespy":["A: Wǒmen qù chīfàn ba.","B: Búyòng le, wǒ (___) chī guo le."],"vi":"A: Chúng ta đi ăn cơm nhé. B: Thôi, mình ăn rồi.","ans":4},{"lines":["A：请你（___）说一次。","B：好的，我慢慢说。"],"linespy":["A: Qǐng nǐ (___) shuō yí cì.","B: Hǎo de, wǒ mànmàn shuō."],"vi":"A: Bạn nói lại một lần nữa nhé. B: Được, mình nói chậm.","ans":0},{"lines":["A：现在几点？","B：现在（___）七点，还早。"],"linespy":["A: Xiànzài jǐ diǎn?","B: Xiànzài (___) qī diǎn, hái zǎo."],"vi":"A: Mấy giờ rồi? B: Mới 7 giờ, còn sớm.","ans":3},{"lines":["A：你什么时候到？","B：我很快（___）到。"],"linespy":["A: Nǐ shénme shíhou dào?","B: Wǒ hěn kuài (___) dào."],"vi":"A: Khi nào bạn đến? B: Mình đến ngay thôi.","ans":2},{"lines":["A：你在忙什么？","B：我（___）打电话，一会儿说。"],"linespy":["A: Nǐ zài máng shénme?","B: Wǒ (___) dǎ diànhuà, yíhuìr shuō."],"vi":"A: Bạn đang bận gì thế? B: Mình đang gọi điện, lát nói nhé.","ans":1}]},{"id":"R4","sec":"R","type":"read3","items":[{"zh":"我六点下班，七点到家，然后做饭。","py":"Wǒ liù diǎn xiàbān, qī diǎn dào jiā, ránhòu zuòfàn.","q":"★ 说话人几点到家？","qpy":"★ Shuōhuàrén jǐ diǎn dào jiā?","vi":"Tôi 6 giờ tan làm, 7 giờ về nhà, sau đó nấu cơm.","opts":["七点","八点","六点"],"optpy":["Qī diǎn","Bā diǎn","Liù diǎn"],"ans":0},{"zh":"对不起，我的电话不在这里，我忘了带。","py":"Duìbuqǐ, wǒ de diànhuà bú zài zhèlǐ, wǒ wàng le dài.","q":"★ 说话人怎么了？","qpy":"★ Shuōhuàrén zěnme le?","vi":"Xin lỗi, điện thoại của tôi không ở đây, tôi quên mang.","opts":["忘了带电话","电话坏了","没有钱"],"optpy":["Wàng le dài diànhuà","Diànhuà huài le","Méi yǒu qián"],"ans":0},{"zh":"我哥哥喜欢运动，每个星期都去游泳。","py":"Wǒ gēge xǐhuan yùndòng, měi ge xīngqī dōu qù yóuyǒng.","q":"★ 哥哥喜欢做什么？","qpy":"★ Gēge xǐhuan zuò shénme?","vi":"Anh trai tôi thích thể thao, tuần nào cũng đi bơi.","opts":["唱歌","看书","游泳"],"optpy":["Chànggē","Kàn shū","Yóuyǒng"],"ans":2},{"zh":"小猫在椅子下面睡觉，小狗在桌子旁边。","py":"Xiǎo māo zài yǐzi xiàmiàn shuìjiào, xiǎo gǒu zài zhuōzi pángbiān.","q":"★ 小猫在哪儿？","qpy":"★ Xiǎo māo zài nǎr?","vi":"Mèo con ngủ dưới ghế, chó con ở cạnh bàn.","opts":["门口","椅子下面","桌子旁边"],"optpy":["Ménkǒu","Yǐzi xiàmiàn","Zhuōzi pángbiān"],"ans":1},{"zh":"你好，欢迎来到我们学校，请问你要找谁？","py":"Nǐ hǎo, huānyíng láidào wǒmen xuéxiào, qǐng wèn nǐ yào zhǎo shéi?","q":"★ 说话人在哪儿？","qpy":"★ Shuōhuàrén zài nǎr?","vi":"Xin chào, chào mừng đến trường chúng tôi, bạn muốn tìm ai?","opts":["饭馆","医院","学校"],"optpy":["Fànguǎn","Yīyuàn","Xuéxiào"],"ans":2}]}]}];
