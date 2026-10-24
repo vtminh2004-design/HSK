@@ -6400,43 +6400,45 @@ const h3dQ = mkQuiz("h3d", H3D_Q, q => ({ tag: "Phức câu · " + q.pair, ask: 
 const h3eQ = mkQuiz("h3e", H3E_Q, q => ({ tag: "Điền từ", ask: "Chọn từ điền vào chỗ trống:", head: `<div class="lib-ex" style="margin:8px 0;font-size:22px">${pyHtml(q.s.replace("＿", "＿＿"))}</div><div class="np-vi">🇻🇳 ${q.vi}</div>`, opts: q.o, fixed: true, p: q.p, full: q.s.replace("＿", q.o[q.p]), vi: q.vi, rule: q.note }));
 Object.entries({"层": "céng", "当": "dāng", "科学家": "kēxuéjiā", "科": "kē", "耐心": "nàixīn", "各": "gè", "眼": "yǎn", "尝": "cháng", "骂": "mà", "部": "bù", "光": "guāng", "千": "qiān", "现场": "xiànchǎng", "讨论": "tǎolùn", "互相": "hùxiāng", "总经理": "zǒngjīnglǐ", "接待": "jiēdài", "天气预报": "tiānqì yùbào", "赢": "yíng", "请客": "qǐngkè", "氢": "qīng", "氧": "yǎng", "组成": "zǔchéng", "以来": "yǐlái", "将": "jiāng", "东": "dōng", "鼓掌": "gǔzhǎng", "录音": "lùyīn", "甜": "tián", "香蕉": "xiāngjiāo", "够": "gòu", "哈哈": "hāhā", "哈": "hā", "帅": "shuài", "咸": "xián", "淡": "dàn", "资料": "zīliào", "大多数": "dàduōshù", "屋子": "wūzi", "屋": "wū", "使": "shǐ", "女孩": "nǚhái", "袋子": "dàizi", "肚子": "dùzi", "收拾": "shōushi", "批评": "pīpíng", "吓": "xià", "另": "lìng", "害怕": "hàipà", "闹": "nào", "页": "yè", "其次": "qícì", "任务": "rènwu", "刮风": "guāfēng", "刮": "guā", "延期": "yánqī", "交通": "jiāotōng", "方便": "fāngbiàn", "锻炼": "duànliàn", "紧张": "jǐnzhāng", "答应": "dāying", "凉": "liáng", "火": "huǒ", "吵": "chǎo", "趟": "tàng", "理解": "lǐjiě", "挥": "huī", "一切": "yíqiè", "转": "zhuǎn", "安全": "ānquán", "系好": "jì hǎo", "好处": "hǎochu", "吸烟": "xīyān", "有害": "yǒuhài", "实话": "shíhuà", "算": "suàn"}).forEach(([k, v]) => { if (!(k in PYD)) PYD[k] = v; });
 Object.entries({"口袋":"kǒudài","发现":"fāxiàn","客气":"kèqi"}).forEach(([k, v]) => { if (!(k in PYD)) PYD[k] = v; });
-/* ===== HSK 3 - Nhặt sạn (300 câu, phủ 81 điểm ngữ pháp H3_GP) =====
+Object.entries({"盘子":"pánzi","安排":"ānpái","加油":"jiāyóu","停":"tíng","公里":"gōnglǐ","留学生":"liúxuéshēng"}).forEach(([k, v]) => { if (!(k in PYD)) PYD[k] = v; });
+Object.entries({"椅":"yǐ","椅子":"yǐzi"}).forEach(([k, v]) => { if (!(k in PYD)) PYD[k] = v; });
+/* ===== HSK 3 - Nhặt sạn (410 câu, phủ 81 điểm ngữ pháp H3_GP) =====
    Định dạng: gp | câu đúng 1 | câu đúng 2 | câu sai | sửa lại | giải thích */
 const H3S_Q = `1|他住在第三层。|我第一次来北京。|他住在三第层。|他住在第三层。|Thứ tự dùng 第 + số từ + lượng từ: 第三层; 第 luôn đứng trước số từ.|Anh ấy sống ở tầng ba.
 1|老王是我的同事。|小李比我小三岁。|王老是我的同事。|老王是我的同事。|老 / 小 là tiền tố đứng trước họ (老王, 小李), không đặt sau họ.|Lão Vương là đồng nghiệp của tôi.
 1|我是第二次来这里。|这是我的第一个中国朋友。|我是二第次来这里。|我是第二次来这里。|第 + số + 次: lần thứ mấy; không đặt 第 sau số từ.|Đây là lần thứ hai tôi đến đây.
 2|同学们都来了。|老师们在开会。|三个同学们都来了。|三个同学都来了。|们 chỉ số nhiều chung chung, không dùng cùng số từ cụ thể (三个同学 / 同学们).|Ba bạn học đều đến rồi.
-2|他是一位作家。|她想当科学家。|她想当科学子。|她想当科学家。|Hậu tố 家 chỉ người làm nghề / chuyên gia: 作家, 科学家; 子 không dùng cho nghĩa này.|Cô ấy muốn làm nhà khoa học.
-2|我有一个小孩儿。|桌子上有一个杯子。|桌上有一个杯头。|桌上有一个杯子。|杯子 mới đúng; 头 chỉ đi với một số từ (石头, 木头, 外头, 里头) chứ không gắn tùy tiện.|Trên bàn có một cái cốc.
+2|桌子上有一本书。|椅子在门口。|椅头在门口。|椅子在门口。|Hậu tố 子 gắn vào danh từ: 桌子, 椅子, 杯子; 头 không dùng với 椅.|Cái ghế ở cửa.
+2|我有一个小孩儿。|这个杯子是我的。|桌子上有一个杯头。|桌子上有一个杯子。|杯子 mới đúng; 头 chỉ đi với một số từ (石头, 外头, 里头) chứ không gắn tùy tiện.|Trên bàn có một cái cốc.
 2|外头很冷，多穿点儿。|里头有很多人。|外子很冷，多穿点儿。|外头很冷，多穿点儿。|外头 / 里头 là từ cố định có hậu tố 头 (bên ngoài / bên trong); 外子 không phải từ.|Bên ngoài lạnh lắm, mặc thêm chút đi.
 3|我不敢一个人回家。|他不敢跟老师说话。|我一个人回家不敢。|我不敢一个人回家。|敢 là động từ năng nguyện, đứng trước động từ chính; phủ định đặt 不 trước 敢.|Tôi không dám về nhà một mình.
 3|你敢不敢上台唱歌？|她敢一个人去旅游。|你敢不敢唱歌上台？|你敢不敢上台唱歌？|敢 + động từ chính: 上台唱歌 là cụm động từ liên động, giữ đúng trật tự 上台 → 唱歌.|Bạn có dám lên sân khấu hát không?
 4|你需要帮忙吗？|我们需要多休息。|我们需要休息多。|我们需要多休息。|多 là trạng ngữ, đứng trước động từ: 多休息, không đặt sau.|Chúng ta cần nghỉ ngơi nhiều hơn.
 4|这件事需要你来做。|你不需要买票。|你没需要买票。|你不需要买票。|Phủ định của 需要 dùng 不需要, không dùng 没需要.|Bạn không cần mua vé.
-4|这个工作需要很多时间。|学汉语需要耐心。|这个工作需要了很多时间。|这个工作需要很多时间。|需要 chỉ nhu cầu chung, không gắn 了 ngay sau động từ khi nói về yêu cầu của công việc.|Công việc này cần rất nhiều thời gian.
-5|我昨天洗了一个澡。|他们昨天见了一次面。|我昨天洗澡了一个。|我昨天洗了一个澡。|Từ ly hợp (洗澡): số lượng, 了 chen vào giữa: 洗 + 了 + 一个 + 澡.|Hôm qua tôi đã tắm một cái.
+4|这个工作需要很多时间。|学汉语需要时间。|这个工作需要了很多时间。|这个工作需要很多时间。|需要 chỉ nhu cầu chung, không gắn 了 ngay sau động từ khi nói về yêu cầu của công việc.|Công việc này cần rất nhiều thời gian.
+5|我昨天睡了一个好觉。|他们昨天见了一次面。|我昨天睡觉了一个好。|我昨天睡了一个好觉。|Từ ly hợp (睡觉): số lượng, tính từ, 了 chen vào giữa: 睡 + 了 + 一个好 + 觉.|Hôm qua tôi đã ngủ một giấc ngon.
 5|你帮我一个忙吧。|她帮了我很多忙。|她帮忙了我很多。|她帮了我很多忙。|帮忙 là từ ly hợp: người nhận đứng giữa 帮 và 忙 (帮 + người + 忙).|Cô ấy đã giúp tôi rất nhiều.
 5|我想跟他见面。|我们明天下午见面。|我想见面他。|我想跟他见面。|见面 không mang tân ngữ trực tiếp; dùng 跟 + người + 见面.|Tôi muốn gặp anh ấy.
-5|他生我的气了。|你别生气。|他生气我了。|他生我的气了。|生气 là từ ly hợp, đối tượng giận đặt giữa: 生 + 我的 + 气.|Anh ấy giận tôi rồi.
-5|她洗了一个小时澡。|我们昨天游了两个小时泳。|她洗澡了一个小时。|她洗了一个小时澡。|Thời lượng chen vào giữa từ ly hợp: 洗 + 了 + 一个小时 + 澡.|Cô ấy tắm một tiếng đồng hồ.
+5|我们跳了一个小时舞。|你别唱歌了。|我们跳舞了一个小时。|我们跳了一个小时舞。|Thời lượng chen vào giữa từ ly hợp: 跳 + 了 + 一个小时 + 舞.|Chúng tôi đã nhảy một tiếng.
+5|她睡了八个小时觉。|我们昨天唱了两个小时歌。|她睡觉了八个小时。|她睡了八个小时觉。|Thời lượng chen vào giữa từ ly hợp: 睡 + 了 + 八个小时 + 觉.|Cô ấy ngủ tám tiếng.
 6|我听得见你说话。|我看不见黑板上的字。|我看见不黑板上的字。|我看不见黑板上的字。|Giữa động từ và bổ ngữ kết quả chen 得 / 不 để tạo bổ ngữ khả năng: 看不见.|Tôi không nhìn thấy chữ trên bảng.
 6|他吃得饱。|这么多菜，我吃不完。|这么多菜，我吃不了完。|这么多菜，我吃不完。|Dùng 吃不完 hoặc 吃不了, không dùng cùng lúc 了 và 完.|Nhiều món thế này, tôi ăn không hết.
-6|他的成绩提高了不少。|你的汉语提高得很快。|他的成绩提了高不少。|他的成绩提高了不少。|提高 là động-bổ liền khối; 了 đặt sau cả từ, không chèn giữa.|Thành tích của anh ấy đã tiến bộ không ít.
+6|我吃完了。|他吃完饭了。|我吃了完。|我吃完了。|吃完 là động-bổ liền khối; 了 đặt sau cả từ, không chèn giữa.|Tôi ăn xong rồi.
 7|我什么都不想吃。|谁都知道这件事。|我都什么不想吃。|我什么都不想吃。|Đại từ nghi vấn phiếm chỉ đứng trước 都 / 也, rồi mới đến phủ định: 什么都不.|Tôi chẳng muốn ăn gì cả.
 7|你想吃什么就吃什么。|哪儿便宜就去哪儿买。|你想吃什么吃什么。|你想吃什么就吃什么。|Hai đại từ nghi vấn hô ứng cần 就 nối: 想……什么就……什么.|Bạn muốn ăn gì thì ăn nấy.
 7|我哪儿也没去。|他谁也不认识。|我没去哪儿也。|我哪儿也没去。|Cấu trúc 哪儿 + 也 + 没 + V: đại từ nghi vấn phải đứng trước 也.|Tôi chẳng đi đâu cả.
 7|谁想去，谁就去。|谁先到，谁就先吃。|谁想去，谁去就。|谁想去，谁就去。|就 đứng trước động từ ở vế sau: 谁……，谁就…….|Ai muốn đi thì người đó đi.
 8|各位同学，请坐。|我们班各个同学都很努力。|各位同学们，请坐。|各位同学，请坐。|各位 đã hàm ý số nhiều, không thêm 们.|Các bạn học sinh, mời ngồi.
 8|每个人都有自己的爱好。|每天我都跑步。|每个人有都自己的爱好。|每个人都有自己的爱好。|都 đứng trước động từ: 每个人都有.|Ai cũng có sở thích riêng của mình.
-8|任何人都可以参加。|我没有任何问题。|任何人可以都参加。|任何人都可以参加。|都 đứng trước động từ năng nguyện: 都可以.|Bất kỳ ai cũng có thể tham gia.
+8|任何人都可以来。|我没有任何问题。|任何人可以都来。|任何人都可以来。|都 đứng trước động từ năng nguyện: 都可以.|Ai cũng có thể đến.
 8|各种水果我都喜欢。|各国的朋友都来了。|各种水果都我喜欢。|各种水果我都喜欢。|Tân ngữ đưa lên đầu câu thì đứng trước 都: 各种水果我都喜欢.|Các loại trái cây tôi đều thích.
-9|我买了一双新鞋。|桌子上有一台电脑。|我买了一个新鞋。|我买了一双新鞋。|鞋 đi với 双 (đôi); 台 dùng cho máy móc như 电脑.|Tôi đã mua một đôi giày mới.
-9|他有一把雨伞。|墙上挂着一张地图。|他有一个雨伞。|他有一把雨伞。|伞 dùng lượng từ 把 (vật có cán cầm).|Anh ấy có một cái ô.
-9|我买了一条新裤子。|河里有一条鱼。|我买了一件新裤子。|我买了一条新裤子。|裤子 dùng 条 (vật dài); 件 dùng cho áo, việc.|Tôi đã mua một chiếc quần mới.
-9|我有一件新衣服。|桌子上放着一本词典。|我有一张新衣服。|我有一件新衣服。|衣服 dùng 件; 张 dùng cho vật phẳng như giấy, bàn, vé.|Tôi có một bộ quần áo mới.
+9|他买了一把椅子。|桌子上有一台电脑。|他买了一个椅子。|他买了一把椅子。|椅子 dùng lượng từ 把; 台 dùng cho máy móc như 电脑.|Anh ấy mua một cái ghế.
+9|他有一把雨伞。|桌子上有一张地图。|他有一个雨伞。|他有一把雨伞。|伞 dùng lượng từ 把 (vật có cán cầm).|Anh ấy có một cái ô.
+9|我买了一条新裤子。|水里有一条鱼。|我买了一件新裤子。|我买了一条新裤子。|裤子 dùng 条 (vật dài); 件 dùng cho áo, việc.|Tôi đã mua một chiếc quần mới.
+9|我有一件新衣服。|桌子上有一本书。|我有一张新衣服。|我有一件新衣服。|衣服 dùng 件; 张 dùng cho vật phẳng như giấy, bàn, vé.|Tôi có một bộ quần áo mới.
 10|我们一起吃了一顿饭。|他看了我一眼。|我们一起吃了饭一顿。|我们一起吃了一顿饭。|Động lượng từ 顿 đứng sau 了 và trước tân ngữ: 吃了一顿饭.|Chúng tôi cùng ăn một bữa cơm.
-10|你尝一口吧。|他喝了一口水。|他喝一口了水。|他喝了一口水。|了 đứng ngay sau động từ, trước động lượng từ: 喝了一口.|Anh ấy uống một ngụm nước.
-10|妈妈骂了我一顿。|他看了我一眼。|妈妈一顿骂了我。|妈妈骂了我一顿。|Động lượng từ đứng sau động từ; tân ngữ là đại từ đứng trước động lượng từ.|Mẹ mắng tôi một trận.
+10|你吃一口吧。|他喝了一口水。|他喝一口了水。|他喝了一口水。|了 đứng ngay sau động từ, trước động lượng từ: 喝了一口.|Anh ấy uống một ngụm nước.
+10|妈妈看了我一眼。|他打了我一下。|妈妈一眼看了我。|妈妈看了我一眼。|Động lượng từ đứng sau động từ; tân ngữ là đại từ đứng trước động lượng từ.|Mẹ nhìn tôi một cái.
 11|他天天都来看我。|我们班同学个个都很努力。|他每天天都来看我。|他天天都来看我。|Lặp lượng từ / danh từ đã có nghĩa "mỗi", không dùng cùng 每 (không nói 每天天).|Ngày nào anh ấy cũng đến thăm tôi.
 11|人人都喜欢他。|个个都是好孩子。|人人喜欢都他。|人人都喜欢他。|Sau lặp lượng từ / danh từ, 都 đứng trước động từ.|Ai cũng quý anh ấy.
 12|这个房间比较干净。|今天比昨天更加冷。|今天比昨天更加很冷。|今天比昨天更加冷。|更加 là phó từ mức độ, không dùng cùng 很.|Hôm nay lạnh hơn hôm qua.
@@ -6447,101 +6449,101 @@ const H3S_Q = `1|他住在第三层。|我第一次来北京。|他住在三第�
 13|这个手机至少五千块。|我至少等了两个小时。|这个手机五千块至少。|这个手机至少五千块。|至少 đứng trước số lượng: tối thiểu là bao nhiêu.|Chiếc điện thoại này ít nhất năm nghìn tệ.
 13|这里仅有一家商店。|现场仅有十个人。|这里有仅一家商店。|这里仅有一家商店。|仅 là phó từ, đứng trước động từ 有.|Ở đây chỉ có một cửa hàng.
 14|我本来想去，可是太累了。|这本来是我的书。|我本来想去，所以太累了。|我本来想去，可是太累了。|本来 nêu ý định ban đầu; vế sau chuyển ý nên dùng 可是, không dùng 所以.|Vốn dĩ tôi muốn đi, nhưng mệt quá.
-14|他曾经在北京住过。|我曾经学过日语。|他曾经正在北京住。|他曾经在北京住过。|曾经 chỉ việc đã từng xảy ra, đi với 过 / 了, không dùng với 正在.|Anh ấy từng sống ở Bắc Kinh.
+14|他曾经在北京住过。|我曾经学过汉语。|他曾经正在北京住。|他曾经在北京住过。|曾经 chỉ việc đã từng xảy ra, đi với 过 / 了, không dùng với 正在.|Anh ấy từng sống ở Bắc Kinh.
 14|听到消息，他立刻回家了。|我立刻就来。|听到消息，他立刻了回家。|听到消息，他立刻回家了。|立刻 là phó từ, đứng trước động từ; 了 đặt sau cả cụm.|Nghe tin xong, anh ấy lập tức về nhà.
-14|他始终没有说话。|他始终相信我。|他没有始终说话。|他始终没有说话。|始终 đứng trước 没有: 始终没有 + V.|Anh ấy từ đầu đến cuối không nói gì.
-15|我通常七点起床。|他往往一个人去图书馆。|我七点通常起床。|我通常七点起床。|通常 là phó từ tần suất, đứng ngay sau chủ ngữ, trước thời gian cụ thể.|Tôi thường dậy lúc bảy giờ.
+14|他始终没有说话。|他始终很忙。|他没有始终说话。|他始终没有说话。|始终 đứng trước 没有: 始终没有 + V.|Anh ấy từ đầu đến cuối không nói gì.
+15|我通常七点起床。|他往往一个人去商店。|我七点通常起床。|我通常七点起床。|通常 là phó từ tần suất, đứng ngay sau chủ ngữ, trước thời gian cụ thể.|Tôi thường dậy lúc bảy giờ.
 15|他总是迟到。|她总是笑着说话。|他迟到总是。|他总是迟到。|总是 là phó từ, đứng trước động từ.|Anh ấy luôn đến muộn.
-15|下雨的时候，路上往往很堵。|周末他往往睡到十点。|昨天他往往迟到了。|昨天他迟到了。|往往 chỉ quy luật thường xảy ra, không dùng cho một việc cụ thể đã xảy ra một lần.|Hôm qua anh ấy đã đến muộn.
+15|下雨的时候，路上往往车很多。|周末他往往睡到十点。|昨天他往往迟到了。|昨天他迟到了。|往往 chỉ quy luật thường xảy ra, không dùng cho một việc cụ thể đã xảy ra một lần.|Hôm qua anh ấy đã đến muộn.
 15|我们周末通常去爬山。|他通常坐地铁上班。|我们周末通常去爬山了。|我们周末通常去爬山。|通常 chỉ thói quen; không thêm 了 sau động từ.|Cuối tuần chúng tôi thường đi leo núi.
-16|吃完饭再走吧。|先做作业，再看电视。|吃完饭走再吧。|吃完饭再走吧。|再 đứng trước động từ: 再 + V chỉ việc làm sau.|Ăn cơm xong rồi hãy đi.
-16|你先看一下，再决定。|等我做完作业，再去玩。|你先看一下，又决定。|你先看一下，再决定。|再 diễn tả việc sẽ làm sau; 又 dùng cho việc đã lặp lại.|Bạn xem qua trước, rồi hãy quyết định.
-16|我们明天再说吧。|这个问题以后再讨论。|我们明天又说吧。|我们明天再说吧。|Việc ở tương lai dùng 再, không dùng 又.|Ngày mai chúng ta nói tiếp nhé.
+16|吃完饭再走吧。|先写字，再看电视。|吃完饭走再吧。|吃完饭再走吧。|再 đứng trước động từ: 再 + V chỉ việc làm sau.|Ăn cơm xong rồi hãy đi.
+16|你先看一下，再决定。|等我做完工作，再去玩。|你先看一下，又决定。|你先看一下，再决定。|再 diễn tả việc sẽ làm sau; 又 dùng cho việc đã lặp lại.|Bạn xem qua trước rồi hãy quyết định.
+16|我们明天再说吧。|这个问题以后再想。|我们明天又说吧。|我们明天再说吧。|Việc ở tương lai dùng 再, không dùng 又.|Ngày mai chúng ta nói tiếp nhé.
 17|我们要互相帮助。|他们互相学习。|我们要互相帮助他。|我们要互相帮助。|互相 đã hàm ý "nhau", không thêm tân ngữ sau động từ.|Chúng ta phải giúp đỡ lẫn nhau.
 17|请尽量早点儿来。|我会尽量帮你。|请早点儿尽量来。|请尽量早点儿来。|尽量 đứng trước động từ / cụm động từ: 尽量 + 早点儿来.|Xin hãy cố gắng đến sớm một chút.
-17|总经理亲自接待了客人。|这件事我要亲自问他。|这件事我要问亲自他。|这件事我要亲自问他。|亲自 là phó từ, đứng trước động từ.|Việc này tôi phải đích thân hỏi anh ấy.
+17|老师亲自接待了客人。|这件事我要亲自问他。|这件事我要问亲自他。|这件事我要亲自问他。|亲自 là phó từ, đứng trước động từ.|Việc này tôi phải đích thân hỏi anh ấy.
 18|他大概五点到。|我大概十点睡觉。|他到大概五点。|他大概五点到。|大概 đứng trước thời gian / số lượng ước chừng, sau chủ ngữ.|Anh ấy có lẽ năm giờ sẽ đến.
 18|恐怕要下雨了。|他恐怕还没起床。|恐怕下雨要了。|恐怕要下雨了。|恐怕 đứng đầu vị ngữ / câu, trước 要…了; không đảo trật tự 下雨要.|Có lẽ trời sắp mưa rồi.
 18|这个包大概三百块。|今天大概有三十度。|这个包大概三百块左右。|这个包大概三百块。|大概 và 左右 đều chỉ ước chừng, dùng trùng lặp là thừa.|Cái túi này khoảng ba trăm tệ.
 19|你到底去不去？|这到底是怎么回事？|你到底去不去吗？|你到底去不去？|到底 dùng trong câu hỏi; câu hỏi chính phản không thêm 吗.|Rốt cuộc bạn có đi hay không?
 19|我根本不知道这件事。|他根本没来过。|我根本知道这件事。|我根本不知道这件事。|根本 thường đi với phủ định: 根本不 / 根本没.|Tôi hoàn toàn không biết chuyện này.
 19|等了三个小时，车终于来了。|他终于考上大学了。|他终于不考上大学了。|他终于考上大学了。|终于 chỉ kết quả mong đợi cuối cùng cũng xảy ra, không đi với 不.|Cuối cùng anh ấy đã thi đỗ đại học.
-19|今天简直太热了。|这里简直像春天一样。|今天简直有点儿热。|今天简直太热了。|简直 nhấn mạnh mức độ cao, đi với 太……了 / 像……一样, không đi với 有点儿.|Hôm nay nóng quá thể.
+19|今天简直太热了。|这个孩子简直太漂亮了。|今天简直有点儿热。|今天简直太热了。|简直 nhấn mạnh mức độ cao, đi với 太……了, không đi với 有点儿.|Hôm nay nóng đến mức không chịu nổi.
 19|天气预报说有雨，果然下雨了。|他说会赢，果然赢了。|天气预报说有雨，果然没下雨。|天气预报说有雨，果然下雨了。|果然 xác nhận điều dự đoán là đúng; kết quả phải khớp với dự đoán.|Dự báo thời tiết nói có mưa, quả nhiên trời mưa thật.
-20|这个问题由他来回答。|活动由学校组织。|这个问题由他回答来。|这个问题由他来回答。|由 + người thực hiện + 来 + V: 来 đứng trước động từ.|Câu hỏi này do anh ấy trả lời.
-20|这件事由经理决定。|这顿饭由我请客。|由经理这件事决定。|这件事由经理决定。|Chủ đề đứng đầu câu, 由 + tác nhân đứng ngay trước động từ.|Việc này do giám đốc quyết định.
-20|水由氢和氧组成。|这本书由三个人写成。|水氢和氧由组成。|水由氢和氧组成。|由 + thành phần + 组成: nước do hydro và oxy tạo thành.|Nước được cấu thành từ hydro và oxy.
-21|自从来北京，他一直很忙。|自从毕业以后，我们没见过面。|自从明天开始，我每天跑步。|从明天开始，我每天跑步。|自从 chỉ mốc bắt đầu trong quá khứ; tương lai dùng 从.|Từ ngày mai, ngày nào tôi cũng chạy bộ.
-21|自从认识他以来，我一直很开心。|自从搬家以后，他很少来。|自从认识他以来，我将会很开心。|自从认识他以来，我一直很开心。|自从……以来 đi với 一直 / 都 (kéo dài đến hiện tại), không dùng 将会.|Từ khi quen anh ấy đến nay, tôi luôn rất vui.
+20|这个问题由他来回答。|活动由学校安排。|这个问题由他回答来。|这个问题由他来回答。|由 + người thực hiện + 来 + V: 来 đứng trước động từ.|Câu hỏi này do anh ấy trả lời.
+20|这件事由老师决定。|这顿饭由我来做。|由老师这件事决定。|这件事由老师决定。|Chủ đề đứng đầu câu, 由 + tác nhân đứng ngay trước động từ.|Việc này do thầy giáo quyết định.
+20|饭由妈妈来做。|这本书由三个人写。|饭妈妈由来做。|饭由妈妈来做。|由 + người thực hiện + 来 + V: 由 đứng ngay sau chủ đề (饭).|Cơm do mẹ nấu.
+21|自从来北京，他一直很忙。|自从搬家以后，我们没见过面。|自从明天开始，我每天跑步。|从明天开始，我每天跑步。|自从 chỉ mốc bắt đầu trong quá khứ; tương lai dùng 从.|Từ ngày mai, mỗi ngày tôi sẽ chạy bộ.
+21|自从认识他以来，我一直很开心。|自从搬家以后，他很少来。|自从认识他以来，我会很开心。|自从认识他以来，我一直很开心。|自从……以来 đi với 一直 / 都 (kéo dài đến hiện tại), không dùng 会 (tương lai).|Từ khi quen anh ấy đến nay, tôi luôn rất vui.
 22|他朝我笑了笑。|请朝前走。|他朝笑我了。|他朝我笑了笑。|朝 + người / hướng + động từ: 朝 đứng trước động từ.|Anh ấy cười với tôi.
-22|这座房子朝东。|窗户朝南。|这座房子东朝。|这座房子朝东。|朝 + phương hướng: 朝东, 朝南.|Ngôi nhà này quay mặt về hướng đông.
+22|这座房子朝东。|门朝南。|这座房子东朝。|这座房子朝东。|朝 + phương hướng: 朝东, 朝南.|Ngôi nhà này quay hướng đông.
 22|他朝门口走去。|孩子朝妈妈跑过去。|孩子朝跑妈妈过去。|孩子朝妈妈跑过去。|朝 + đối tượng / hướng + động từ.|Đứa bé chạy về phía mẹ.
-23|我为你高兴。|大家为他鼓掌。|我高兴为你。|我为你高兴。|为 + đối tượng + động từ / tính từ: giới từ đứng trước vị ngữ.|Tôi mừng cho bạn.
+23|我为你高兴。|大家为他唱歌。|我高兴为你。|我为你高兴。|为 + đối tượng + động từ / tính từ: giới từ đứng trước vị ngữ.|Tôi mừng cho bạn.
 23|他为大家准备了饭菜。|妈妈为孩子做了新衣服。|他准备为大家了饭菜。|他为大家准备了饭菜。|为 + người hưởng lợi đứng trước động từ; 了 đặt sau động từ.|Anh ấy chuẩn bị cơm nước cho mọi người.
 24|他向我借了一本书。|请向大家介绍一下。|他借向我一本书。|他向我借了一本书。|向 + người + động từ: giới từ đứng trước động từ.|Anh ấy mượn tôi một cuốn sách.
 24|我要向你学习。|向左走，再向右走。|我要学习向你。|我要向你学习。|向 + đối tượng + học / hỏi / mượn…: giới từ đứng trước động từ.|Tôi phải học hỏi bạn.
 25|由于下雨，比赛取消了。|因为天气不好，我们没去。|由于他生病，因为没来。|由于他生病，所以没来。|由于 chỉ nguyên nhân (vế trước); vế kết quả dùng 所以, không lặp nguyên nhân bằng 因为.|Do anh ấy bị ốm nên không đến.
-25|因为我很累，所以想早点儿睡。|由于堵车，他迟到了。|因为我很累，可是想早点儿睡。|因为我很累，所以想早点儿睡。|因为 đi với 所以; 可是 chỉ chuyển ý.|Vì tôi rất mệt nên muốn đi ngủ sớm.
-26|为了学好汉语，他每天听录音。|为了健康，他不吃甜的。|为了健康，所以他不吃甜的。|为了健康，他不吃甜的。|为了 nêu mục đích, vế sau không dùng 所以.|Vì sức khỏe, anh ấy không ăn đồ ngọt.
-26|为了考试，他每天学到很晚。|为了孩子，她换了工作。|他每天学到很晚，为了考试了。|为了考试，他每天学到很晚。|为了 + mục đích thường đặt ở vế trước để dẫn dắt hành động.|Vì kỳ thi, ngày nào anh ấy cũng học đến khuya.
-27|我把作业做完了。|他把杯子打破了。|我把作业做。|我把作业做完了。|Câu 把 cần thành phần sau động từ (bổ ngữ, 了…), không để động từ trần.|Tôi làm xong bài tập rồi.
+25|因为我很累，所以想早点儿睡。|由于下雨，他迟到了。|因为我很累，可是想早点儿睡。|因为我很累，所以想早点儿睡。|因为 đi với 所以; 可是 chỉ chuyển ý.|Vì tôi rất mệt nên muốn đi ngủ sớm.
+26|为了学好汉语，他每天听录音。|为了身体好，他不吃甜的。|为了身体好，所以他不吃甜的。|为了身体好，他不吃甜的。|为了 nêu mục đích, vế sau không dùng 所以.|Vì sức khỏe, anh ấy không ăn đồ ngọt.
+26|为了考试，他每天学到很晚。|为了孩子，她去上班了。|他每天学到很晚，为了考试了。|为了考试，他每天学到很晚。|为了 + mục đích thường đặt ở vế trước để dẫn dắt hành động.|Vì kỳ thi, anh ấy ngày nào cũng học đến khuya.
+27|我把工作做完了。|他把杯子打破了。|我把工作做。|我把工作做完了。|Câu 把 cần thành phần sau động từ (bổ ngữ, 了…), không để động từ trần.|Tôi làm xong công việc rồi.
 27|请把门关上。|我把钥匙忘在家里了。|我把钥匙在家里忘了。|我把钥匙忘在家里了。|把 + O + V + 在 + nơi chốn: 在 + nơi chốn đứng sau động từ.|Tôi để quên chìa khóa ở nhà.
 27|我的书被他借走了。|杯子被弟弟打破了。|我的书被借走他了。|我的书被他借走了。|被 + tác nhân + V + thành phần: tác nhân đứng giữa 被 và động từ.|Sách của tôi bị anh ấy mượn đi rồi.
-27|我的伞让风吹走了。|手机叫小偷偷走了。|我的伞让吹走了。|我的伞让风吹走了。|叫 / 让 trong câu bị động bắt buộc phải có tác nhân (风).|Ô của tôi bị gió thổi bay mất.
-27|我没把作业做完。|他没把钱带来。|我把作业没做完。|我没把作业做完。|Phó từ phủ định 没 đứng trước 把, không đặt sau tân ngữ.|Tôi chưa làm xong bài tập.
-27|他把房间打扫得很干净。|我把这本书看了三遍。|他把打扫房间得很干净。|他把房间打扫得很干净。|把 + O + V + 得 + …: tân ngữ đứng ngay sau 把.|Anh ấy dọn phòng rất sạch sẽ.
+27|我的伞让朋友拿走了。|手机叫弟弟拿走了。|我的伞让拿走了。|我的伞让朋友拿走了。|叫 / 让 trong câu bị động bắt buộc phải có tác nhân (朋友).|Ô của tôi bị bạn lấy đi mất.
+27|我没把工作做完。|他没把钱带来。|我把工作没做完。|我没把工作做完。|Phó từ phủ định 没 đứng trước 把, không đặt sau tân ngữ.|Tôi chưa làm xong công việc.
+27|他把衣服洗得很干净。|我把这本书看了三遍。|他把洗衣服得很干净。|他把衣服洗得很干净。|把 + O + V + 得 + …: tân ngữ đứng ngay sau 把.|Anh ấy giặt quần áo rất sạch.
 28|除了苹果，我还喜欢香蕉。|除了他，我们都去。|除了苹果以外，我喜欢也香蕉。|除了苹果以外，我也喜欢香蕉。|除了……(以外)，还 / 也 đứng trước động từ ở vế sau.|Ngoài táo ra, tôi cũng thích chuối.
-28|除了周末，我每天都上班。|这个菜除了辣，别的都好。|除了周末，我每天上班都。|除了周末，我每天都上班。|都 đứng trước động từ: 每天都上班.|Ngoài cuối tuần ra, ngày nào tôi cũng đi làm.
+28|除了周末，我每天都上班。|这个菜除了贵，别的都好。|除了周末，我每天上班都。|除了周末，我每天都上班。|都 đứng trước động từ: 每天都上班.|Trừ cuối tuần, ngày nào tôi cũng đi làm.
 28|除了英语，他还会说汉语。|除了小王，没有人知道。|除了英语，他会说还汉语。|除了英语，他还会说汉语。|还 đứng trước động từ năng nguyện 会.|Ngoài tiếng Anh, anh ấy còn nói được tiếng Trung.
-29|请按顺序排队。|按照老师的要求做。|请顺序按排队。|请按顺序排队。|按 + danh từ + động từ: 按 là giới từ đứng trước danh từ.|Xin hãy xếp hàng theo thứ tự.
-29|按照规定，这里不能停车。|他按照说明书做。|他说明书按照做。|他按照说明书做。|按照 + căn cứ + động từ: giới từ đứng trước căn cứ.|Anh ấy làm theo sách hướng dẫn.
-30|他会说汉语，并且说得很好。|这个房间很大，并且很干净。|我喜欢红色，并且我不喜欢蓝色。|我喜欢红色，但是我不喜欢蓝色。|并且 chỉ quan hệ tăng tiến; ý đối lập phải dùng 但是.|Tôi thích màu đỏ, nhưng không thích màu xanh dương.
+29|请按时来上课。|按照老师说的做。|请时按来上课。|请按时来上课。|按 + danh từ + động từ: 按 là giới từ đứng trước danh từ.|Xin hãy đến lớp đúng giờ.
+29|按照规定，这里不能打电话。|他按照我说的做。|他我说的按照做。|他按照我说的做。|按照 + căn cứ + động từ: giới từ đứng trước căn cứ.|Anh ấy làm theo lời tôi nói.
+30|他会说汉语，并且说得很好。|这个房间很大，并且很干净。|我喜欢这个，并且我不喜欢那个。|我喜欢这个，但是我不喜欢那个。|并且 chỉ quan hệ tăng tiến; ý đối lập phải dùng 但是.|Tôi thích cái này, nhưng tôi không thích cái kia.
 30|天气不好，因此比赛取消了。|他生病了，因此没来。|他生病了，因此所以没来。|他生病了，因此没来。|因此 đã nêu kết quả, không dùng cùng 所以.|Anh ấy bị ốm, vì vậy không đến.
-30|我要买书。另外，我还想买一支笔。|这个问题很难，另外时间也不够。|我要买书。另外，我想还买一支笔。|我要买书。另外，我还想买一支笔。|还 đứng trước động từ năng nguyện 想.|Tôi muốn mua sách. Ngoài ra, tôi còn muốn mua một cây bút.
+30|我要买书。另外，我还想买一支笔。|这个问题很难，另外时间也很少。|我要买书。另外，我想还买一支笔。|我要买书。另外，我还想买一支笔。|还 đứng trước động từ năng nguyện 想.|Tôi muốn mua sách. Ngoài ra, tôi còn muốn mua một cây bút.
 30|他不但会说汉语，并且会写汉字。|她唱歌很好，并且跳舞也很好。|她唱歌很好，并且很跳舞好。|她唱歌很好，并且跳舞也很好。|Sau 并且 vẫn giữ trật tự câu bình thường: chủ ngữ – vị ngữ.|Cô ấy hát rất hay, hơn nữa nhảy cũng rất giỏi.
 31|他哈哈地笑了起来。|听了这个笑话，大家哈哈大笑。|他哈哈地哭了起来。|他哈哈地笑了起来。|哈哈 là từ tượng thanh chỉ tiếng cười, không đi với 哭.|Anh ấy cười ha ha.
-31|他说了句笑话，大家都哈哈大笑。|老师哈哈地笑着说：“好！”|他说了句笑话，大家都大笑哈哈。|他说了句笑话，大家都哈哈大笑。|哈哈大笑 là cụm cố định, 哈哈 đứng trước 大笑.|Anh ấy kể một câu chuyện cười, mọi người đều cười ha hả.
-32|我喜欢红色和蓝色。|他又高又帅。|我昨天去商店和买东西。|我昨天去商店买东西。|和 chỉ nối từ / cụm cùng loại; hai hành động nối tiếp dùng liên động, không dùng 和.|Hôm qua tôi đi cửa hàng mua đồ.
+31|他说了一个笑话，大家都哈哈大笑。|老师哈哈地笑着说：“好！”|他说了一个笑话，大家都大笑哈哈。|他说了一个笑话，大家都哈哈大笑。|哈哈大笑 là cụm cố định, 哈哈 đứng trước 大笑.|Anh ấy kể một câu chuyện cười, mọi người đều cười phá lên.
+32|我喜欢苹果和香蕉。|他又高又大。|我昨天去商店和买东西。|我昨天去商店买东西。|和 chỉ nối từ / cụm cùng loại; hai hành động nối tiếp dùng liên động, không dùng 和.|Hôm qua tôi đi cửa hàng mua đồ.
 32|我的新手机很贵。|他是一个很好的老师。|新我的手机很贵。|我的新手机很贵。|Cụm định-trung: sở hữu (我的) đứng trước, rồi tính từ (新), rồi danh từ.|Điện thoại mới của tôi rất đắt.
 33|同学们一个一个地回答问题。|请一个一个地进来。|同学们一个一个回答问题地。|同学们一个一个地回答问题。|Lặp số-lượng + 地 + động từ: 地 đứng ngay sau 一个一个.|Các bạn lần lượt từng người trả lời câu hỏi.
-33|孩子们两个两个地排队。|大家一个一个地走。|孩子们两个两个排队地。|孩子们两个两个地排队。|Số-lượng lặp là trạng ngữ, 地 nằm trước động từ.|Bọn trẻ xếp hàng từng hai em một.
-34|这双鞋不大不小，正合适。|今天的天气不冷不热。|今天的天气不很冷不热。|今天的天气不冷不热。|不A不B: A, B là hai từ đơn trái nghĩa, không thêm 很.|Thời tiết hôm nay không lạnh không nóng.
-34|他的汉语不好不坏。|这个菜不咸不淡，刚好。|这个菜不咸不好，刚好。|这个菜不咸不淡，刚好。|不A不B cần hai tính từ trái nghĩa cùng nhóm: 咸 – 淡.|Món này không mặn không nhạt, vừa vặn.
+33|孩子们两个两个地进来。|大家一个一个地走。|孩子们两个两个进来地。|孩子们两个两个地进来。|Số-lượng lặp là trạng ngữ, 地 nằm trước động từ.|Bọn trẻ đi vào từng hai đứa một.
+34|这个房间不大不小。|今天的天气不冷不热。|今天的天气不很冷不热。|今天的天气不冷不热。|不A不B: A, B là hai từ đơn trái nghĩa, không thêm 很.|Thời tiết hôm nay không lạnh không nóng.
+34|他的汉语不好不坏。|他的个子不高不矮。|他的个子不高不好。|他的个子不高不矮。|不A不B cần hai tính từ trái nghĩa cùng nhóm: 高 – 矮.|Dáng anh ấy không cao không thấp.
 34|这些书不多不少，正好十本。|他不快不慢地走着。|他不快不慢走着地。|他不快不慢地走着。|不快不慢 là trạng ngữ, đi với 地 trước động từ.|Anh ấy đi không nhanh không chậm.
 35|他看起来很累。|这件衣服看起来很贵。|他很累看起来。|他看起来很累。|看起来 + tính từ / mệnh đề: trông có vẻ; 看起来 đứng trước phần miêu tả.|Anh ấy trông rất mệt.
 35|这个菜看起来很好吃。|她看起来比我小。|这个菜看起来好吃很。|这个菜看起来很好吃。|Trạng từ 很 đứng trước tính từ, không đặt sau.|Món này trông rất ngon.
-36|她看上去只有二十岁。|这个孩子看上去很聪明。|她看上去只二十岁有。|她看上去只有二十岁。|只有 + số lượng: chỉ có; 只 đứng trước 有.|Cô ấy trông chỉ khoảng hai mươi tuổi.
-36|他看上去很年轻。|这座山看上去不高。|他上去看很年轻。|他看上去很年轻。|看上去 là cụm cố định (trông có vẻ); không tách 看 và 上去.|Anh ấy trông rất trẻ.
+36|她看上去只有二十岁。|这个孩子看上去很高兴。|她看上去只二十岁有。|她看上去只有二十岁。|只有 + số lượng: chỉ có; 只 đứng trước 有.|Trông cô ấy chỉ có hai mươi tuổi.
+36|他看上去很年轻。|这个房间看上去不大。|他上去看很年轻。|他看上去很年轻。|看上去 là cụm cố định (trông có vẻ); không tách 看 và 上去.|Trông anh ấy rất trẻ.
 37|我有的是时间。|这里有的是好玩的地方。|我有的是一点儿时间。|我有的是时间。|有的是 nghĩa "có rất nhiều", không đi với 一点儿 (rất ít).|Tôi có thừa thời gian.
-37|他有的是钱，你不用担心。|苹果，我家有的是。|我家没有的是苹果。|我家有的是苹果。|有的是 không có dạng phủ định 没有的是.|Nhà tôi có thừa táo.
-37|网上有的是汉语学习资料。|商店里有的是新衣服。|商店里有的是几件新衣服。|商店里有的是新衣服。|有的是 nhấn mạnh số lượng rất nhiều, không đi với số lượng cụ thể nhỏ.|Trong cửa hàng có thừa quần áo mới.
-38|除了数学，他还喜欢历史。|除了小王，大家都来了。|除了数学，他喜欢还历史。|除了数学，他还喜欢历史。|还 đứng trước động từ: 还喜欢.|Ngoài toán ra, anh ấy còn thích lịch sử.
+37|他有的是钱，你不用问。|苹果，我家有的是。|我家没有的是苹果。|我家有的是苹果。|有的是 không có dạng phủ định 没有的是.|Nhà tôi có đầy táo.
+37|网上有的是好看的电影。|商店里有的是新衣服。|商店里有的是几件新衣服。|商店里有的是新衣服。|有的是 nhấn mạnh số lượng rất nhiều, không đi với số lượng cụ thể nhỏ.|Trong cửa hàng có thừa quần áo mới.
+38|除了汉语，他还喜欢电影。|除了小王，大家都来了。|除了汉语，他喜欢还电影。|除了汉语，他还喜欢电影。|还 đứng trước động từ: 还喜欢.|Ngoài tiếng Trung, anh ấy còn thích phim.
 38|除了我，他们都不会游泳。|除了他，别人也都不知道。|除了我，都他们不会游泳。|除了我，他们都不会游泳。|都 đứng sau chủ ngữ (他们), trước 不会.|Ngoài tôi ra, họ đều không biết bơi.
 38|除了苹果，我都喜欢。|除了周末，我每天都上课。|除了周末，我每天上课也。|除了周末，我每天都上课。|Phó từ 都 / 也 đứng trước động từ, không đặt cuối câu.|Ngoài cuối tuần ra, ngày nào tôi cũng đi học.
 39|从明天起，我每天跑步。|从下周一起，公司九点上班。|从明天，我起每天跑步。|从明天起，我每天跑步。|从……起 là cặp cố định: 起 đứng ngay sau mốc thời gian.|Từ ngày mai, ngày nào tôi cũng chạy bộ.
-39|从今天起，我不再抽烟了。|从八点起，我们开始上课。|从八点起，我们开始上课起。|从八点起，我们开始上课。|起 chỉ dùng một lần ngay sau mốc thời gian, không lặp ở cuối câu.|Từ tám giờ, chúng ta bắt đầu vào học.
+39|从今天起，我不再喝茶了。|从八点起，我们开始上课。|从八点起，我们开始上课起。|从八点起，我们开始上课。|起 chỉ dùng một lần ngay sau mốc thời gian, không lặp ở cuối câu.|Từ tám giờ, chúng ta bắt đầu vào học.
 39|从现在起，大家要认真学习。|从下个月起，价格会便宜一点儿。|从现在大家起要认真学习。|从现在起，大家要认真学习。|Mốc thời gian + 起 đi liền nhau, rồi mới đến chủ ngữ.|Từ bây giờ, mọi người phải học nghiêm túc.
 40|对我来说，汉语很有意思。|对学生来说，时间很重要。|汉语对我很有意思来说。|对我来说，汉语很有意思。|对……来说: cụm cố định, đứng đầu câu hoặc trước vị ngữ.|Đối với tôi, tiếng Trung rất thú vị.
-40|对孩子来说，睡觉很重要。|对大多数人来说，这个价格太高了。|来说对孩子，睡觉很重要。|对孩子来说，睡觉很重要。|Trật tự cố định: 对 + người + 来说.|Đối với trẻ con, ngủ rất quan trọng.
+40|对孩子来说，睡觉很重要。|对很多人来说，这个价格太高了。|来说对孩子，睡觉很重要。|对孩子来说，睡觉很重要。|Trật tự cố định: 对 + người + 来说.|Đối với trẻ con, ngủ rất quan trọng.
 40|对他来说，这不难。|对我来说，这个问题很容易。|对他说来，这不难。|对他来说，这不难。|Cấu trúc cố định là 对……来说, không đổi thành 说来.|Đối với anh ấy, việc này không khó.
 41|我一个字也不认识。|他一口水都没喝。|我一个字不也认识。|我一个字也不认识。|一 + lượng từ + N + 也 / 都 + 不 / 没 + V: 也 đứng trước 不.|Tôi không biết một chữ nào.
 41|屋子里一个人也没有。|我一天都没休息。|屋子里一个也人没有。|屋子里一个人也没有。|一个人也没有: 一 + lượng từ + danh từ đi liền, rồi mới đến 也.|Trong phòng không có một ai.
-41|他一句话也不说。|我一分钱都没带。|他一句话也说不。|他一句话也不说。|不 / 没 đứng trước động từ: 也不说.|Anh ấy không nói một câu nào.
+41|他一个字也不说。|我一分钱都没带。|他一个字也说不。|他一个字也不说。|不 / 没 đứng trước động từ: 也不说.|Anh ấy không nói một chữ nào.
 41|我一次也没去过。|他一天也没休息。|我一天没也休息。|我一天也没休息。|也 / 都 đứng ngay sau cụm 一 + lượng từ, trước 没.|Tôi không nghỉ ngơi một ngày nào.
 42|雨越下越大。|他越说越高兴。|雨越下大越。|雨越下越大。|越 + V + 越 + Adj: hai 越 đứng trước động từ / tính từ.|Mưa càng rơi càng to.
 42|你越着急，越做不好。|孩子越大，越懂事。|孩子大越，越懂事。|孩子越大，越懂事。|越 đứng trước tính từ / động từ ở mỗi vế.|Con càng lớn càng hiểu chuyện.
-42|这首歌我越听越喜欢。|他越跑越快。|这首歌我听越越喜欢。|这首歌我越听越喜欢。|Hai 越 đứng trước hai động từ: 越听越喜欢.|Bài hát này tôi càng nghe càng thích.
+42|这个歌我越听越喜欢。|他越跑越快。|这个歌我听越越喜欢。|这个歌我越听越喜欢。|Hai 越 đứng trước hai động từ: 越听越喜欢.|Bài hát này tôi càng nghe càng thích.
 42|天气越来越冷。|我越来越喜欢这个城市。|天气越来越很冷。|天气越来越冷。|越来越 + Adj / V tâm lý, không thêm 很.|Thời tiết càng ngày càng lạnh.
 43|游泳对身体很好。|学习汉语很有意思。|游泳对很好身体。|游泳对身体很好。|对 + đối tượng đứng trước vị ngữ: 对身体很好.|Bơi lội rất tốt cho sức khỏe.
 43|看书是我的爱好。|旅游使人快乐。|看书我的爱好是。|看书是我的爱好。|Động từ làm chủ ngữ, theo sau là 是 + danh từ.|Đọc sách là sở thích của tôi.
 44|我喜欢游泳。|他觉得汉语很难。|他觉得很难汉语。|他觉得汉语很难。|觉得 + mệnh đề (chủ ngữ + vị ngữ): 汉语很难.|Anh ấy thấy tiếng Trung rất khó.
 44|我知道他是老师。|我听说她要结婚了。|我知道是他老师。|我知道他是老师。|Mệnh đề làm tân ngữ giữ trật tự chủ – vị: 他是老师.|Tôi biết anh ấy là giáo viên.
-44|我打算明年去北京。|他决定不去了。|我打算去明年北京。|我打算明年去北京。|Thời gian đứng trước động từ: 明年去北京.|Tôi định năm sau đi Bắc Kinh.
+44|我想明年去北京。|他决定不去了。|我想去明年北京。|我想明年去北京。|Thời gian đứng trước động từ: 明年去北京.|Tôi muốn sang năm đi Bắc Kinh.
 45|这是我昨天买的书。|他是教我们汉语的老师。|这是我买昨天的书。|这是我昨天买的书。|Trạng ngữ thời gian đứng trước động từ trong định ngữ: 我昨天买的.|Đây là cuốn sách tôi mua hôm qua.
 45|我喜欢她做的菜。|他是我认识的人。|我喜欢她的做菜。|我喜欢她做的菜。|Cụm 主 + V + 的 làm định ngữ cho danh từ: 她做的菜.|Tôi thích món cô ấy nấu.
 45|昨天来的人是我的同学。|这是妈妈给我买的衣服。|昨天来人的是我的同学。|昨天来的人是我的同学。|Định ngữ + 的 đứng trước danh từ trung tâm: 来的人.|Người đến hôm qua là bạn học của tôi.
-45|穿红衣服的女孩是我妹妹。|他是我们学校的老师。|穿的红衣服女孩是我妹妹。|穿红衣服的女孩是我妹妹。|Cả cụm 穿红衣服 làm định ngữ, 的 đứng sau cả cụm.|Cô gái mặc áo đỏ là em gái tôi.
-46|我记住了他的名字。|请拿住这个袋子。|我记了住他的名字。|我记住了他的名字。|Bổ ngữ kết quả 住 đứng ngay sau động từ, 了 đặt sau bổ ngữ.|Tôi đã nhớ tên anh ấy.
+45|穿红衣服的人是我妹妹。|他是我们学校的老师。|穿的红衣服人是我妹妹。|穿红衣服的人是我妹妹。|Cả cụm 穿红衣服 làm định ngữ, 的 đứng sau cả cụm.|Người mặc áo đỏ là em gái tôi.
+46|我记住了他的名字。|请拿住这个包。|我记了住他的名字。|我记住了他的名字。|Bổ ngữ kết quả 住 đứng ngay sau động từ, 了 đặt sau bổ ngữ.|Tôi đã nhớ tên anh ấy.
 46|我没买到火车票。|他没找到工作。|我买到没火车票。|我没买到火车票。|Phủ định 没 đứng trước động từ: 没买到.|Tôi không mua được vé tàu.
 46|他把书带走了。|客人已经走了。|他带书走把了。|他把书带走了。|Câu 把: 把 + tân ngữ + 带走 (bổ ngữ 走).|Anh ấy mang cuốn sách đi rồi.
 46|我听到有人叫我。|他看到了一只小鸟。|我听了到有人叫我。|我听到有人叫我。|到 đứng liền sau động từ; không chèn 了 vào giữa.|Tôi nghe thấy có người gọi tôi.
@@ -6550,7 +6552,7 @@ const H3S_Q = `1|他住在第三层。|我第一次来北京。|他住在三第�
 47|他站起来了。|他慢慢走过来了。|他站来起了。|他站起来了。|起 đứng trước 来 trong 起来.|Anh ấy đứng dậy rồi.
 48|这个字我看不懂。|这么多东西，我拿不动。|这个字我不看懂。|这个字我看不懂。|Bổ ngữ khả năng phủ định: V + 不 + bổ ngữ, 不 chen giữa động từ và bổ ngữ.|Chữ này tôi xem không hiểu.
 48|你听得清楚吗？|我听得懂汉语。|我听懂得汉语。|我听得懂汉语。|Bổ ngữ khả năng khẳng định: V + 得 + bổ ngữ.|Tôi nghe hiểu tiếng Trung.
-48|他说得太快，我跟不上。|这个箱子我搬得动。|这个箱子我搬动得。|这个箱子我搬得动。|得 chen giữa động từ và bổ ngữ: 搬得动.|Cái thùng này tôi khiêng nổi.
+48|他说得太快，我跟不上。|这个包我拿得动。|这个包我拿动得。|这个包我拿得动。|得 chen giữa động từ và bổ ngữ: 拿得动.|Cái túi này tôi xách nổi.
 48|太贵了，我买不起。|这么贵的东西，他买得起吗？|太贵了，我不买得起。|太贵了，我买不起。|买不起: 不 chen giữa động từ và 起.|Đắt quá, tôi không mua nổi.
 49|他高兴得跳了起来。|累得我不想说话。|他高兴跳得了起来。|他高兴得跳了起来。|Tính từ + 得 + kết quả: 得 đứng ngay sau tính từ.|Anh ấy vui đến mức nhảy cẫng lên.
 49|今天热死了。|我饿极了。|今天死热了。|今天热死了。|死了 / 极了 đứng sau tính từ để chỉ mức độ rất cao.|Hôm nay nóng chết đi được.
@@ -6560,29 +6562,29 @@ const H3S_Q = `1|他住在第三层。|我第一次来北京。|他住在三第�
 50|我见过他一次。|我见过他两回。|我见过一次他。|我见过他一次。|Tân ngữ là đại từ đứng trước bổ ngữ động lượng.|Tôi đã gặp anh ấy một lần.
 50|请你再说一遍。|他看了我一眼。|请你再一遍说。|请你再说一遍。|Động lượng từ đứng sau động từ: 说一遍.|Xin bạn nói lại một lần nữa.
 51|我学了三年汉语。|他等了你半个小时。|我学汉语了三年。|我学了三年汉语。|Thời lượng đứng sau 了 và trước tân ngữ: V + 了 + thời lượng + O.|Tôi đã học tiếng Trung ba năm.
-51|他睡了八个小时。|我们聊了一个晚上。|他睡了八小时个。|他睡了八个小时。|Trật tự: số từ + lượng từ + 小时, 个 đứng trước 小时.|Anh ấy ngủ tám tiếng.
+51|他睡了八个小时。|我们看了一个晚上电视。|他睡了八小时个。|他睡了八个小时。|Trật tự: số từ + lượng từ + 小时, 个 đứng trước 小时.|Anh ấy ngủ tám tiếng.
 51|我每天看两个小时电视。|他每天学一个小时汉语。|我每天两个小时看电视。|我每天看两个小时电视。|Thời lượng làm bổ ngữ đứng sau động từ, không đặt trước.|Mỗi ngày tôi xem tivi hai tiếng.
-52|他离开家三年了。|我毕业两年了。|他离开家了三年。|他离开家三年了。|Khoảng thời gian tính từ khi sự việc xảy ra đến nay: V + khoảng thời gian + 了 (cuối câu).|Anh ấy rời nhà ba năm rồi.
+52|他离开家三年了。|我搬家两年了。|他离开家了三年。|他离开家三年了。|Khoảng thời gian tính từ khi sự việc xảy ra đến nay: V + khoảng thời gian + 了 (cuối câu).|Anh ấy rời nhà ba năm rồi.
 52|我们认识十年了。|他来北京一个月了。|我们十年认识了。|我们认识十年了。|Khoảng thời gian đặt sau động từ, 了 ở cuối câu.|Chúng tôi quen nhau mười năm rồi.
-52|他不抽烟两年了。|我不吃肉三年了。|他不抽烟了两年。|他不抽烟两年了。|Khoảng thời gian + 了 đặt cuối câu để chỉ trạng thái kéo dài đến nay.|Anh ấy bỏ hút thuốc hai năm rồi.
+52|他不喝茶两年了。|我不吃肉三年了。|他不喝茶了两年。|他不喝茶两年了。|Khoảng thời gian + 了 đặt cuối câu để chỉ trạng thái kéo dài đến nay.|Anh ấy không uống trà hai năm rồi.
 52|他下班两个小时了。|我来中国半年了。|他两个小时下班了。|他下班两个小时了。|Khoảng thời gian đặt sau động từ chứ không đặt trước.|Anh ấy tan làm hai tiếng rồi.
 53|他身体很好。|我头疼。|他很身体好。|他身体很好。|Câu vị ngữ chủ-vị: 他 + (身体 + 很好); 很 đứng trước tính từ.|Sức khỏe anh ấy rất tốt.
 53|这件事我不知道。|他个子很高。|这件事不知道我。|这件事我不知道。|Chủ đề 这件事 đứng đầu, rồi chủ ngữ 我, rồi vị ngữ.|Việc này tôi không biết.
 53|她眼睛很大。|北京冬天很冷。|北京很冬天冷。|北京冬天很冷。|Chủ ngữ lớn + chủ ngữ nhỏ + vị ngữ; 很 đứng trước tính từ.|Mùa đông ở Bắc Kinh rất lạnh.
-53|她头发很长。|我肚子饿了。|她很头发长。|她头发很长。|很 đứng ngay trước tính từ 长, không đứng trước 头发.|Tóc cô ấy rất dài.
-54|请你把窗户打开。|他把钱放在口袋里。|请你把窗户。|请你把窗户打开。|Câu 把 phải có thành phần sau động từ (bổ ngữ), không dừng ở tân ngữ.|Xin bạn mở cửa sổ ra.
+53|她头发很长。|我头很疼。|她很头发长。|她头发很长。|很 đứng ngay trước tính từ 长, không đứng trước 头发.|Tóc cô ấy rất dài.
+54|请你把门打开。|他把钱给我了。|请你把门。|请你把门打开。|Câu 把 phải có thành phần sau động từ (bổ ngữ), không dừng ở tân ngữ.|Xin bạn mở cửa ra.
 54|我把书还给他了。|他把衣服洗干净了。|我把还给他书了。|我把书还给他了。|把 + tân ngữ đứng ngay sau 把.|Tôi trả sách cho anh ấy rồi.
-54|你把这个字写一遍。|他把作业交给老师了。|他把作业交老师给了。|他把作业交给老师了。|交给 là một cụm: 交 + 给 + người.|Anh ấy nộp bài tập cho thầy giáo rồi.
-54|我把你的话记住了。|她把房间收拾好了。|我把你的话记了。|我把你的话记住了。|Sau 把 động từ cần bổ ngữ kết quả (记住).|Tôi đã ghi nhớ lời bạn nói.
-55|杯子被弟弟打破了。|我的自行车被朋友骑走了。|杯子被打破弟弟了。|杯子被弟弟打破了。|被 + tác nhân + động từ + bổ ngữ.|Cái cốc bị em trai làm vỡ.
-55|他被老师批评了。|我的钱包被偷了。|他被批评了老师。|他被老师批评了。|Tác nhân (老师) đứng giữa 被 và động từ.|Anh ấy bị thầy giáo phê bình.
-55|我的手机没被偷。|他没被老师发现。|我的手机被没偷。|我的手机没被偷。|Phủ định 没 đứng trước 被.|Điện thoại của tôi không bị trộm.
-55|我被雨淋湿了。|他被我吓了一跳。|我被雨湿淋了。|我被雨淋湿了。|Động từ 淋 đứng trước bổ ngữ kết quả 湿.|Tôi bị mưa ướt hết.
-56|我骑自行车去学校。|他去超市买水果。|我去学校骑自行车。|我骑自行车去学校。|Liên động: phương tiện (V1) đứng trước hành động chính (V2).|Tôi đi xe đạp đến trường.
+54|你把这个字写一遍。|他把书交给老师了。|他把书交老师给了。|他把书交给老师了。|交给 là một cụm: 交 + 给 + người.|Anh ấy nộp sách cho thầy giáo rồi.
+54|我把你的话记住了。|她把衣服洗好了。|我把你的话记了。|我把你的话记住了。|Sau 把 động từ cần bổ ngữ kết quả (记住).|Tôi đã ghi nhớ lời bạn nói.
+55|杯子被弟弟打破了。|我的车被朋友开走了。|杯子被打破弟弟了。|杯子被弟弟打破了。|Tác nhân (弟弟) đứng giữa 被 và động từ.|Cái cốc bị em trai làm vỡ rồi.
+55|他被老师批评了。|我的钱包被弟弟拿走了。|他被批评了老师。|他被老师批评了。|Tác nhân (老师) đứng giữa 被 và động từ.|Anh ấy bị thầy giáo phê bình.
+55|我的手机没被拿走。|他没被老师看见。|我的手机被没拿走。|我的手机没被拿走。|Phủ định 没 đứng trước 被.|Điện thoại của tôi không bị lấy đi.
+55|我的书被弟弟看完了。|他被老师叫走了。|我的书被看完弟弟了。|我的书被弟弟看完了。|Tác nhân (弟弟) đứng giữa 被 và động từ 看完.|Sách của tôi bị em trai đọc hết rồi.
+56|我坐地铁去学校。|他去超市买水果。|我去学校坐地铁。|我坐地铁去学校。|Liên động: phương tiện (V1) đứng trước hành động chính (V2).|Tôi đi tàu điện ngầm đến trường.
 56|他坐飞机去北京。|我们打车去机场。|他去北京坐飞机。|他坐飞机去北京。|Cách thức 坐飞机 đứng trước 去北京.|Anh ấy đi máy bay đến Bắc Kinh.
 56|他回家吃饭。|我去商店买东西。|我买东西去商店。|我去商店买东西。|Hai động từ xếp theo thứ tự xảy ra: 去商店 → 买东西.|Tôi đi cửa hàng mua đồ.
-56|他笑着说了声谢谢。|她哭着跑了出去。|他说了声谢谢笑着。|他笑着说了声谢谢。|V1 + 着 chỉ cách thức đi kèm, đứng trước V2.|Anh ấy cười và nói một tiếng cảm ơn.
-57|老师让我们读课文。|公司请他参加会议。|老师让读我们课文。|老师让我们读课文。|Kiêm ngữ: 让 + người + động từ; người đứng ngay sau 让.|Thầy giáo cho chúng tôi đọc bài khóa.
+56|他笑着说谢谢。|她哭着跑了出去。|他说谢谢笑着。|他笑着说谢谢。|V1 + 着 chỉ cách thức đi kèm, đứng trước V2.|Anh ấy cười nói cảm ơn.
+57|老师让我们读书。|公司请他去开会。|老师让读我们书。|老师让我们读书。|Kiêm ngữ: 让 + người + động từ; người đứng ngay sau 让.|Thầy bảo chúng tôi đọc sách.
 57|妈妈叫我早点儿回家。|医生让他多休息。|妈妈叫早点儿我回家。|妈妈叫我早点儿回家。|叫 + người + (trạng ngữ) + động từ.|Mẹ bảo tôi về nhà sớm.
 57|他请我吃饭。|我想请你帮忙。|他请吃饭我。|他请我吃饭。|请 + người + động từ: 我 đứng ngay sau 请.|Anh ấy mời tôi ăn cơm.
 57|老板派他去上海。|学校派老师去北京开会。|老板派去上海他。|老板派他去上海。|派 + người + 去 + nơi chốn.|Ông chủ cử anh ấy đi Thượng Hải.
@@ -6591,58 +6593,58 @@ const H3S_Q = `1|他住在第三层。|我第一次来北京。|他住在三第�
 58|姐姐比我大三岁。|弟弟比我小两岁。|姐姐比我三岁大。|姐姐比我大三岁。|Chênh lệch đặt sau tính từ: 大三岁.|Chị gái lớn hơn tôi ba tuổi.
 58|我跑得比他快。|他说得比我好。|我比他跑快。|我跑得比他快。|Động từ có bổ ngữ 得 giữ nguyên cấu trúc: 跑得比他快.|Tôi chạy nhanh hơn anh ấy.
 58|这个比那个贵一点儿。|这个房间比那个大得多。|这个比那个一点儿贵。|这个比那个贵一点儿。|一点儿 đứng sau tính từ trong câu 比.|Cái này đắt hơn cái kia một chút.
-59|他说汉语说得很流利。|我看书看了两个小时。|他说汉语得很流利。|他说汉语说得很流利。|Lặp động từ: V + O + V + 得 + bổ ngữ.|Anh ấy nói tiếng Trung rất lưu loát.
+59|他说汉语说得很好。|我看书看了两个小时。|他说汉语得很好。|他说汉语说得很好。|Lặp động từ: V + O + V + 得 + bổ ngữ.|Anh ấy nói tiếng Trung rất tốt.
 59|她唱歌唱得很好。|他开车开得很慢。|她唱歌得很好。|她唱歌唱得很好。|Có tân ngữ thì phải lặp động từ trước 得.|Cô ấy hát rất hay.
 59|他写汉字写得很漂亮。|她做饭做得很好吃。|他写得汉字很漂亮。|他写汉字写得很漂亮。|Tân ngữ đứng sau động từ thứ nhất, bổ ngữ sau động từ lặp.|Anh ấy viết chữ Hán rất đẹp.
 60|他也会唱歌，也会跳舞。|她也喜欢茶，也喜欢咖啡。|他也会唱歌，会也跳舞。|他也会唱歌，也会跳舞。|也 ở hai vế đều đứng trước động từ (năng nguyện).|Anh ấy vừa biết hát, vừa biết nhảy.
 60|我也想去，他也想去。|你也是学生，我也是学生。|我想也去，他想也去。|我也想去，他也想去。|也 đứng sau chủ ngữ, trước động từ năng nguyện 想.|Tôi cũng muốn đi, anh ấy cũng muốn đi.
-60|她也会说英语，也会说日语。|周末我也看书，也看电影。|她会也说英语，也会说日语。|她也会说英语，也会说日语。|也 đứng ngay trước 会, không chen sau 会.|Cô ấy vừa biết nói tiếng Anh, vừa biết nói tiếng Nhật.
+60|她也会写字，也会说汉语。|周末我也看书，也看电影。|她会也写字，也会说汉语。|她也会写字，也会说汉语。|也 đứng ngay trước 会, không chen sau 会.|Cô ấy cũng biết viết chữ, cũng biết nói tiếng Trung.
 60|他也不去，我也不去。|你也不累，我也不累。|他也不去，我不也去。|他也不去，我也不去。|也 đứng trước 不.|Anh ấy cũng không đi, tôi cũng không đi.
 61|孩子一会儿哭，一会儿笑。|天气一会儿晴，一会儿阴。|孩子一会儿哭，一会笑儿。|孩子一会儿哭，一会儿笑。|Cặp 一会儿……一会儿……: 儿 đi liền sau 一会.|Đứa bé lúc thì khóc, lúc thì cười.
 61|他一会儿看电视，一会儿玩手机。|她一会儿站起来，一会儿坐下去。|他一会看电视儿，一会儿玩手机。|他一会儿看电视，一会儿玩手机。|一会儿 là một cụm cố định, không tách 儿 ra.|Anh ấy lúc thì xem tivi, lúc thì chơi điện thoại.
-61|水一会儿热，一会儿冷。|他的心情一会儿好，一会儿坏。|水一会儿热，一下儿冷。|水一会儿热，一会儿冷。|Cặp cố định: 一会儿 + A，一会儿 + B (luân phiên).|Nước lúc nóng, lúc lạnh.
+61|水一会儿热，一会儿冷。|他一会儿看书，一会儿看电视。|水一会儿热，一下儿冷。|水一会儿热，一会儿冷。|Cặp cố định: 一会儿 + A，一会儿 + B (luân phiên).|Nước lúc nóng, lúc lạnh.
 61|他一会儿说好，一会儿说不好。|她一会儿高兴，一会儿难过。|他一会儿说好，一边说不好。|他一会儿说好，一会儿说不好。|一会儿……一会儿 (luân phiên) khác 一边……一边 (đồng thời).|Anh ấy lúc thì bảo tốt, lúc thì bảo không tốt.
 62|一方面要努力学习，另一方面要注意休息。|一方面他很忙，另一方面他身体不好。|一方面要努力学习，一方面另要注意休息。|一方面要努力学习，另一方面要注意休息。|Cặp cố định 一方面……另一方面……, 另 đứng trước 一方面.|Một mặt phải học tập chăm chỉ, mặt khác phải chú ý nghỉ ngơi.
 62|学汉语一方面要多听，另一方面要多说。|一方面我想去，另一方面我没有时间。|一方面我想去，另外方面我没有时间。|一方面我想去，另一方面我没有时间。|Dạng cố định là 另一方面, không đổi thành 另外方面.|Một mặt tôi muốn đi, mặt khác tôi không có thời gian.
-62|他一方面在工作，另一方面在学习。|一方面价格便宜，另一方面质量也好。|他一方面在工作，另一在学习方面。|他一方面在工作，另一方面在学习。|另一方面 đứng ở đầu vế sau, không đảo 方面.|Một mặt anh ấy đang làm việc, mặt khác đang học tập.
+62|他一方面在工作，另一方面在学习。|一方面价格便宜，另一方面东西也好。|他一方面在工作，另一在学习方面。|他一方面在工作，另一方面在学习。|另一方面 đứng ở đầu vế sau, không đảo 方面.|Một mặt anh ấy đang làm việc, mặt khác đang học tập.
 62|一方面我很想去，另一方面我也很害怕。|一方面天气冷，另一方面工作忙。|另一方面我想去，一方面我没有时间。|一方面我想去，另一方面我没有时间。|Trật tự bắt buộc: 一方面 trước, 另一方面 sau.|Một mặt tôi muốn đi, mặt khác tôi không có thời gian.
 63|这个菜又好吃又便宜。|她又高又漂亮。|这个菜又好吃又很便宜。|这个菜又好吃又便宜。|又……又……: không thêm 很 trước tính từ.|Món này vừa ngon vừa rẻ.
-63|他又说又笑。|孩子又哭又闹。|他又说笑又。|他又说又笑。|Mỗi 又 đứng ngay trước một động từ / tính từ.|Anh ấy vừa nói vừa cười.
-63|她又会唱歌又会跳舞。|他又聪明又努力。|她又会唱歌，会又跳舞。|她又会唱歌又会跳舞。|Hai 又 đứng trước hai vị ngữ song song.|Cô ấy vừa biết hát vừa biết nhảy.
-64|首先要洗手，然后才能吃饭。|首先打开书，然后看第一页。|首先要洗手，然后才吃能饭。|首先要洗手，然后才能吃饭。|才 đứng trước động từ năng nguyện 能, rồi mới đến động từ chính.|Trước hết phải rửa tay, rồi mới được ăn cơm.
-64|首先问一下价格，然后再决定。|首先要做完作业，然后才能玩。|然后问一下价格，首先再决定。|首先问一下价格，然后再决定。|首先 đứng trước (bước 1), 然后 đứng sau (bước 2).|Trước hết hỏi giá, sau đó hãy quyết định.
-64|首先要认真听，其次要多练习。|首先我想谢谢大家，其次想谢谢老师。|首先要认真听，然后其次要多练习。|首先要认真听，其次要多练习。|首先 đi cùng 其次 (thứ hai); không chồng 然后 và 其次.|Trước hết phải nghe cho kỹ, sau đó phải luyện tập nhiều.
+63|他又说又笑。|孩子又哭又笑。|他又说笑又。|他又说又笑。|Mỗi 又 đứng ngay trước một động từ / tính từ.|Anh ấy vừa nói vừa cười.
+63|她又会唱歌又会跳舞。|他又忙又累。|她又会唱歌，会又跳舞。|她又会唱歌又会跳舞。|Hai 又 đứng trước hai vị ngữ song song.|Cô ấy vừa biết hát vừa biết nhảy.
+64|首先要洗手，然后才能吃饭。|首先打开门，然后进去。|首先要洗手，然后才吃能饭。|首先要洗手，然后才能吃饭。|才 đứng trước động từ năng nguyện 能, rồi mới đến động từ chính.|Trước hết phải rửa tay, sau đó mới được ăn cơm.
+64|首先问一下价格，然后再决定。|首先要写完字，然后才能玩。|然后问一下价格，首先再决定。|首先问一下价格，然后再决定。|首先 đứng trước (bước 1), 然后 đứng sau (bước 2).|Trước hết hỏi giá, sau đó hãy quyết định.
+64|首先要认真听，其次要多说。|首先我想谢谢大家，其次想谢谢老师。|首先要认真听，然后其次要多说。|首先要认真听，其次要多说。|首先 đi cùng 其次 (thứ hai); không chồng 然后 và 其次.|Trước hết phải nghe nghiêm túc, tiếp theo phải nói nhiều.
 64|首先我去商店，然后我回家了。|首先他洗了手，然后吃了饭。|首先我去商店，然后我了回家。|首先我去商店，然后我回家了。|了 đứng sau động từ (回家了), không đứng trước động từ.|Trước tiên tôi đến cửa hàng, sau đó tôi về nhà.
-65|他会开车，并且开得很好。|我同意你的看法，并且愿意帮助你。|他会开车，并且开车得很好。|他会开车，并且开得很好。|Lặp động từ phải tuân theo 开车开得: nếu đã lược động từ thì dùng 开得.|Anh ấy biết lái xe, hơn nữa lái rất giỏi.
-65|她很聪明，并且很可爱。|他读了这本书，并且写了一篇文章。|她很聪明，并且不可爱。|她很聪明，但是不可爱。|并且 chỉ tăng tiến (cùng chiều); ý đối lập phải dùng 但是.|Cô ấy rất thông minh, nhưng không đáng yêu.
-65|我们完成了任务，并且完成得很好。|他是医生，并且是我的邻居。|我们完成了任务，并且得完成很好。|我们完成了任务，并且完成得很好。|得 đứng ngay sau động từ 完成.|Chúng tôi đã hoàn thành nhiệm vụ, hơn nữa hoàn thành rất tốt.
-66|他不仅会说汉语，而且会写汉字。|她不光漂亮，而且很聪明。|他不仅会说汉语，所以会写汉字。|他不仅会说汉语，而且会写汉字。|不仅……而且……: tăng tiến, không dùng 所以.|Anh ấy không chỉ biết nói tiếng Trung mà còn biết viết chữ Hán.
+65|他会开车，并且开得很好。|我同意你，并且想帮助你。|他会开车，并且开车得很好。|他会开车，并且开得很好。|Lặp động từ phải tuân theo 开车开得: nếu đã lược động từ thì dùng 开得.|Anh ấy biết lái xe, hơn nữa lái rất tốt.
+65|她很漂亮，并且很高兴。|他读了这本书，并且看了电影。|她很漂亮，并且不高兴。|她很漂亮，但是不高兴。|并且 chỉ tăng tiến (cùng chiều); ý đối lập phải dùng 但是.|Cô ấy rất đẹp, nhưng không vui.
+65|我们做完了工作，并且做得很好。|他是医生，并且是我的朋友。|我们做完了工作，并且得做很好。|我们做完了工作，并且做得很好。|得 đứng ngay sau động từ 做.|Chúng tôi đã làm xong công việc, hơn nữa làm rất tốt.
+66|他不仅会说汉语，而且会写汉字。|她不光会唱歌，而且会跳舞。|他不仅会说汉语，所以会写汉字。|他不仅会说汉语，而且会写汉字。|不仅……而且……: tăng tiến, không dùng 所以.|Anh ấy không những biết nói tiếng Trung mà còn biết viết chữ Hán.
 66|这个房间不仅大，而且很干净。|他不光学习好，还很会唱歌。|这个房间不仅大，但是很干净。|这个房间不仅大，而且很干净。|不仅 phải đi cùng 而且 / 还, không đi cùng 但是.|Căn phòng này không chỉ rộng mà còn rất sạch.
 66|不仅我去，他也去。|不仅我喜欢，我朋友也喜欢。|我不仅去，他也去。|不仅我去，他也去。|Hai vế khác chủ ngữ thì 不仅 đứng trước chủ ngữ của vế đầu.|Không chỉ tôi đi, anh ấy cũng đi.
-66|他不仅是老师，而且是作家。|她不仅会做饭，还会做蛋糕。|他仅不是老师，而且是作家。|他不仅是老师，而且是作家。|Dạng cố định 不仅, không đảo thành 仅不.|Anh ấy không chỉ là giáo viên mà còn là nhà văn.
+66|他不仅是老师，而且是我的朋友。|她不仅会做饭，还会做蛋糕。|他仅不是老师，而且是我的朋友。|他不仅是老师，而且是我的朋友。|Dạng cố định 不仅, không đảo thành 仅不.|Anh ấy không những là thầy giáo mà còn là bạn của tôi.
 67|他每天不是看书，就是看电影。|周末我不是睡觉，就是看电视。|他每天不是看书，是就看电影。|他每天不是看书，就是看电影。|Cặp cố định 不是……就是……, 就 đứng trước 是.|Ngày nào anh ấy cũng hoặc đọc sách, hoặc xem phim.
-67|这几天不是下雨，就是刮风。|他不是在教室，就是在图书馆。|这几天不是下雨，也是刮风。|这几天不是下雨，就是刮风。|Dùng 就是 đi cặp với 不是, không dùng 也是.|Mấy ngày nay hoặc là mưa, hoặc là gió.
-67|周末他不是去爬山，就是去游泳。|晚上她不是看书，就是写作业。|周末他不是去爬山，就去是游泳。|周末他不是去爬山，就是去游泳。|就是 liền nhau, không chen 去 vào giữa.|Cuối tuần anh ấy hoặc đi leo núi, hoặc đi bơi.
-68|这个菜好吃是好吃，就是太贵了。|他聪明是聪明，不过不努力。|这个菜好吃好吃，就是太贵了。|这个菜好吃是好吃，就是太贵了。|X是X，就是……: giữa hai tính từ phải có 是.|Món này ngon thì ngon, chỉ là đắt quá.
+67|这几天不是下雨，就是下雪。|他不是在教室，就是在商店。|这几天不是下雨，也是下雪。|这几天不是下雨，就是下雪。|Dùng 就是 đi cặp với 不是, không dùng 也是.|Mấy ngày nay hoặc mưa, hoặc tuyết.
+67|周末他不是去爬山，就是去游泳。|晚上她不是看书，就是看电视。|周末他不是去爬山，就去是游泳。|周末他不是去爬山，就是去游泳。|就是 liền nhau, không chen 去 vào giữa.|Cuối tuần anh ấy hoặc đi leo núi, hoặc đi bơi.
+68|这个菜好吃是好吃，就是太贵了。|他累是累，不过很高兴。|这个菜好吃好吃，就是太贵了。|这个菜好吃是好吃，就是太贵了。|X是X，就是……: giữa hai tính từ phải có 是.|Món này ngon thì ngon, chỉ có điều quá đắt.
 68|房子大是大，就是太旧了。|这件衣服漂亮是漂亮，不过有点儿贵。|房子是大大，就是太旧了。|房子大是大，就是太旧了。|Cấu trúc A是A: 是 chen giữa hai tính từ giống nhau.|Nhà rộng thì rộng, chỉ là cũ quá.
 68|我喜欢是喜欢，就是没时间去。|他说是说，不过不一定去。|他说是说，所以不一定去。|他说是说，不过不一定去。|Vế sau của X是X là chuyển ý (就是 / 不过), không dùng 所以.|Anh ấy nói thì nói vậy, nhưng chưa chắc sẽ đi.
-68|这个手机便宜是便宜，不过质量不太好。|他去是去，就是不想去太久。|这个手机便宜是便宜，不过质量不太好吗。|这个手机便宜是便宜，不过质量不太好。|Câu trần thuật không thêm 吗.|Điện thoại này rẻ thì rẻ, nhưng chất lượng không tốt lắm.
+68|这个手机便宜是便宜，不过不太好用。|他去是去，就是不想去太久。|这个手机便宜是便宜，不过不太好用吗。|这个手机便宜是便宜，不过不太好用。|Câu trần thuật không thêm 吗.|Điện thoại này rẻ thì rẻ, nhưng không dễ dùng lắm.
 69|要是明天下雨，我就不去了。|要是你有时间，就来看我吧。|要是明天下雨，我所以不去了。|要是明天下雨，我就不去了。|要是……就……: giả thiết → kết quả, không dùng 所以.|Nếu ngày mai mưa, tôi sẽ không đi nữa.
 69|要是你不舒服，就回家休息吧。|要是他来，我们就开始。|要是你不舒服，就吧回家休息。|要是你不舒服，就回家休息吧。|吧 đứng cuối câu.|Nếu bạn không khỏe thì về nhà nghỉ ngơi đi.
 69|要是你有问题，就问老师。|要是我是你，我就去。|要是我是你，我去就。|要是我是你，我就去。|就 đứng trước động từ.|Nếu tôi là bạn, tôi sẽ đi.
 69|要是天气好，我们就去公园。|要是你累了，就休息一下。|要是天气好，我们才去公园。|要是天气好，我们就去公园。|要是……就……; 才 dùng trong 只有……才…….|Nếu thời tiết đẹp, chúng ta sẽ đi công viên.
 70|只有努力学习，才能考好。|只有他去，我才去。|只有努力学习，就能考好。|只有努力学习，才能考好。|只有……才……: 才 hô ứng với 只有, không dùng 就.|Chỉ có học hành chăm chỉ mới thi tốt được.
-70|只有你同意，我才做。|只有经理来，会议才开始。|只有你同意，我再做。|只有你同意，我才做。|才 (chứ không phải 再) hô ứng với 只有.|Chỉ khi bạn đồng ý tôi mới làm.
+70|只有你同意，我才做。|只有老师来，会议才开始。|只有你同意，我再做。|只有你同意，我才做。|才 (chứ không phải 再) hô ứng với 只有.|Chỉ có bạn đồng ý thì tôi mới làm.
 70|只有这样，问题才能解决。|只有多听多说，才能学好汉语。|只有这样，才问题能解决。|只有这样，问题才能解决。|才 đứng sau chủ ngữ, trước động từ năng nguyện.|Chỉ có như vậy vấn đề mới giải quyết được.
 71|由于天气不好，所以比赛取消了。|由于工作忙，他很少回家。|由于天气不好，但是比赛取消了。|由于天气不好，所以比赛取消了。|由于 → 所以 / 因此; 但是 là chuyển ý.|Do thời tiết xấu nên trận đấu bị hủy.
-71|由于生病，他没来上课。|由于下雨，比赛延期了。|他由于，生病没来上课。|由于生病，他没来上课。|由于 + nguyên nhân đi liền nhau, đứng đầu vế.|Do bị ốm, anh ấy không đến lớp.
-71|由于没有时间，我们没有去旅游。|由于交通不方便，因此人很少。|由于没有时间，我们去旅游没有。|由于没有时间，我们没有去旅游。|没有 đứng trước động từ: 没有去.|Do không có thời gian, chúng tôi không đi du lịch.
+71|由于生病，他没来上课。|由于下雨，我们没去公园。|他由于，生病没来上课。|由于生病，他没来上课。|由于 + nguyên nhân đi liền nhau, đứng đầu vế.|Do bị ốm, anh ấy không đến lớp.
+71|由于没有时间，我们没有去旅游。|由于路远，因此人很少。|由于没有时间，我们去旅游没有。|由于没有时间，我们没有去旅游。|没有 đứng trước động từ: 没有去.|Vì không có thời gian nên chúng tôi không đi du lịch.
 72|为了赶飞机，他很早就起床了。|为了学好汉语，他来到中国。|为了让孩子上好大学，所以他努力工作。|为了让孩子上好大学，他努力工作。|为了 nêu mục đích, vế sau không có 所以.|Để con vào được trường đại học tốt, ông ấy làm việc chăm chỉ.
-72|为了身体好，他每天锻炼。|为了让大家高兴，他唱了一首歌。|为了身体好，他每天锻炼了。|为了身体好，他每天锻炼。|Thói quen hằng ngày không dùng 了.|Để có sức khỏe tốt, ngày nào anh ấy cũng tập thể dục.
-72|为了不迟到，他六点就起床了。|为了健康，大家都应该运动。|为了不迟到，他六点就起床为了。|为了不迟到，他六点就起床了。|为了 chỉ dùng ở đầu vế mục đích, không lặp ở cuối.|Để không bị muộn, anh ấy sáu giờ đã dậy.
+72|为了身体好，他每天运动。|为了让大家高兴，他跳了舞。|为了身体好，他每天运动了。|为了身体好，他每天运动。|Thói quen hằng ngày không dùng 了.|Vì sức khỏe, mỗi ngày anh ấy vận động.
+72|为了不迟到，他六点就起床了。|为了身体好，大家都应该运动。|为了不迟到，他六点就起床为了。|为了不迟到，他六点就起床了。|为了 chỉ dùng ở đầu vế mục đích, không lặp ở cuối.|Để không đến muộn, anh ấy sáu giờ đã dậy.
 73|我吃了饭就去。|他下了课就回家。|我吃饭了就去。|我吃了饭就去。|V + 了 + O + 就 + V2: 了 đứng ngay sau động từ.|Tôi ăn cơm xong là đi ngay.
-73|你到了就给我打电话。|我看了就明白了。|你到了就给我电话打。|你到了就给我打电话。|给 + người + 打电话: 打电话 đi liền.|Bạn đến nơi là gọi điện cho tôi nhé.
-73|他做完作业就睡觉了。|她洗了澡就睡觉。|他做完作业就了睡觉。|他做完作业就睡觉了。|了 đứng cuối câu hoặc sau động từ, không đứng trước động từ.|Anh ấy làm xong bài tập là đi ngủ.
+73|你到了就给我打电话。|我看了就懂了。|你到了就给我电话打。|你到了就给我打电话。|给 + người + 打电话: 打电话 đi liền.|Bạn đến nơi là gọi điện cho tôi.
+73|他做完工作就睡觉了。|她吃了饭就睡觉。|他做完工作就了睡觉。|他做完工作就睡觉了。|了 đứng cuối câu hoặc sau động từ, không đứng trước động từ.|Anh ấy làm xong việc là đi ngủ.
 74|这个班有三十来个学生。|这个班有二十多个学生。|这个班有三十个来学生。|这个班有三十来个学生。|来 đứng sau số từ chẵn, trước lượng từ: 三十来个.|Lớp này có khoảng ba mươi học sinh.
 74|桌子上有七八本书。|他三十岁左右。|桌子上有七八个本书。|桌子上有七八本书。|Hai số liền kề + lượng từ phù hợp (本).|Trên bàn có bảy tám cuốn sách.
 74|他三十岁左右。|我六点左右到。|他左右三十岁。|他三十岁左右。|左右 đứng sau số lượng.|Anh ấy khoảng ba mươi tuổi.
@@ -6653,7 +6655,7 @@ const H3S_Q = `1|他住在第三层。|我第一次来北京。|他住在三第�
 75|他一点儿也不紧张。|她一点儿都不害怕。|他一点儿不也紧张。|他一点儿也不紧张。|也 đứng trước 不.|Anh ấy không căng thẳng chút nào.
 76|你不是已经知道了吗？|他不是学生吗？|你不是已经知道了。|你不是已经知道了吗？|Câu phản vấn 不是……吗 cần có 吗 ở cuối câu.|Chẳng phải bạn đã biết rồi sao?
 76|难道他没告诉你吗？|这么简单，难道你不会吗？|难道他没告诉你。|难道他没告诉你吗？|难道 phải đi với 吗 cuối câu.|Lẽ nào anh ấy không nói với bạn?
-76|你不是答应我了吗？|你不是说今天来吗？|你不是答应我吗了？|你不是答应我了吗？|吗 đứng ở cuối câu, sau 了.|Chẳng phải bạn đã hứa với tôi rồi sao?
+76|你不是同意我了吗？|你不是说今天来吗？|你不是同意我吗了？|你不是同意我了吗？|吗 đứng ở cuối câu, sau 了.|Chẳng phải bạn đồng ý với tôi rồi sao?
 76|他难道不是你的朋友吗？|难道你不知道吗？|难道他吗不是你的朋友？|他难道不是你的朋友吗？|难道 đứng trước phủ định, 吗 ở cuối câu.|Lẽ nào anh ấy không phải bạn của bạn?
 77|我是昨天来的。|他是坐飞机去的。|我是昨天来了的。|我是昨天来的。|Câu 是……的 nhấn mạnh thời gian / cách thức của việc đã xảy ra, không dùng 了.|Tôi đến vào hôm qua.
 77|你是在哪儿学的汉语？|她是跟朋友一起来的。|你是哪儿在学的汉语？|你是在哪儿学的汉语？|是 + giới từ + nơi chốn + động từ + 的.|Bạn học tiếng Trung ở đâu vậy?
@@ -6665,142 +6667,142 @@ const H3S_Q = `1|他住在第三层。|我第一次来北京。|他住在三第�
 79|都十二点了，快睡吧。|都三十岁了，他还没结婚。|十二点都了，快睡吧。|都十二点了，快睡吧。|都 đứng trước mốc thời gian / số lượng, 了 ở cuối.|Đã mười hai giờ rồi, mau ngủ đi.
 79|天都黑了，回家吧。|孩子都会走路了。|天黑都了，回家吧。|天都黑了，回家吧。|都 đứng ngay sau chủ ngữ, trước vị ngữ.|Trời tối rồi, về nhà thôi.
 79|你都这么大了，还哭。|都这么晚了，你怎么还不睡？|你大都这么了，还哭。|你都这么大了，还哭。|都 + 这么 + Adj + 了: trật tự cố định.|Bạn lớn thế này rồi mà còn khóc.
-79|饭都凉了，快吃吧。|水都开了，快关火。|饭凉了都，快吃吧。|饭都凉了，快吃吧。|都 đứng trước động từ / tính từ, không đặt sau.|Cơm nguội hết rồi, mau ăn đi.
+79|饭都冷了，快吃吧。|水都开了，快关火。|饭冷了都，快吃吧。|饭都冷了，快吃吧。|都 đứng trước động từ / tính từ, không đặt sau.|Cơm nguội hết rồi, mau ăn đi.
 80|不去就不去吧，没关系。|坏了就坏了吧，再买一个。|不去就不去，吧没关系。|不去就不去吧，没关系。|X就X吧: 吧 đi liền sau X thứ hai.|Không đi thì không đi, không sao.
 80|错了就错了吧，下次注意。|累了就累了吧，休息一下。|错了就错吧了，下次注意。|错了就错了吧，下次注意。|Cấu trúc 错了就错了吧: 了 đứng trước 吧.|Sai thì sai rồi, lần sau chú ý.
 80|贵就贵吧，我喜欢。|来就来吧，反正没事。|贵吧就贵，我喜欢。|贵就贵吧，我喜欢。|吧 đặt ở cuối cụm X就X, không chen giữa.|Đắt thì đắt, tôi thích.
-81|急什么急？|吵什么吵？|急什么着急？|急什么急？|X什么X: lặp lại đúng cùng một từ hai bên 什么.|Vội cái gì mà vội?
+81|吵什么吵？|哭什么哭？|吵什么吵吵？|吵什么吵？|X什么X: lặp lại đúng cùng một từ hai bên 什么.|Ồn gì mà ồn?
 81|哭什么哭，别哭了。|看什么看，走吧。|哭哭什么，别哭了。|哭什么哭，别哭了。|什么 chen giữa hai từ giống nhau, không đứng cuối.|Khóc cái gì mà khóc, đừng khóc nữa.
-81|谢什么谢，我们是朋友。|客气什么客气？|谢什么谢谢，我们是朋友。|谢什么谢，我们是朋友。|X什么X cần lặp đúng X (谢), không đổi thành 谢谢.|Cảm ơn gì chứ, chúng ta là bạn mà.
+81|谢什么谢，我们是朋友。|看什么看？|谢什么谢谢，我们是朋友。|谢什么谢，我们是朋友。|X什么X cần lặp đúng X (谢), không đổi thành 谢谢.|Cảm ơn gì chứ, chúng ta là bạn mà.
 81|忙什么忙，慢慢来。|说什么说，听我的。|忙什么忙吗，慢慢来。|忙什么忙，慢慢来。|Cấu trúc 什么 đã mang ngữ khí phản bác, không thêm 吗.|Bận gì mà bận, cứ từ từ thôi.
 3|你敢说真话吗？|他不敢告诉我。|我不告诉敢他真话。|我不敢告诉他真话。|敢 là động từ năng nguyện: 不 + 敢 + động từ chính.|Tôi không dám nói thật với anh ấy.
-4|你需要带什么？|我们需要多练习。|你需要什么带？|你需要带什么？|需要 + động từ + tân ngữ nghi vấn: 带什么 giữ trật tự V + O.|Bạn cần mang gì?
-11|张张照片都很漂亮。|件件衣服都很贵。|张张照片很都漂亮。|张张照片都很漂亮。|都 đứng sau lượng từ lặp, trước 很 + tính từ.|Tấm ảnh nào cũng rất đẹp.
+4|你需要带什么？|我们需要多听。|你需要什么带？|你需要带什么？|需要 + động từ + tân ngữ nghi vấn: 带什么 giữ trật tự V + O.|Bạn cần mang gì?
+11|张张票都很贵。|件件衣服都很贵。|张张票很都贵。|张张票都很贵。|都 đứng sau lượng từ lặp, trước 很 + tính từ.|Tấm vé nào cũng rất đắt.
 12|这个问题相当难。|他的汉语比较好。|这个问题难相当。|这个问题相当难。|相当 là phó từ mức độ, đứng trước tính từ.|Câu hỏi này khá khó.
 17|你亲自去一趟吧。|我们互相理解。|你去亲自一趟吧。|你亲自去一趟吧。|亲自 đứng trước động từ.|Bạn đích thân đi một chuyến đi.
 18|他大概不会来了。|她恐怕不知道。|他不会来大概了。|他大概不会来了。|大概 đứng trước động từ / năng nguyện, thể hiện suy đoán.|Có lẽ anh ấy sẽ không đến nữa.
-21|自从毕业，我们没有见过面。|自从搬家，他常常来看我。|我们自从毕业，没有过见面。|我们自从毕业，没有见过面。|过 đứng ngay sau động từ: 没有见过面.|Từ khi tốt nghiệp, chúng tôi chưa gặp lại nhau.
-22|他朝我挥了挥手。|门朝北开。|他挥了挥手朝我。|他朝我挥了挥手。|朝 + đối tượng đứng trước động từ.|Anh ấy vẫy tay với tôi.
+21|自从搬家，我们没有见过面。|自从来北京，他常常来看我。|我们自从搬家，没有过见面。|我们自从搬家，没有见过面。|过 đứng ngay sau động từ: 没有见过面.|Từ khi chuyển nhà, chúng tôi chưa gặp nhau.
+22|他朝我点了点头。|门朝北开。|他点了点头朝我。|他朝我点了点头。|朝 + đối tượng đứng trước động từ.|Anh ấy gật đầu với tôi.
 23|他为公司工作了十年。|谢谢你为我做的一切。|他工作为公司了十年。|他为公司工作了十年。|为 + đối tượng đứng trước động từ.|Anh ấy đã làm việc cho công ty mười năm.
 24|他向我点了点头。|请向右转。|他点了点头向我。|他向我点了点头。|向 + đối tượng đứng trước động từ.|Anh ấy gật đầu với tôi.
-25|由于他的帮助，我完成了工作。|因为你的帮助，我完成了工作。|由于他帮助的，我完成了工作。|由于他的帮助，我完成了工作。|Danh từ chỉ nguyên nhân dùng 的 ở giữa: 他的帮助.|Nhờ có sự giúp đỡ của anh ấy, tôi đã hoàn thành công việc.
-26|为了让你开心，我做了蛋糕。|为了安全，请系好安全带。|让你开心为了，我做了蛋糕。|为了让你开心，我做了蛋糕。|为了 đứng ở đầu vế chỉ mục đích.|Để bạn vui, tôi đã làm bánh kem.
+25|由于他的帮助，我做完了工作。|因为你的帮助，我做完了工作。|由于他帮助的，我做完了工作。|由于他的帮助，我做完了工作。|Danh từ chỉ nguyên nhân dùng 的 ở giữa: 他的帮助.|Nhờ sự giúp đỡ của anh ấy, tôi đã làm xong công việc.
+26|为了让你开心，我做了蛋糕。|为了你，我来了。|让你开心为了，我做了蛋糕。|为了让你开心，我做了蛋糕。|为了 đứng ở đầu vế chỉ mục đích.|Để bạn vui, tôi đã làm bánh kem.
 29|大家按照老师说的做。|请按时吃药。|大家老师按照说的做。|大家按照老师说的做。|按照 + căn cứ + động từ: chủ ngữ đứng trước 按照.|Mọi người làm theo lời thầy giáo nói.
 31|老师听了哈哈笑了起来。|孩子们哈哈地笑着。|老师听了哈哈起来笑。|老师听了哈哈笑了起来。|笑 + 了起来: 起来 đứng sau 笑了.|Thầy giáo nghe xong liền cười ha hả.
 32|他和我是同学。|我和你一起去。|他是和我同学。|他和我是同学。|Cụm danh từ nối bằng 和 đứng trước 是: 他和我.|Anh ấy và tôi là bạn học.
-33|他一遍一遍地读课文。|她一次一次地试。|他一遍一遍读地课文。|他一遍一遍地读课文。|Số-lượng lặp + 地 + động từ.|Anh ấy đọc bài khóa từng lượt từng lượt.
+33|他一遍一遍地读书。|她一次一次地试。|他一遍一遍读地书。|他一遍一遍地读书。|Số-lượng lặp + 地 + động từ.|Anh ấy đọc sách từng lượt một.
 35|看起来他很高兴。|她看起来很年轻。|看起来他高兴很。|看起来他很高兴。|很 đứng trước tính từ.|Trông anh ấy có vẻ rất vui.
 36|这本书看上去很有意思。|那个人看上去不太高兴。|这本书看上去有很意思。|这本书看上去很有意思。|很有意思: 很 đứng trước 有.|Cuốn sách này trông rất thú vị.
-43|锻炼身体对健康有好处。|吸烟有害健康。|锻炼身体对健康好处有。|锻炼身体对健康有好处。|有好处: 动词 有 đứng trước danh từ 好处.|Rèn luyện thân thể có lợi cho sức khỏe.
+43|运动对身体很好。|睡太晚对身体不好。|运动对很好身体。|运动对身体很好。|对 + đối tượng đứng trước vị ngữ: 对身体很好.|Vận động rất tốt cho cơ thể.
 47|他跑出去了。|请你走进来。|他跑去出了。|他跑出去了。|Bổ ngữ xu hướng kép: 出 + 去.|Anh ấy chạy ra ngoài rồi.
 50|他去过两次上海。|我给他打过一次电话。|他去两次过上海。|他去过两次上海。|过 đứng ngay sau động từ, trước số lượng.|Anh ấy đã đến Thượng Hải hai lần.
 51|我等了他一个小时。|我们学了两个小时汉语。|我等一个小时了他。|我等了他一个小时。|Tân ngữ đại từ đứng trước thời lượng: 等了他一个小时.|Tôi đã đợi anh ấy một tiếng.
-59|他骑自行车骑得很快。|我做饭做得不太好。|我做饭得不太好。|我做饭做得不太好。|Phải lặp động từ trước 得 khi có tân ngữ.|Tôi nấu ăn không giỏi lắm.
+59|他开车开得很快。|我做饭做得不太好。|我做饭得不太好。|我做饭做得不太好。|Phải lặp động từ trước 得 khi có tân ngữ.|Tôi nấu ăn không giỏi lắm.
 70|只有坚持，才能成功。|只有注意休息，病才能好。|只有坚持，成功才能。|只有坚持，才能成功。|才 đứng trước động từ năng nguyện 能.|Chỉ có kiên trì mới thành công được.
-71|由于下雪，路很滑。|由于他不努力，成绩不好。|由于他不努力，所以成绩好不。|由于他不努力，所以成绩不好。|不 đứng trước tính từ 好.|Do anh ấy không cố gắng nên thành tích không tốt.
-72|为了不让妈妈担心，他没说实话。|为了不迟到，他早点儿出发。|为了让不妈妈担心，他没说实话。|为了不让妈妈担心，他没说实话。|不 đứng ngay trước 让.|Để mẹ không lo lắng, anh ấy đã không nói thật.
+71|由于下雪，我们没出去。|由于他不努力，汉语不好。|由于他不努力，所以汉语好不。|由于他不努力，所以汉语不好。|不 đứng trước tính từ 好.|Do anh ấy không cố gắng nên tiếng Trung không tốt.
+72|为了不让妈妈知道，他没告诉她。|为了不迟到，他早点儿走。|为了让不妈妈知道，他没告诉她。|为了不让妈妈知道，他没告诉她。|不 đứng ngay trước 让.|Để mẹ không biết, anh ấy đã không nói với bà.
 73|我们到了就吃饭。|他起了床就看手机。|我们到就了吃饭。|我们到了就吃饭。|了 đứng ngay sau động từ, rồi mới đến 就.|Chúng tôi đến nơi là ăn cơm.
 78|你也喜欢？|他还没吃饭？|你是不是也喜欢吗？|你是不是也喜欢？|Câu hỏi chính phản (是不是) không thêm 吗.|Có phải bạn cũng thích không?
-80|不吃就不吃吧，别生气。|算了就算了吧，别想了。|不吃吧就不吃，别生气。|不吃就不吃吧，别生气。|吧 đặt ở cuối cụm X就X.|Không ăn thì thôi, đừng giận.
-27|我把房间收拾好了。|信被小王拿走了。|我房间把收拾好了。|我把房间收拾好了。|把 đứng trước tân ngữ và phải đứng trước động từ chính: 把 + O + V.|Tôi dọn dẹp xong phòng rồi.
-27|门被风吹开了。|他把杯子放在桌子上。|门被吹开了风。|门被风吹开了。|Câu bị động: chủ ngữ + 被 + tác nhân + động từ.|Cửa bị gió thổi mở rồi.
-27|妈妈把菜洗好了。|我的手机被小偷偷走了。|我的手机被偷走小偷了。|我的手机被小偷偷走了。|Tác nhân (小偷) đứng ngay sau 被, trước động từ.|Điện thoại của tôi bị kẻ trộm lấy đi rồi.
+80|不吃就不吃吧，别生气。|不去就不去吧，别想了。|不吃吧就不吃，别生气。|不吃就不吃吧，别生气。|吧 đặt ở cuối cụm X就X.|Không ăn thì thôi, đừng giận.
+27|我把衣服洗好了。|信被小王拿走了。|我衣服把洗好了。|我把衣服洗好了。|把 đứng trước tân ngữ và phải đứng trước động từ chính: 把 + O + V.|Tôi giặt xong quần áo rồi.
+27|门被小王打开了。|他把杯子给我了。|门被打开了小王。|门被小王打开了。|Câu bị động: chủ ngữ + 被 + tác nhân + động từ.|Cửa bị Tiểu Vương mở ra rồi.
+27|妈妈把菜洗好了。|我的手机被同学拿走了。|我的手机被拿走同学了。|我的手机被同学拿走了。|Tác nhân (同学) đứng ngay sau 被, trước động từ.|Điện thoại của tôi bị bạn học lấy đi rồi.
 54|请把门关上。|我把钱包忘在家里了。|请把关门上。|请把门关上。|把 + tân ngữ + động từ + bổ ngữ: 把门关上.|Xin hãy đóng cửa lại.
 54|他把那本书看完了。|她把衣服洗干净了。|他把看完了那本书。|他把那本书看完了。|Tân ngữ của 把 phải đứng ngay sau 把, không đặt sau động từ.|Anh ấy đọc xong cuốn sách đó rồi.
-54|我想把这个送给你。|你把照片拿过来吧。|我想送把这个给你。|我想把这个送给你。|把 phải đứng trước động từ 送: 把 + O + 送给 + người.|Tôi muốn tặng cái này cho bạn.
-55|我的自行车被朋友骑走了。|杯子被他打破了。|我的自行车骑走被朋友了。|我的自行车被朋友骑走了。|被 đứng trước động từ, theo sau là tác nhân rồi mới đến động từ.|Xe đạp của tôi bị bạn đi mất rồi.
-55|蛋糕让弟弟吃完了。|窗户叫风吹开了。|蛋糕让吃完弟弟了。|蛋糕让弟弟吃完了。|让/叫 trong câu bị động bắt buộc phải có tác nhân đứng ngay sau.|Bánh kem bị em trai ăn hết rồi.
-55|他被同学笑了。|我被朋友骗了。|他被笑同学了。|他被同学笑了。|Tác nhân 同学 phải đứng giữa 被 và động từ 笑.|Anh ấy bị bạn học cười.
+54|我想把这个送给你。|你把书拿过来吧。|我想送把这个给你。|我想把这个送给你。|把 + tân ngữ đứng trước động từ 送.|Tôi muốn tặng cái này cho bạn.
+55|我的车被朋友开走了。|杯子被他打破了。|我的车开走被朋友了。|我的车被朋友开走了。|被 + tác nhân đứng trước động từ.|Xe của tôi bị bạn lái đi rồi.
+55|蛋糕让弟弟吃完了。|门叫弟弟打开了。|蛋糕让吃完弟弟了。|蛋糕让弟弟吃完了。|让/叫 trong câu bị động bắt buộc phải có tác nhân đứng ngay sau.|Bánh kem bị em trai ăn hết rồi.
+55|他被同学笑了。|我被朋友叫走了。|他被笑同学了。|他被同学笑了。|Tác nhân 同学 phải đứng giữa 被 và động từ 笑.|Anh ấy bị bạn học cười.
 56|我去超市买东西。|他坐地铁去上班。|我去买东西超市。|我去超市买东西。|Câu liên động: V1 + O1 rồi mới đến V2 + O2, theo thứ tự hành động.|Tôi đi siêu thị mua đồ.
-56|她用手机看电影。|我们骑车去公园玩儿。|她看电影用手机。|她用手机看电影。|Phương tiện/cách thức (用手机) đứng trước hành động chính (看电影).|Cô ấy dùng điện thoại xem phim.
+56|她用手机看电影。|我们坐车去公园玩儿。|她看电影用手机。|她用手机看电影。|用 + công cụ đứng trước động từ chính.|Cô ấy dùng điện thoại xem phim.
 56|他回家吃饭了。|她来北京学汉语。|我想去看病医院。|我想去医院看病。|Thứ tự: 去 + nơi chốn + hành động mục đích (看病); không đặt nơi chốn sau 看病.|Tôi muốn đến bệnh viện khám bệnh.
 57|老师让我们回家。|妈妈叫我早点儿睡。|老师让回家我们。|老师让我们回家。|Kiêm ngữ: 让 + người + động từ; người vừa là tân ngữ của 让, vừa là chủ ngữ của động từ sau.|Cô giáo bảo chúng tôi về nhà.
 57|请你告诉我他的电话。|我请朋友吃饭。|我请吃饭朋友。|我请朋友吃饭。|请 + người + động từ: 请朋友吃饭.|Tôi mời bạn ăn cơm.
-57|这件事让我很高兴。|医生不让他喝酒。|医生让不他喝酒。|医生不让他喝酒。|Phó từ phủ định 不 đặt trước 让.|Bác sĩ không cho anh ấy uống rượu.
+57|这件事让我很高兴。|医生不让他喝茶。|医生让不他喝茶。|医生不让他喝茶。|Phủ định 不 đứng trước 让.|Bác sĩ không cho anh ấy uống trà.
 59|他写字写得很快。|我吃饭吃得很慢。|他写字得很快。|他写字写得很快。|Có tân ngữ thì phải lặp lại động từ: 写字写得.|Anh ấy viết chữ rất nhanh.
-59|她唱歌唱得真好。|弟弟踢足球踢得很棒。|她唱歌得真好。|她唱歌唱得真好。|Cấu trúc: V + O + V + 得 + bổ ngữ; không được bỏ động từ lặp.|Cô ấy hát thật hay.
+59|她唱歌唱得真好。|弟弟踢足球踢得很好。|她唱歌得真好。|她唱歌唱得真好。|Cấu trúc: V + O + V + 得 + bổ ngữ; không được bỏ động từ lặp.|Cô ấy hát thật hay.
 59|我开车开得不快。|妈妈做饭做得很好吃。|我开车开不得快。|我开车开得不快。|Phủ định đặt ở bổ ngữ: V + 得 + 不 + adj.|Tôi lái xe không nhanh.
 77|我是昨天到的。|你是怎么来的？|我是到昨天的。|我是昨天到的。|是……的 nhấn mạnh thời gian: 是 + thời gian + động từ + 的.|Tôi đến vào hôm qua.
 77|他是在北京学的汉语。|我是坐飞机来的。|他是学在北京的汉语。|他是在北京学的汉语。|Địa điểm cần nhấn mạnh đứng sau 是 và trước động từ.|Anh ấy học tiếng Trung ở Bắc Kinh.
 46|我找到了我的手机。|请你记住这个电话。|我找了到我的手机。|我找到了我的手机。|Bổ ngữ kết quả 到 đi liền sau động từ, 了 đặt sau 到.|Tôi tìm thấy điện thoại của mình rồi.
 46|他买到了火车票。|你拿走我的书了吗？|他买了到火车票。|他买到了火车票。|了 đứng sau bổ ngữ kết quả 到, không chen giữa động từ và bổ ngữ.|Anh ấy mua được vé tàu rồi.
-46|我听到有人在敲门。|我把名字写错了。|我听有人在敲门到。|我听到有人在敲门。|Bổ ngữ kết quả 到 đặt ngay sau động từ 听.|Tôi nghe thấy có người đang gõ cửa.
+46|我听到有人在叫我。|我把名字写错了。|我听有人在叫我到。|我听到有人在叫我。|Bổ ngữ kết quả 到 đặt ngay sau động từ 听.|Tôi nghe thấy có người đang gọi tôi.
 46|他站住了。|我已经记住了他的名字。|他住站了。|他站住了。|Bổ ngữ kết quả đứng sau động từ: 站住.|Anh ấy đứng lại rồi.
 47|他跑回家来了。|她从楼上走下来。|他跑回来家了。|他跑回家来了。|Tân ngữ nơi chốn (家) phải chen giữa 回 và 来: V + 回 + nơi chốn + 来.|Anh ấy chạy về nhà rồi.
 47|请你把书拿出来。|孩子们跑进教室去了。|请你把书拿来出。|请你把书拿出来。|Thứ tự bổ ngữ xu hướng kép: 出 + 来, không đảo ngược.|Xin bạn lấy sách ra.
-47|他坐下来了。|雨停下来了。|他下坐来了。|他坐下来了。|Động từ đứng trước bổ ngữ xu hướng: 坐下来.|Anh ấy ngồi xuống rồi.
-48|这句话我听不懂。|你写得完作业吗？|这句话我听懂不。|这句话我听不懂。|Bổ ngữ khả năng phủ định: V + 不 + kết quả (听不懂).|Câu này tôi nghe không hiểu.
+47|他坐下来了。|雨下起来了。|他下坐来了。|他坐下来了。|坐 đứng trước bổ ngữ xu hướng 下来.|Anh ấy ngồi xuống rồi.
+48|他的话我听不懂。|你写得完字吗？|他的话我听懂不。|他的话我听不懂。|Khả năng phủ định: 不 chen giữa động từ và bổ ngữ.|Lời anh ấy nói tôi nghe không hiểu.
 48|房间太小，坐不下十个人。|我吃得完这些菜。|房间太小，坐下不十个人。|房间太小，坐不下十个人。|Dạng phủ định chen 不 giữa động từ và bổ ngữ: 坐不下.|Phòng nhỏ quá, không ngồi vừa mười người.
-48|黑板上的字你看得见吗？|山太高了，我爬不上去。|山太高了，我不爬得上去。|山太高了，我爬不上去。|Không đặt 不 trước động từ mà chen vào giữa: 爬不上去.|Núi cao quá, tôi leo không lên được.
-49|他激动得哭了。|今天冷极了。|他激动哭得了。|他激动得哭了。|得 đứng ngay sau tính từ/động từ để nối với bổ ngữ mức độ.|Anh ấy xúc động đến bật khóc.
+48|黑板上的字你看得见吗？|楼太高了，我走不上去。|楼太高了，我不走得上去。|楼太高了，我走不上去。|Khả năng phủ định: V + 不 + bổ ngữ.|Tòa nhà cao quá, tôi đi không lên được.
+49|他高兴得哭了。|今天冷极了。|他高兴哭得了。|他高兴得哭了。|得 đứng ngay sau tính từ/động từ để nối với bổ ngữ mức độ.|Anh ấy vui đến bật khóc.
 49|这个菜好吃得很。|我累得不想说话。|这个菜好吃很得。|这个菜好吃得很。|Cấu trúc: tính từ + 得 + 很.|Món này ngon vô cùng.
 49|她高兴得说不出话来。|他忙得没时间吃饭。|他忙得没吃饭时间。|他忙得没时间吃饭。|Sau 没 là danh từ 时间 rồi mới đến động từ 吃饭.|Anh ấy bận đến mức không có thời gian ăn cơm.
 50|我见过他两次。|她看了这部电影三遍。|我见过两次他。|我见过他两次。|Tân ngữ là đại từ nhân xưng phải đứng trước động lượng từ.|Tôi đã gặp anh ấy hai lần.
-50|请你再读一遍。|他敲了三下门。|请你读再一遍。|请你再读一遍。|Phó từ 再 đứng trước động từ, động lượng từ đứng sau động từ.|Xin bạn đọc lại một lần nữa.
+50|请你再读一遍。|他读了三遍书。|请你读再一遍。|请你再读一遍。|Phó từ 再 đứng trước động từ, động lượng từ đứng sau động từ.|Xin bạn đọc lại một lần nữa.
 50|我找了他三次。|他去过一次上海。|我找了三次他。|我找了他三次。|Đại từ làm tân ngữ đứng trước động lượng từ.|Tôi đã tìm anh ấy ba lần.
 51|我学了两年汉语。|他睡了八个小时。|我学汉语了两年。|我学了两年汉语。|Thời lượng đặt sau động từ (có 了): V + 了 + thời lượng + O.|Tôi đã học tiếng Trung hai năm.
 51|他看了一个晚上电视。|我们休息了十分钟。|他看电视了一个晚上。|他看了一个晚上电视。|Thời lượng đứng sau V了 và trước tân ngữ (hoặc lặp động từ: 看电视看了一个晚上).|Anh ấy xem tivi cả buổi tối.
 51|我等了你半个小时。|她在北京住了三年。|我等半个小时了你。|我等了你半个小时。|Đại từ làm tân ngữ đứng trước thời lượng: 等了你半个小时.|Tôi đã đợi bạn nửa tiếng.
-52|我来中国三个月了。|他毕业两年了。|我三个月来中国了。|我来中国三个月了。|Cấu trúc: V + O + khoảng thời gian + 了 cho thời gian tính từ lúc sự việc xảy ra đến nay.|Tôi đến Trung Quốc ba tháng rồi.
+52|我来中国三个月了。|他结婚两年了。|我三个月来中国了。|我来中国三个月了。|Khoảng thời gian đặt sau động từ, 了 ở cuối câu.|Tôi đến Trung Quốc ba tháng rồi.
 52|他离开家一年了。|我们认识三年了。|他一年离开家了。|他离开家一年了。|Khoảng thời gian đặt sau động từ/tân ngữ, cuối câu có 了.|Anh ấy rời nhà một năm rồi.
-52|我毕业三年了。|她去上海两个星期了。|我毕业了三年。|我毕业三年了。|Với động từ không kéo dài (毕业), dùng 了 ở cuối câu chứ không đặt sau động từ.|Tôi tốt nghiệp ba năm rồi.
-11|这里的学生个个都很聪明。|他天天都去跑步。|这里的学生个个很都聪明。|这里的学生个个都很聪明。|Sau lượng từ lặp dùng 都, và 都 đứng trước 很.|Học sinh ở đây đứa nào cũng thông minh.
+52|我搬家三年了。|她去上海两个星期了。|我搬家了三年。|我搬家三年了。|Khoảng thời gian + 了 đặt cuối câu.|Tôi chuyển nhà ba năm rồi.
+11|这里的学生个个都很好。|他天天都去跑步。|这里的学生个个很都好。|这里的学生个个都很好。|都 đứng sau lượng từ lặp, trước 很 + tính từ.|Học sinh ở đây ai cũng rất tốt.
 11|人人都想去北京。|我们班的同学个个都爱唱歌。|人人想都去北京。|人人都想去北京。|都 đứng trước động từ năng nguyện 想.|Ai cũng muốn đi Bắc Kinh.
 11|这些苹果个个又大又红。|家家都有电视。|这些苹果个个大又又红。|这些苹果个个又大又红。|Cấu trúc 又……又……: 又大又红.|Những quả táo này quả nào cũng vừa to vừa đỏ.
 33|请大家一个一个地进来。|她一件一件地试衣服。|请大家一个一个进地来。|请大家一个一个地进来。|Số-lượng từ lặp + 地 rồi mới đến động từ.|Mời mọi người lần lượt từng người vào.
 33|孩子们一个一个地回答问题。|他一口一口地喝着茶。|孩子们一个一个回答地问题。|孩子们一个一个地回答问题。|地 đứng sau 一个一个, trước động từ.|Bọn trẻ lần lượt trả lời từng câu hỏi.
-33|她把书一本一本地放进书包里。|老师一个一个地检查作业。|她把书一本一本放地进书包里。|她把书一本一本地放进书包里。|地 gắn ngay sau số-lượng từ lặp, trước động từ 放.|Cô ấy bỏ từng cuốn sách vào cặp.
+33|她把书一本一本地拿进来。|老师一个一个地问他们。|她把书一本一本拿地进来。|她把书一本一本地拿进来。|Số-lượng lặp + 地 + động từ.|Cô ấy mang từng quyển sách vào.
 41|我一个人也不认识。|他一口水也没喝。|我也一个人不认识。|我一个人也不认识。|Cấu trúc: 一 + lượng từ + danh từ + 也/都 + 不/没 + động từ.|Tôi chẳng quen một ai.
-41|房间里一个人都没有。|他一句话也不说。|房间里都一个人没有。|房间里一个人都没有。|一 + lượng từ + danh từ đứng trước 都/也, rồi mới đến phủ định.|Trong phòng không có một ai.
+41|房间里一个人都没有。|他一个字也不写。|房间里都一个人没有。|房间里一个人都没有。|都 đứng trước 没有.|Trong phòng không có một ai.
 41|今天我一点儿东西也没吃。|她一次也没去过。|今天我也一点儿东西没吃。|今天我一点儿东西也没吃。|也 đứng sau thành phần 一点儿 + danh từ, ngay trước 没.|Hôm nay tôi chưa ăn chút gì cả.
-42|风越刮越大。|他越跑越快。|风越大刮越。|风越刮越大。|越 + động từ + 越 + tính từ.|Gió càng thổi càng mạnh.
+42|他越学越高兴。|他越跑越快。|他学越越高兴。|他越学越高兴。|越 + V + 越 + Adj.|Anh ấy càng học càng vui.
 42|汉语越学越有意思。|我越想越生气。|汉语越学有意思越。|汉语越学越有意思。|Mỗi 越 phải đứng trước một động từ/tính từ.|Tiếng Trung càng học càng thú vị.
 42|你越着急，越容易出错。|天气越来越冷了。|你越着急，容易越出错。|你越着急，越容易出错。|Vế sau cũng dùng 越 đứng trước 容易.|Bạn càng sốt ruột càng dễ sai.
-58|他比我高两厘米。|今天比昨天冷。|他比我两厘米高。|他比我高两厘米。|Chênh lệch số lượng đứng sau tính từ: A + 比 + B + adj + số lượng.|Anh ấy cao hơn tôi hai xăng-ti-mét.
+58|他比我大两岁。|今天比昨天冷。|他比我两岁大。|他比我大两岁。|Chênh lệch số lượng đứng sau tính từ: A + 比 + B + adj + số lượng.|Anh ấy lớn hơn tôi hai tuổi.
 58|我的汉语没有你的好。|哥哥比我大三岁。|我的汉语没你有的好。|我的汉语没有你的好。|Cấu trúc phủ định: A + 没有 + B + adj.|Tiếng Trung của tôi không tốt bằng của bạn.
 58|这件衣服比那件贵得多。|她跑得比我快。|这件衣服很比那件贵。|这件衣服比那件贵得多。|Không dùng 很 trước tính từ trong câu 比; muốn nhấn mạnh dùng 得多/多了.|Cái áo này đắt hơn cái kia nhiều.
 58|他说汉语说得比我好。|我家比你家远。|他说汉语说得比好我。|他说汉语说得比我好。|Trật tự: 比 + đối tượng so sánh + tính từ.|Anh ấy nói tiếng Trung giỏi hơn tôi.
 74|他三十多岁。|这件衣服两百块左右。|他三十岁多。|他三十多岁。|Với số tròn chục, 多 đặt ngay sau số từ rồi mới đến lượng từ: 三十多岁.|Anh ấy hơn ba mươi tuổi.
-74|教室里有十来个人。|我家离学校一公里左右。|教室里有来十个人。|教室里有十来个人。|来 đứng sau số từ: 十来个.|Trong lớp có khoảng mười người.
+74|教室里有十来个人。|我等了他十分钟左右。|教室里有来十个人。|教室里有十来个人。|来 đứng sau số từ: 十来个.|Trong lớp có khoảng mười người.
 74|他四十岁上下。|我等了二十分钟左右。|我等了左右二十分钟。|我等了二十分钟左右。|左右 đứng sau cụm số lượng.|Tôi đợi khoảng hai mươi phút.
-75|我一点儿也不累。|这个菜一点儿都不辣。|我也一点儿不累。|我一点儿也不累。|Cấu trúc: 一点儿 + 也/都 + 不 + adj.|Tôi chẳng mệt chút nào.
+75|我一点儿也不累。|这个菜一点儿都不贵。|我也一点儿不累。|我一点儿也不累。|Trật tự cố định: 一点儿 + 也 / 都 + 不.|Tôi không mệt chút nào.
 75|他一点儿也不害怕。|今天一点儿也不冷。|他一点儿不也害怕。|他一点儿也不害怕。|也 đứng giữa 一点儿 và 不.|Anh ấy chẳng sợ chút nào.
 75|这个问题一点儿都不难。|我一点儿也不想去。|这个问题都一点儿不难。|这个问题一点儿都不难。|都 đứng sau 一点儿, trước 不.|Câu hỏi này chẳng khó chút nào.
 75|她一点儿也不喜欢吃鱼。|我一点儿也没睡。|她一点儿也喜欢不吃鱼。|她一点儿也不喜欢吃鱼。|不 đứng trước 喜欢, sau 也.|Cô ấy chẳng thích ăn cá chút nào.
-31|他哈哈大笑起来。|雨哗哗地下着。|他笑哈哈大起来。|他哈哈大笑起来。|Từ tượng thanh 哈哈 đứng trước 大笑 để miêu tả tiếng cười.|Anh ấy cười ha hả.
-31|有人咚咚地敲门。|水哗哗地流。|有人敲咚咚地门。|有人咚咚地敲门。|Từ tượng thanh + 地 làm trạng ngữ, đứng trước động từ.|Có người cốc cốc gõ cửa.
+31|他哈哈大笑起来。|大家听了都哈哈地笑。|他笑哈哈大起来。|他哈哈大笑起来。|Từ tượng thanh 哈哈 đứng trước 大笑 để miêu tả tiếng cười.|Anh ấy cười ha hả.
+31|孩子们哈哈地笑着。|他哈哈一笑，什么也没说。|他哈哈一笑，什么也说没。|他哈哈一笑，什么也没说。|Từ tượng thanh + 地 / + động từ làm trạng ngữ, đứng trước động từ; 没 đứng trước 说.|Anh ấy cười ha hả, chẳng nói gì.
 34|这件衣服不大不小。|今天不冷不热。|这件衣服不大小不。|这件衣服不大不小。|不A不B: hai tính từ đối lập, mỗi từ có 不 đứng trước.|Cái áo này không to không nhỏ.
-34|他来得不早不晚。|这个菜不咸不淡。|他来得不早晚不。|他来得不早不晚。|Mỗi vế đều có 不: 不早不晚.|Anh ấy đến không sớm không muộn.
-35|她看起来很高兴。|这道菜看起来很好吃。|她很高兴看起来。|她看起来很高兴。|看起来 đứng trước phần nhận xét.|Cô ấy trông có vẻ rất vui.
+34|他来得不早不晚。|这杯水不冷不热。|他来得不早晚不。|他来得不早不晚。|Mỗi vế đều có 不: 不早不晚.|Anh ấy đến không sớm không muộn.
+35|她看起来很高兴。|这个菜看起来很好吃。|她很高兴看起来。|她看起来很高兴。|看起来 đứng trước phần miêu tả.|Trông cô ấy rất vui.
 36|这个房子看上去很新。|她看上去只有二十岁。|这个房子很新看上去。|这个房子看上去很新。|看上去 làm trạng ngữ, đứng trước vị ngữ.|Căn nhà này trông rất mới.
 37|我们有的是时间。|他有的是钱。|我们有是的时间。|我们有的是时间。|有的是 là cụm cố định, không tách rời 的 và 是.|Chúng ta có thừa thời gian.
-37|这里有的是好吃的。|别着急，机会有的是。|这里的有是好吃的。|这里有的是好吃的。|Cố định: 有的是 + danh từ (rất nhiều).|Ở đây có thừa đồ ngon.
+37|这里有的是好吃的。|别忙，时间有的是。|这里的有是好吃的。|这里有的是好吃的。|有的是 là cụm cố định, không tách 有 và 的.|Ở đây có đầy đồ ngon.
 76|你不是去北京了吗？|难道你不知道吗？|你不是了去北京吗？|你不是去北京了吗？|Câu phản vấn 不是……吗: 了 đứng sau động từ/cụm động từ, trước 吗.|Chẳng phải bạn đã đi Bắc Kinh rồi sao?
 76|难道他不知道这件事吗？|你不是说你不去吗？|难道不他知道这件事吗？|难道他不知道这件事吗？|难道 đứng trước chủ ngữ; 不 đứng trước động từ.|Lẽ nào anh ấy không biết chuyện này sao?
 78|你明天去北京？|他是你哥哥？|你明天去北京吗吧？|你明天去北京？|Câu hỏi bằng ngữ điệu không thêm 吗 hay 吧 chồng lên nhau.|Ngày mai bạn đi Bắc Kinh à?
 79|都十二点了，快睡觉吧。|他都三十岁了，还没结婚。|十二点都了，快睡觉吧。|都十二点了，快睡觉吧。|都 đứng trước thời gian/số lượng, 了 ở cuối.|Đã mười hai giờ rồi, mau đi ngủ thôi.
-79|天都黑了，我们回家吧。|饭都凉了，快吃吧。|天黑都了，我们回家吧。|天都黑了，我们回家吧。|都 đứng trước động từ/tính từ, 了 đứng sau.|Trời tối rồi, chúng ta về nhà thôi.
+79|天都黑了，我们回家吧。|饭都冷了，快吃吧。|天黑都了，我们回家吧。|天都黑了，我们回家吧。|都 đứng trước động từ/tính từ, 了 đứng sau.|Trời tối rồi, chúng ta về nhà thôi.
 80|难就难吧，我想试试。|去就去吧，怕什么。|难吧就难，我想试试。|难就难吧，我想试试。|Cấu trúc X就X吧, 吧 ở cuối cụm.|Khó thì khó vậy, tôi muốn thử.
-81|哭什么哭，别哭了！|急什么急，还有时间。|什么哭哭，别哭了！|哭什么哭，别哭了！|Cấu trúc X什么X: 什么 chen giữa hai động từ lặp.|Khóc cái gì mà khóc, đừng khóc nữa!
-32|我喜欢红色的帽子。|桌子上有书和笔。|我喜欢帽子红色的。|我喜欢红色的帽子。|Cụm chính-phụ: định ngữ (红色的) đứng trước trung tâm ngữ (帽子).|Tôi thích chiếc mũ màu đỏ.
+81|哭什么哭，别哭了！|忙什么忙，还有时间。|什么哭哭，别哭了！|哭什么哭，别哭了！|X什么X: 什么 chen giữa hai từ giống nhau.|Khóc gì mà khóc, đừng khóc nữa!
+32|我喜欢红色的衣服。|桌子上有书和笔。|我喜欢衣服红色的。|我喜欢红色的衣服。|Định ngữ + 的 đứng trước danh từ trung tâm.|Tôi thích quần áo màu đỏ.
 32|老师和学生都在教室里。|爸爸妈妈去上班了。|老师学生和都在教室里。|老师和学生都在教室里。|Cụm đẳng lập: 和 nằm giữa hai thành phần ngang hàng.|Thầy cô và học sinh đều ở trong lớp.
 32|他的爸爸是医生。|我弟弟的同学来了。|他爸爸的是医生。|他的爸爸是医生。|Cụm chính-phụ: 的 nằm giữa định ngữ (他) và trung tâm ngữ (爸爸).|Bố anh ấy là bác sĩ.
-32|他们三个人一起去旅游。|桌子上放着两本书。|他们人三个一起去旅游。|他们三个人一起去旅游。|Cụm số-lượng: số từ + lượng từ + danh từ: 三个人.|Ba người họ cùng đi du lịch.
+32|他们三个人一起去旅游。|桌子上有两本书。|他们人三个一起去旅游。|他们三个人一起去旅游。|Số từ + lượng từ đứng trước danh từ: 三个人.|Ba người họ cùng đi du lịch.
 32|学校前面有一个超市。|我们在教室里上课。|学校有前面一个超市。|学校前面有一个超市。|Cụm phương vị đứng đầu câu chỉ nơi chốn: 学校前面 + 有 + danh từ.|Phía trước trường có một siêu thị.
 40|对我来说，汉字很难。|对学生来说，学习最重要。|对来说我，汉字很难。|对我来说，汉字很难。|Cấu trúc: 对 + người + 来说, đứng đầu câu.|Đối với tôi, chữ Hán rất khó.
 40|对孩子来说，这本书太难了。|对他来说，这不是问题。|对孩子说来，这本书太难了。|对孩子来说，这本书太难了。|Cố định 对……来说, không đảo 来说 thành 说来.|Đối với trẻ con, cuốn sách này khó quá.
-40|对老年人来说，健康最重要。|对我们来说，时间很宝贵。|对老年人来说，最重要健康。|对老年人来说，健康最重要。|Sau 对……来说 là một mệnh đề đầy đủ: chủ ngữ + 最 + adj.|Đối với người già, sức khỏe là quan trọng nhất.
-40|对大多数人来说，这个价格太高了。|对她来说，跳舞很简单。|对她来说，很简单跳舞。|对她来说，跳舞很简单。|Chủ ngữ (跳舞) đứng trước vị ngữ (很简单).|Đối với cô ấy, nhảy múa rất đơn giản.
-40|对我来说，去哪儿都可以。|对留学生来说，语言是第一个问题。|对我来说都可以，去哪儿。|对我来说，去哪儿都可以。|Nghi vấn từ 哪儿 đứng trước 都 trong vế sau.|Đối với tôi, đi đâu cũng được.
-43|锻炼对身体很好。|学习很重要。|锻炼很对身体好。|锻炼对身体很好。|Giới từ 对 + đối tượng đứng trước vị ngữ.|Tập thể dục rất tốt cho sức khỏe.
-43|吸烟不好。|诚实是一种美德。|吸烟好不。|吸烟不好。|不 đứng trước tính từ làm vị ngữ: 不好.|Hút thuốc không tốt.
+40|对老年人来说，身体最重要。|对我们来说，时间很重要。|对老年人来说，最重要身体。|对老年人来说，身体最重要。|Sau 对……来说 là một mệnh đề đầy đủ: chủ ngữ + 最 + adj.|Đối với người già, sức khỏe là quan trọng nhất.
+40|对很多人来说，这个价格太高了。|对她来说，跳舞很简单。|对她来说，很简单跳舞。|对她来说，跳舞很简单。|很 đứng trước tính từ: 很简单.|Đối với cô ấy, nhảy múa rất đơn giản.
+40|对我来说，去哪儿都可以。|对留学生来说，汉字最难。|对我来说都可以，去哪儿。|对我来说，去哪儿都可以。|Nghi vấn từ 哪儿 đứng trước 都 trong vế sau.|Đối với tôi, đi đâu cũng được.
+43|运动对身体很好。|学习很重要。|运动很对身体好。|运动对身体很好。|对 + đối tượng đứng trước vị ngữ: 对身体很好.|Vận động rất tốt cho cơ thể.
+43|运动很重要。|读书是一种好习惯。|运动重要很。|运动很重要。|很 đứng trước tính từ làm vị ngữ: 很重要.|Vận động rất quan trọng.
 43|跑步是我的爱好。|读书使人快乐。|跑步我的爱好是。|跑步是我的爱好。|Động từ 跑步 làm chủ ngữ; 是 nối chủ ngữ và vị ngữ.|Chạy bộ là sở thích của tôi.
-43|早起对健康有好处。|安静是学习的好条件。|早起有对健康好处。|早起对健康有好处。|对 + đối tượng đứng trước 有好处.|Dậy sớm có lợi cho sức khỏe.
+43|早起对身体很好。|安静是学习的好条件。|早起有对身体很好。|早起对身体很好。|对 + đối tượng đứng trước vị ngữ.|Dậy sớm rất tốt cho cơ thể.
 43|唱歌让人高兴。|看书是一种休息。|唱歌高兴让人。|唱歌让人高兴。|让 + người + tính từ/động từ (kiêm ngữ).|Ca hát khiến người ta vui.
 44|我喜欢游泳。|他觉得汉语很有意思。|我游泳喜欢。|我喜欢游泳。|Tân ngữ (游泳) đứng sau động từ 喜欢.|Tôi thích bơi lội.
 44|我希望你能来。|大家都知道他是医生。|我你能来希望。|我希望你能来。|Mệnh đề làm tân ngữ đứng sau 希望.|Tôi hy vọng bạn có thể đến.
 44|他说明天会下雨。|我觉得这个问题很难。|他明天会下雨说。|他说明天会下雨。|Mệnh đề làm tân ngữ đứng sau động từ 说.|Anh ấy nói ngày mai sẽ mưa.
-44|我怕迟到。|她打算去北京学汉语。|我迟到怕。|我怕迟到。|Động từ làm tân ngữ đứng sau động từ chính.|Tôi sợ đến muộn.
+44|我怕迟到。|她想去北京学汉语。|我迟到怕。|我怕迟到。|怕 là động từ tâm lý, đứng trước động từ / cụm động từ làm tân ngữ.|Tôi sợ đến muộn.
 44|我知道他不喜欢这里。|我听说你要去中国。|我知道不他喜欢这里。|我知道他不喜欢这里。|Trong mệnh đề tân ngữ, 不 đứng ngay trước 喜欢.|Tôi biết anh ấy không thích ở đây.
 45|我买的书很有意思。|他唱的歌很好听。|我的买书很有意思。|我买的书很有意思。|Mệnh đề làm định ngữ: chủ ngữ + động từ + 的 + trung tâm ngữ.|Cuốn sách tôi mua rất thú vị.
 45|昨天来的客人是我的老师。|会说汉语的人不多。|昨天客人来的是我的老师。|昨天来的客人是我的老师。|Định ngữ (昨天来) + 的 + danh từ (客人).|Vị khách đến hôm qua là thầy giáo của tôi.
