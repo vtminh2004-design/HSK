@@ -807,6 +807,7 @@ html.dark .container .panel{background:#dcdcdc}
 <div class="ex-grid">
 <button class="ex-item" onclick="stShow('antCard');antQ.start()"><div class="ex-item-no">↔️ Tìm từ trái nghĩa</div><div class="ex-item-meta">118 câu: chọn từ trái nghĩa (多 ↔ 少, 来 ↔ 去…)</div><div class="ex-item-go">Bắt đầu →</div></button>
 <button class="ex-item" onclick="stShow('bjCard');bjStart()"><div class="ex-item-no">🖌️ Ghép bộ kiện (ẩn nét)</div><div class="ex-item-meta">500 câu: từ bị ẩn nét, chọn bộ kiện để hoàn thành chữ</div><div class="ex-item-go">Bắt đầu →</div></button>
+<button class="ex-item" onclick="stShow('h2wCard');h2wQ.start()"><div class="ex-item-no">📚 Trắc nghiệm từ</div><div class="ex-item-meta">189 từ HSK 2 · 500 câu mỗi lượt: chữ Hán ↔ phiên âm ↔ nghĩa</div><div class="ex-item-go">Bắt đầu →</div></button>
 <button class="ex-item" onclick="stShow('h2rvCard');h2rvStart()"><div class="ex-item-no">🔤 Từ vựng ngẫu nhiên</div><div class="ex-item-meta">207 từ HSK 2: nhớ chữ, kiểm tra Pinyin và nghĩa</div><div class="ex-item-go">Bắt đầu →</div></button>
 </div>
 <div class="menu-sec">Đọc hiểu</div>
@@ -818,6 +819,13 @@ html.dark .container .panel{background:#dcdcdc}
 <button class="ex-item" onclick="stShow('dlg2Card');dlg2Start()"><div class="ex-item-no">💬 Đối đáp phản xạ</div><div class="ex-item-meta">114 tình huống: A hỏi, chọn câu đáp B đúng (比 / 了 / 过 / 还是 / 离 / 虽然…但是…)</div><div class="ex-item-go">Bắt đầu →</div></button>
 <button class="ex-item" onclick="openOral()"><div class="ex-item-no">🎲 Hỏi ngẫu nhiên</div><div class="ex-item-meta">40 câu khẩu ngữ, tự trả lời, bấm Pinyin / nghĩa / đáp án mẫu</div><div class="ex-item-go">Bắt đầu →</div></button>
 </div>
+    </div>
+    <div class="card hidden" id="h2wCard">
+      <button class="toggle-btn back-btn" onclick="stBack('h2wCard')">← Danh sách chức năng</button>
+      <h1>📚 Trắc nghiệm từ · HSK 2</h1>
+      <div class="vis-tools"><button class="toggle-btn" data-tool="py" type="button"></button><button class="toggle-btn" data-tool="vi" type="button"></button></div>
+      <div class="sub">Nhận diện chữ Hán, phiên âm và nghĩa tiếng Việt của 189 từ vựng HSK 2, 500 câu mỗi lượt (đảo ngẫu nhiên, mỗi từ hỏi bằng nhiều dạng).</div>
+      <div id="h2wArea"></div>
     </div>
     <div class="card hidden" id="h2nCard">
       <button class="toggle-btn back-btn" onclick="stBack('h2nCard')">← Danh sách chức năng</button>
@@ -8133,6 +8141,40 @@ const H3N_MORE = [
 {"t": "我平时不太喜欢运动，可是看到同事们每天都去锻炼，我也受到了影响，现在每个星期都去游两次泳。", "ask": "我现在：", "ok": "每周游两次泳", "w1": "一直不运动", "w2": "天天跑步", "vi": "Bình thường tôi không thích vận động, nhưng thấy đồng nghiệp ngày nào cũng đi tập, tôi cũng bị ảnh hưởng, giờ mỗi tuần đi bơi hai lần.", "note": "每个星期都去游两次泳。"}
 ];
 H3N_Q.push(...H3N_MORE);
+/* ===== HSK2: Trắc nghiệm từ ===== */
+const H2W_TY = [
+  ["hz", "vi", "Nhìn CHỮ HÁN chọn NGHĨA TIẾNG VIỆT"], ["hz", "py", "Nhìn CHỮ HÁN chọn PHIÊN ÂM"], ["py", "hz", "Nhìn PHIÊN ÂM chọn CHỮ HÁN"],
+  ["py", "vi", "Nhìn PHIÊN ÂM chọn TIẾNG VIỆT"], ["vi", "hz", "Nhìn TIẾNG VIỆT chọn CHỮ HÁN"], ["vi", "py", "Nhìn TIẾNG VIỆT chọn PHIÊN ÂM"]
+];
+let H2W_POOL = null;
+function h2wPool() {
+  if (H2W_POOL) return H2W_POOL;
+  const h1 = new Set(vocabFull.map(v => v.hz)), seen = new Set(), out = [];
+  const add = (hz, py, vi) => {
+    hz = String(hz || "").trim(); py = String(py || "").trim(); vi = String(vi || "").trim();
+    if (!hz || !py || !vi || h1.has(hz) || seen.has(hz) || !/^[\u4e00-\u9fff]+$/.test(hz) || /^很/.test(hz)) return;
+    seen.add(hz); out.push({ hz, py, vi });
+  };
+  libBuild().filter(w => w.lv === "2").forEach(w => add(w.hz, w.py, w.vi));
+  H2_RV.forEach(w => add(w.hz, w.py, w.vi));
+  return (H2W_POOL = out);
+}
+function h2wBuild(q) {
+  const w = q.w, [pk, ak, title] = q.t, pool = h2wPool(), ds = [], used = new Set([w[ak]]);
+  const cand = shuffleArray(pool.filter(r => r !== w && r[pk] !== w[pk]));
+  cand.sort((a, b) => (Math.abs(a.hz.length - w.hz.length) > 0 ? 1 : 0) - (Math.abs(b.hz.length - w.hz.length) > 0 ? 1 : 0));
+  for (const r of cand) { if (ds.length >= 2) break; if (used.has(r[ak])) continue; used.add(r[ak]); ds.push(r[ak]); }
+  const prompt = pk === "hz" ? `<div class="lib-ex" style="margin:8px 0;font-size:40px;line-height:2.2;text-align:center">${pyHtml(w.hz)}</div>`
+    : `<div class="lib-ex" style="margin:8px 0;font-size:${pk === "py" ? 30 : 22}px;text-align:center;font-weight:700">${exEscW(w[pk])}</div>`;
+  return { tag: "Trắc nghiệm từ · HSK 2", ask: "★ " + title, head: prompt, opts: [w[ak], ds[0], ds[1]], full: w.hz, vi: w.vi, rule: `${w.hz} [${w.py}]: ${w.vi}` };
+}
+function exEscW(t) { return String(t).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"); }
+const h2wQ = mkQuiz("h2w", [], h2wBuild);
+h2wQ.start = () => {
+  const all = [];
+  h2wPool().forEach(w => H2W_TY.forEach(t => all.push({ w, t })));
+  h2wQ.deck = shuffleArray(all).slice(0, 500); h2wQ.i = 0; h2wQ.score = 0; h2wQ.render();
+};
 const h3nQ = mkQuiz("h3n", H3N_Q, q => ({ tag: "Nhận biết · đọc hiểu", ask: "★ " + q.ask, head: `<div class="lib-ex" style="margin:8px 0;font-size:22px;line-height:2.1">${pyHtml(q.t)}</div>`, opts: [q.ok, q.w1, q.w2], full: q.t, vi: q.vi, rule: q.note }));
 const h3a = { deck: [], i: 0, score: 0, pool: [], ans: [] };
 function h3aStart() { h3a.deck = shuffleArray(H3A_Q); h3a.i = 0; h3a.score = 0; h3aRender(); }
