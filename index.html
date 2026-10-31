@@ -3,6 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#f3f5f9" id="themeMeta">
+<script>try{if(localStorage.getItem("hsk_dark")==="1")document.documentElement.classList.add("dark")}catch(e){}</script>
 <title>Luyện dịch & Gõ tiếng Trung HSK 1</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -493,6 +495,17 @@ body.in-func .topbar{position:relative;top:0;height:0;margin:0;overflow:visible;
 body.in-func .topbar details.shared-voice>summary{width:38px;height:38px;border-radius:12px;box-shadow:none;opacity:.85}
 body.in-func .container{padding-top:6px}
 body.exam-run .topbar{display:none}
+
+/* ===== Chế độ tối (bật trong bảng Giọng đọc 🗣) ===== */
+html.dark{scrollbar-color:#555 #121212}
+html.dark body{background:#121212}
+html.dark .container,
+html.dark .donate-box{filter:invert(1) hue-rotate(180deg)}
+html.dark .container img,
+html.dark .container .pic,
+html.dark .container .ex-ico,
+html.dark .donate-box img{filter:invert(1) hue-rotate(180deg)}
+html.dark .container .panel{background:#dcdcdc}
 </style>
 </head>
 <body>
@@ -516,6 +529,7 @@ body.exam-run .topbar{display:none}
     <option value="1.2">Nhanh</option>
   </select>
   <button class="toggle-btn" onclick="testVoice()">🔊 Thử giọng</button>
+  <button class="toggle-btn" id="darkBtn" onclick="toggleDark()">🌙 Chế độ tối: Tắt</button>
 </div>
 <div class="voice-note hidden" id="voiceNote"></div></div></details>
 </div>
@@ -8905,6 +8919,22 @@ exRender();
     if (!closeTop() && stack.length) history.back();
   });
 })();
+</script>
+<script>
+/* Chế độ tối: lưu lựa chọn trong localStorage (khóa hsk_dark) */
+function applyDark(on) {
+  document.documentElement.classList.toggle("dark", !!on);
+  const b = document.getElementById("darkBtn");
+  if (b) { b.textContent = "🌙 Chế độ tối: " + (on ? "Bật" : "Tắt"); b.classList.toggle("on", !!on); b.setAttribute("aria-pressed", on ? "true" : "false"); }
+  const m = document.getElementById("themeMeta");
+  if (m) m.setAttribute("content", on ? "#121212" : "#f3f5f9");
+}
+function toggleDark() {
+  const on = !document.documentElement.classList.contains("dark");
+  try { localStorage.setItem("hsk_dark", on ? "1" : "0"); } catch (e) {}
+  applyDark(on);
+}
+applyDark(document.documentElement.classList.contains("dark"));
 </script>
 </body>
 </html>
