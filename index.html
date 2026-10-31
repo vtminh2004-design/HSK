@@ -485,6 +485,14 @@ body{background:var(--bg)}
 .h3-novi .np-vi:not(.show){filter:blur(7px);cursor:pointer;user-select:none}
 #hsk2Pane.h2-nopy .card:not(#oralCard) ruby rt{display:none}
 #hsk2Pane.h2-novi .card:not(#oralCard) .np-vi:not(.show){filter:blur(7px);cursor:pointer;user-select:none}
+
+/* ===== Chế độ gọn: khi đang ở trong một chức năng, ẩn thanh Học tập/Thi thử và tab HSK 1-2-3/Thư viện ===== */
+body.in-func .topbar .main-nav,
+body.in-func #studyPane > .level-nav{display:none !important}
+body.in-func .topbar{position:relative;top:0;height:0;margin:0;overflow:visible;justify-content:flex-end;z-index:60}
+body.in-func .topbar details.shared-voice>summary{width:38px;height:38px;border-radius:12px;box-shadow:none;opacity:.85}
+body.in-func .container{padding-top:6px}
+body.exam-run .topbar{display:none}
 </style>
 </head>
 <body>
@@ -8814,6 +8822,31 @@ exRender();
   const $ = id => document.getElementById(id);
   const vis = id => { const e = $(id); return e && !e.classList.contains("hidden"); };
   try { history.replaceState({ d: 0 }, ""); } catch (e) {}
+  /* ----- Chế độ gọn + xác nhận khi thoát bài ----- */
+  const LEVEL_MENU = { hsk1Pane: "hsk1Menu", hsk2Pane: "hsk2Menu", hsk3Pane: "hsk3Menu", libPane: "libMenu" };
+  function inFunc() {                 /* đang mở một chức năng (không phải sảnh) */
+    if (vis("examPane")) return ex.view === "run";
+    if (!vis("studyPane")) return false;
+    const pane = Object.keys(LEVEL_MENU).find(vis);
+    return !!pane && !vis(LEVEL_MENU[pane]);
+  }
+  function needConfirm() {            /* đang làm bài: hỏi trước khi bỏ (Thư viện chỉ để tra cứu nên không hỏi) */
+    if (vis("examPane")) return ex.view === "run";
+    return inFunc() && !vis("libCard");
+  }
+  function confirmMsg() {
+    return vis("examPane") ? "Thoát bài thi? Tiến trình làm bài sẽ bị mất."
+                           : "Bỏ bài làm hiện tại và quay lại danh sách chức năng?";
+  }
+  function syncChrome() {
+    document.body.classList.toggle("in-func", inFunc());
+    document.body.classList.toggle("exam-run", vis("examPane") && ex.view === "run");
+  }
+  let syncRaf = 0;
+  const mo = new MutationObserver(() => { if (!syncRaf) syncRaf = requestAnimationFrame(() => { syncRaf = 0; syncChrome(); }); });
+  [$("studyPane"), $("examPane")].forEach(n => n && mo.observe(n, { subtree: true, attributes: true, attributeFilter: ["class"] }));
+  if ($("examCard")) mo.observe($("examCard"), { childList: true });
+  syncChrome();
   function state() {
     return { tab: vis("studyPane") ? "study" : "exam",
              lv: $("lvHsk2").classList.contains("active") ? "hsk2" : $("lvHsk3").classList.contains("active") ? "hsk3" : $("lvLib").classList.contains("active") ? "lib" : "hsk1" };
@@ -8852,7 +8885,7 @@ exRender();
     window[name] = function () {
       const top = stack[stack.length - 1];
       if (top && top.t === "screen" && !top.dead) history.back();
-      else { f.apply(this, arguments); for (let i = stack.length - 1; i >= 0; i--) { const e = stack[i]; if (e.t === "screen" && !e.dead && !!e.exam === (name === "exBackToList")) { e.dead = true; break; } } }
+      else { if (needConfirm() && !confirm(confirmMsg())) return; f.apply(this, arguments); for (let i = stack.length - 1; i >= 0; i--) { const e = stack[i]; if (e.t === "screen" && !e.dead && !!e.exam === (name === "exBackToList")) { e.dead = true; break; } } }
     };
   });
   orig.setTopTab = window.setTopTab; orig.setLevel = window.setLevel;
@@ -8868,7 +8901,7 @@ exRender();
     const e = stack.pop(); if (!e) return;
     if (e.dead) { if (stack.length) history.back(); return; }
     if (e.t === "tab") { orig.setTopTab(e.prev.tab); orig.setLevel(e.prev.lv); return; }
-    if (vis("examPane") && ex.view === "run" && !confirm("Thoát bài thi? Tiến trình làm bài sẽ bị mất.")) { push({ t: "screen", exam: true }); return; }
+    if (needConfirm() && !confirm(confirmMsg())) { push({ t: "screen", exam: vis("examPane") }); return; }
     if (!closeTop() && stack.length) history.back();
   });
 })();
