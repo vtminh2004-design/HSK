@@ -507,6 +507,17 @@ html.dark .container .ex-ico,
 html.dark .donate-box img{filter:invert(1) hue-rotate(180deg)}
 html.dark .container .panel{background:#dcdcdc}
 </style>
+<style>
+.ui-dlg-ov{position:fixed;inset:0;z-index:100000;display:flex;align-items:center;justify-content:center;padding:16px;background:rgba(15,23,42,.55)}
+.ui-dlg{width:100%;max-width:340px;background:#fff;color:#1e293b;border-radius:16px;padding:20px 18px 16px;box-shadow:0 12px 40px rgba(0,0,0,.3);text-align:center}
+.ui-dlg-msg{font-size:16px;line-height:1.5;font-weight:600;margin:4px 0 16px;white-space:pre-line}
+.ui-dlg-btns{display:flex;gap:10px;justify-content:center}
+.ui-dlg-btns button{flex:1;min-height:44px;padding:10px 14px;border-radius:12px;border:0;font-size:15px;font-weight:700;cursor:pointer}
+.ui-dlg-ok{background:#b91c1c;color:#fff}
+.ui-dlg-no{background:#e2e8f0;color:#334155}
+html.dark .ui-dlg{background:#1e1e1e;color:#f1f5f9}
+html.dark .ui-dlg-no{background:#334155;color:#e2e8f0}
+</style>
 </head>
 <body>
 <div class="container">
@@ -2664,7 +2675,7 @@ function useHint() {
   if (locked) return;
 
   if (score < 5) {
-    alert("Bạn cần tích lũy tối thiểu 5 điểm để đổi một lần gợi ý!");
+    uiAlert("Bạn cần tích lũy tối thiểu 5 điểm để đổi một lần gợi ý!");
     return;
   }
 
@@ -2687,7 +2698,7 @@ function useHint() {
   const remainingCount = targetChars.length - startIdx;
 
   if (remainingCount <= 0) {
-    alert("Bạn đã ghép đủ câu rồi, hãy bấm nút '✓ Kiểm tra'!");
+    uiAlert("Bạn đã ghép đủ câu rồi, hãy bấm nút '✓ Kiểm tra'!");
     return;
   }
 
@@ -8723,7 +8734,7 @@ function exSpeakOne(t, pitch, last) {
 }
 function speakLines(lines, pitches) {
   try {
-    if (!("speechSynthesis" in window)) { alert("Trình duyệt này không hỗ trợ đọc giọng nói."); return; }
+    if (!("speechSynthesis" in window)) { uiAlert("Trình duyệt này không hỗ trợ đọc giọng nói."); return; }
     const ss = window.speechSynthesis;
     if (ss.speaking || ss.pending) ss.cancel();
     exUtts = [];
@@ -8870,6 +8881,26 @@ exRender();
 })();
 </script>
 <script>
+/* Hộp thoại xác nhận / thông báo hiện ở giữa màn hình (thay confirm/alert của trình duyệt) */
+function uiDialog(msg, ask, onOk, onNo) {
+  const ov = document.createElement("div"); ov.className = "ui-dlg-ov"; ov.setAttribute("role", "dialog"); ov.setAttribute("aria-modal", "true");
+  const box = document.createElement("div"); box.className = "ui-dlg";
+  const m = document.createElement("div"); m.className = "ui-dlg-msg"; m.textContent = msg;
+  const row = document.createElement("div"); row.className = "ui-dlg-btns";
+  let closed = false;
+  const close = ok => { if (closed) return; closed = true; document.removeEventListener("keydown", key, true); ov.remove(); const f = ok ? onOk : onNo; if (f) f(); };
+  const key = e => { if (e.key === "Escape") { e.preventDefault(); e.stopPropagation(); close(false); } else if (e.key === "Enter") { e.preventDefault(); e.stopPropagation(); close(true); } };
+  if (ask) { const no = document.createElement("button"); no.className = "ui-dlg-no"; no.textContent = "Hủy"; no.onclick = () => close(false); row.appendChild(no); }
+  const ok = document.createElement("button"); ok.className = "ui-dlg-ok"; ok.textContent = ask ? "Đồng ý" : "OK"; ok.onclick = () => close(true); row.appendChild(ok);
+  box.append(m, row); ov.appendChild(box);
+  ov.addEventListener("click", e => { if (e.target === ov) close(false); });
+  document.addEventListener("keydown", key, true);
+  document.body.appendChild(ov); ok.focus();
+}
+function uiConfirm(msg, onOk, onNo) { uiDialog(msg, true, onOk, onNo); }
+function uiAlert(msg) { uiDialog(msg, false); }
+</script>
+<script>
 /* Nút Back của điện thoại/trình duyệt: mỗi lần mở màn hình con hoặc chuyển tab/cấp độ
    sẽ thêm 1 mục lịch sử; bấm Back quay lại đúng bước trước đó, không thoát cả web. */
 (function () {
@@ -8915,7 +8946,7 @@ exRender();
     if (vis("hsk2Pane")) {
       if (vis("npCard")) { orig.npBack(); return true; }
       if (vis("oralCard")) { orig.oralBack(); return true; }
-      for (const id of ["sanCard", "fillCard", "matCard", "trnCard", "bjCard", "antCard", "ddCard", "h2rvCard", "dlg2Card"]) if (vis(id)) { orig.stBack(id); return true; }
+      for (const id of ["sanCard", "fillCard", "matCard", "trnCard", "bjCard", "antCard", "ddCard", "h2rvCard", "dlg2Card", "h2nCard", "h2wCard"]) if (vis(id)) { orig.stBack(id); return true; }
     }
     return false;
   }
@@ -8926,7 +8957,7 @@ exRender();
     if (vis("npCard")) { orig.npBack(); any = true; }
     for (const id of H3_CARDS) if (vis(id)) { orig.h3Back(id); any = true; }
     if (vis("oralCard")) { orig.oralBack(); any = true; }
-    for (const id of ["sanCard", "fillCard", "matCard", "trnCard", "bjCard", "antCard", "ddCard", "h2rvCard", "dlg2Card"]) if (vis(id)) { orig.stBack(id); any = true; }
+    for (const id of ["sanCard", "fillCard", "matCard", "trnCard", "bjCard", "antCard", "ddCard", "h2rvCard", "dlg2Card", "h2nCard", "h2wCard"]) if (vis(id)) { orig.stBack(id); any = true; }
     stack.forEach(e => { if (e.t === "screen" && !e.exam) e.dead = true; });
     return any;
   }
@@ -8941,7 +8972,7 @@ exRender();
     window[name] = function () {
       const top = stack[stack.length - 1];
       if (top && top.t === "screen" && !top.dead) history.back();
-      else { if (needConfirm() && !confirm(confirmMsg())) return; f.apply(this, arguments); for (let i = stack.length - 1; i >= 0; i--) { const e = stack[i]; if (e.t === "screen" && !e.dead && !!e.exam === (name === "exBackToList")) { e.dead = true; break; } } }
+      else { const self = this, args = arguments, run = () => { f.apply(self, args); for (let i = stack.length - 1; i >= 0; i--) { const e = stack[i]; if (e.t === "screen" && !e.dead && !!e.exam === (name === "exBackToList")) { e.dead = true; break; } } }; if (needConfirm()) uiConfirm(confirmMsg(), run); else run(); }
     };
   });
   orig.setTopTab = window.setTopTab; orig.setLevel = window.setLevel;
@@ -8957,7 +8988,7 @@ exRender();
     const e = stack.pop(); if (!e) return;
     if (e.dead) { if (stack.length) history.back(); return; }
     if (e.t === "tab") { orig.setTopTab(e.prev.tab); orig.setLevel(e.prev.lv); return; }
-    if (needConfirm() && !confirm(confirmMsg())) { push({ t: "screen", exam: vis("examPane") }); return; }
+    if (needConfirm()) { uiConfirm(confirmMsg(), () => { if (!closeTop() && stack.length) history.back(); }, () => push({ t: "screen", exam: vis("examPane") })); return; }
     if (!closeTop() && stack.length) history.back();
   });
 })();
